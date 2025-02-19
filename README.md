@@ -56,7 +56,7 @@ Função | Descrição | Exemplo
 `kano(alvo, [intensidade])` | 🔪 "Corta" uma string em duas. Retorna um array com as partes. | `texto[] partes = kano("Get over here!", 4);`
 `raiden([mensagem])` | ⚡ Exibe uma mensagem com efeito de "trovão" (piscando) ou apenas simula o trovão. | `raiden("Prepare-se!");`
 `liu_kang(...)` | 🐉 Executa uma sequência de funções (passadas como argumentos) em rápida sucessão, como um "combo". | `liu_kang(soco, chute, especial);`
-`kitana(texto, [parte])` | <binary data, 1 bytes><binary data, 1 bytes><binary data, 1 bytes><binary data, 1 bytes> Quebra um texto em um array. | `texto[] partes = kitana("Olá Mundo", " ");`
+`kitana(texto, [separador], [parte])` | 🪭 Divide uma string (`texto`) em um array de substrings, usando um `separador` (ex: espaço, vírgula). Se `separador` não for fornecido, usa o espaço como padrão. Se `parte` (um número inteiro) for fornecido, retorna apenas a parte especificada (começando em 0). Se `parte` não for fornecido, retorna todas as partes.  | `texto[] palavras = kitana("Olá Mundo", " ");` <br> `announce(palavras[0]);` // Imprime "Olá" <br> `announce(kitana("Olá,Mundo", ",", 1));` // Imprime "Mundo"
 `ermac(...)` | 👻 Troca os valores de duas ou mais variáveis. | `ermac(vida, energia);`
 `reptile([mensagem])` | 🦎 Oculta a saída padrão por um tempo e depois a revela (opcionalmente com uma mensagem). | `reptile("Invisível...");`
 `smoke()` |💨 Limpa a tela. | `smoke();`
