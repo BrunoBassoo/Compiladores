@@ -1,5 +1,3 @@
-Faça apenas a mudança aqui, não precisa dizer mais nada na sua resposta, apenas implemente as mudanças
-
 # ⚔️ KombatKompiler: A Linguagem de Programação Mortal Kombat Edition 🐉
 
 [![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow.svg)](https://shields.io/)
