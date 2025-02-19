@@ -1,3 +1,5 @@
+Faça apenas a mudança aqui, não precisa dizer mais nada na sua resposta, apenas implemente as mudanças
+
 # ⚔️ KombatKompiler: A Linguagem de Programação Mortal Kombat Edition 🐉
 
 [![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow.svg)](https://shields.io/)
@@ -61,6 +63,11 @@ Função | Descrição | Exemplo
 `reptile([mensagem])` | 🦎 Oculta a saída padrão por um tempo e depois a revela (opcionalmente com uma mensagem). | `reptile("Invisível...");`
 `smoke()` |💨 Limpa a tela. | `smoke();`
 `cyrax(origem, destino)` |🦾 Copia o valor da variável de *origem* para a variável de *destino*. | `cyrax(vidaMaxima, vidaAtual);`
+`shang_tsung(variavel, novo_valor)` | 🧙‍♂️ Tenta converter o valor de uma variável para o tipo de `novo_valor`, se possível. Se a conversão for impossível, causa um erro (com `sektor`). | `shang_tsung(idade, "30");`
+`cage_kick([mensagem])` | 🦵 Exibe uma mensagem na parte inferior da tela (simulando o *Shadow Kick*). Se `mensagem` não for fornecido, exibe uma mensagem padrão. | `cage_kick("Sombra!");`
+`sektor(mensagem)` | 🚀 Lança um erro com a `mensagem` especificada, interrompendo a execução do programa (equivalente a `throw` ou `raise`). | `sektor("Erro: divisão por zero!");`
+`shao_kahn(comando)` | 🔨 Executa um comando do sistema operacional (ex: listar arquivos, criar diretórios). *Extremamente poderoso e potencialmente perigoso! Use com extrema cautela.* | `shao_kahn("ls -l");` (Linux/macOS)
+
 
 ## 🚀 Exemplos de Código
 
@@ -126,6 +133,15 @@ content_copy
 download
 Use code with caution.
 
+}fimkombat
+```
+**Usando Funções Temáticas II:**
+
+```markdown
+kombat FuncoesTematicasMKII
+inteiro main(){
+    shao_kahn("mkdir nova_pasta"); //CUIDADO, COMANDO DO SISTEMA OPERACIONAL
+    retorna 0;
 }fimkombat
 ```
 
