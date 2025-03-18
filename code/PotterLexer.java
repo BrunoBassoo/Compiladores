@@ -1,5 +1,3 @@
-// Arquivo: AnalisadorLexicoPotter.java (ou PotterLexer.java)
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
