@@ -126,10 +126,6 @@ inteiro main(){
     lumus(partes[0]);                  // Imprime "Expecto"
     lumus(partes[1]);                  // Imprime "Patronum!"
 
-    reptile("Enviando mensagem secreta..."); // Oculta a saída (função de MK)
-    reparo(3000);
-    reptile("Mensagem secreta revelada!"); // Revela a saída
-
     riddikulus("Bicho-papão virou aranha de patins!"); // Mensagem na parte inferior
 
      retorna 0;
