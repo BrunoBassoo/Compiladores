@@ -3,6 +3,8 @@
 [![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-brightgreen.svg)](https://shields.io/)
 [![Versão](https://img.shields.io/badge/Versão-0.1-blue.svg)](https://shields.io/)
 
+[![harrypotter](https://media1.tenor.com/m/M9kOGVX74UsAAAAC/abell46s-voldemor.gif)](https://www.youtube.com/watch?v=PIwhCiZeVjg)
+
 ## ✨ *Accio Código!* ✨
 
 **PotterScript** é uma linguagem de programação de propósito geral inspirada no universo mágico de Harry Potter. Com ela, você poderá conjurar programas com a mesma facilidade com que um bruxo lança feitiços. Prepare sua varinha (ou melhor, seu teclado) e embarque nessa aventura!
