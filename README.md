@@ -1,153 +1,155 @@
-# ⚔️ KombatKompiler: A Linguagem de Programação Mortal Kombat Edition 🐉
+# ⚡️ PotterScript: A Linguagem de Programação do Mundo Bruxo 🪄
 
-[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow.svg)](https://shields.io/)
+[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-brightgreen.svg)](https://shields.io/)
 [![Versão](https://img.shields.io/badge/Versão-0.1-blue.svg)](https://shields.io/)
 
-## 🔥 FATALITY na sua Forma de Programar! 🔥
+## ✨ *Accio Código!* ✨
 
-**KombatKompiler** é uma linguagem de programação de propósito geral com uma *skin* temática inspirada no universo de Mortal Kombat.  Ela combina a funcionalidade de uma linguagem completa com a estética e o humor da icônica franquia de luta. Prepare-se para codificar como um verdadeiro guerreiro do Outworld! 
+**PotterScript** é uma linguagem de programação de propósito geral inspirada no universo mágico de Harry Potter. Com ela, você poderá conjurar programas com a mesma facilidade com que um bruxo lança feitiços. Prepare sua varinha (ou melhor, seu teclado) e embarque nessa aventura!
 
 ## 📜 Sinopse
 
-Você já imaginou escrever código com a mesma intensidade de um kombate épico? Com **KombatKompiler**, você pode!  Use palavras-chave como `versus`, `round`, `announce` e `fatality` para criar programas que parecem ter saído diretamente de um fliperama dos anos 90.  Mas não se engane: por trás da aparência "arcade", há uma linguagem poderosa e flexível, pronta para qualquer desafio.
+Já imaginou controlar o fluxo do seu código com um *Accio* ou um *Alohomora*? Em **PotterScript**, isso é possível! Escreva programas com palavras-chave que remetem ao mundo de Hogwarts, mas com a funcionalidade de uma linguagem de programação completa. Perfeita para *trouxas* (quer dizer, iniciantes) e bruxos experientes!
 
 ## ✨ Características Principais
 
-*   **Sintaxe Temática:** Palavras-chave inspiradas em Mortal Kombat (veja a lista completa abaixo).
-*   **Propósito Geral:** Crie programas para qualquer finalidade, não apenas jogos!
+*   **Sintaxe Mágica:** Palavras-chave inspiradas em Harry Potter (veja a lista completa abaixo).
+*   **Propósito Geral:** Crie programas para qualquer finalidade, não apenas para simular feitiços!
 *   **Tipos de Dados Básicos:** `inteiro`, `decimal`, `texto`, `booleano`.
-*   **Estruturas de Controle:** Condicionais (`versus`, `rematch`, `flawless_victory`) e laços (`round`, `combo`).
-*   **Funções:** Crie suas próprias funções e use funções temáticas pré-definidas (veja abaixo).
+*   **Estruturas de Controle:** Condicionais (`revelio`, `colloportus`, `protego`) e laços (`geminio`, `incendio`).
+*   **Funções:** Crie suas próprias funções (feitiços!) e use funções mágicas pré-definidas (veja abaixo).
 *   **Comentários:** Use `//` para comentários de linha e `/* ... */` para blocos de comentário.
-*   **Fácil de Aprender:** Se você já programa em outras linguagens, vai se sentir em casa (ou melhor, no Reino da Terra!).
-*   **Em Desenvolvimento:**  A linguagem está em constante evolução.  Novas *fatalities* (ops, funcionalidades!) serão adicionadas em breve.
+*   **Fácil de Aprender:** Se você já conhece outras linguagens, vai tirar de letra (ou melhor, de varinha!).
+*   **Em Desenvolvimento:** A linguagem está sempre evoluindo. Novos feitiços serão adicionados em breve!
 
 ## ⌨️ Palavras-chave
 
 Categoria | Palavra-chave | Descrição
 --------- | ------------- | -----------
-Declaração | `kombat` ... `fimkombat` | Delimita o início e o fim do programa.
+Declaração | `magia` ... `fim_magia` | Delimita o início e o fim do programa.
 Tipos de Dados | `inteiro` | Números inteiros.
  | `decimal` | Números de ponto flutuante.
  | `texto` | Strings (cadeias de caracteres).
  | `booleano` | Valores lógicos (`verdadeiro` ou `falso`).
-Condicional | `versus` | Equivalente a `if`.
- | `rematch` | Equivalente a `else if`.
- | `flawless_victory` | Equivalente a `else`.
-Laços | `round` | Equivalente a `while`.
- | `combo` | Equivalente a `for`.
-Funções | `funcao` ... `fimfuncao` | Define uma função.
+Condicional | `revelio` | Equivalente a `if`.
+ | `protego` | Equivalente a `else if`.
+ | `colloportus` | Equivalente a `else`.
+Laços | `geminio` | Equivalente a `while`.
+ | `incendio` | Equivalente a `for`.
+Funções | `feitico` ... `fim_feitico` | Define uma função.
  | `retorna` | Retorna um valor de uma função.
-Entrada/Saída | `announce` | Exibe mensagens na tela (equivalente a `print`).
- | `aguarda_comando` | Lê entrada do usuário (equivalente a `input`).
+Entrada/Saída | `lumus` | Exibe mensagens na tela (equivalente a `print`).
+ | `nox` | Usada com `lumus` para criar efeitos.
+ | `accio` | Lê entrada do usuário (equivalente a `input`).
 Outros | `e` | Operador lógico "E".
  | `ou` | Operador lógico "OU".
  | `nao` | Operador lógico "NÃO".
-Variados| `becomes` | Atribui valor à variável.
+Variados| `atribui` | Atribui valor à variável.
 
-## 🕹️ Funções Temáticas Pré-definidas
+## 🧙 Funções Mágicas Pré-definidas
 
 Função | Descrição | Exemplo
 ------- | -------- | -------
-`subzero([tempo_ms])` | 🧊 "Congela" a execução por um tempo (em milissegundos). Se `tempo_ms` não for fornecido, congela por 1 segundo (1000 ms). | `subzero(500);`
-`scorpion([nome_variavel])` | 🦂 "Deleta" uma variável (torna-a indefinida). Se `nome_variavel` não for fornecido, remove a última variável definida. *Cuidado ao usar!* | `scorpion(pontuacao);`
-`fatality()` | 💀 Encerra o programa imediatamente. | `fatality();`
-`brutality()` | 💥 Encerra a função atual (retorna imediatamente). | `brutality();`
-`kano(alvo, [intensidade])` | 🔪 "Corta" uma string em duas. Retorna um array com as partes. | `texto[] partes = kano("Get over here!", 4);`
-`raiden([mensagem])` | ⚡ Exibe uma mensagem com efeito de "trovão" (piscando) ou apenas simula o trovão. | `raiden("Prepare-se!");`
-`liu_kang(...)` | 🐉 Executa uma sequência de funções (passadas como argumentos) em rápida sucessão, como um "combo". | `liu_kang(soco, chute, especial);`
-`kitana(texto, [separador], [parte])` | 🪭 Divide uma string (`texto`) em um array de substrings, usando um `separador` (ex: espaço, vírgula). Se `separador` não for fornecido, usa o espaço como padrão. Se `parte` (um número inteiro) for fornecido, retorna apenas a parte especificada (começando em 0). Se `parte` não for fornecido, retorna todas as partes.  | `texto[] palavras = kitana("Olá Mundo", " ");` <br> `announce(palavras[0]);` // Imprime "Olá" <br> `announce(kitana("Olá,Mundo", ",", 1));` // Imprime "Mundo"
-`ermac(...)` | 👻 Troca os valores de duas ou mais variáveis. | `ermac(vida, energia);`
-`reptile([mensagem])` | 🦎 Oculta a saída padrão por um tempo e depois a revela (opcionalmente com uma mensagem). | `reptile("Invisível...");`
-`smoke()` |💨 Limpa a tela. | `smoke();`
-`cyrax(origem, destino)` |🦾 Copia o valor da variável de *origem* para a variável de *destino*. | `cyrax(vidaMaxima, vidaAtual);`
-`shang_tsung(variavel, novo_valor)` | 🧙‍♂️ Tenta converter o valor de uma variável para o tipo de `novo_valor`, se possível. Se a conversão for impossível, causa um erro (com `sektor`). | `shang_tsung(idade, "30");`
-`cage_kick([mensagem])` | 🦵 Exibe uma mensagem na parte inferior da tela (simulando o *Shadow Kick*). Se `mensagem` não for fornecido, exibe uma mensagem padrão. | `cage_kick("Sombra!");`
-`sektor(mensagem)` | 🚀 Lança um erro com a `mensagem` especificada, interrompendo a execução do programa (equivalente a `throw` ou `raise`). | `sektor("Erro: divisão por zero!");`
-`shao_kahn(comando)` | 🔨 Executa um comando do sistema operacional (ex: listar arquivos, criar diretórios). *Extremamente poderoso e potencialmente perigoso! Use com extrema cautela.* | `shao_kahn("ls -l");` (Linux/macOS)
-
+`avada_kedavra()` | 💀 Encerra o programa imediatamente. | `avada_kedavra();`
+`expelliarmus([nome_variavel])` | 💥 "Desarma" uma variável (torna-a indefinida). | `expelliarmus(varinha);`
+`reparo([tempo_ms])` | ⏳ "Conserta" o tempo, atrasando a execução (em milissegundos). |  `reparo(2000)`
+`obliviate()` | 💫 Limpa a tela. | `obliviate();`
+`alohomora(alvo, [posicao])` | 🔑 "Abre" uma string, dividindo-a em partes. | `texto[] partes = alohomora("Expecto Patronum", " ");`
+`diffindo(var1, var2, ...)` | ✂️ Troca os valores de duas ou mais variáveis. | `diffindo(nome, sobrenome);`
+`lumus_maxima([mensagem])` | 🔦 Exibe uma mensagem com efeito "flash" ou apenas simula o flash. | `lumus_maxima("Lumos Maxima!");`
+`aparecium(texto, [separador], [parte])` | 🪶 Revela as partes de uma *string*, dividindo-a por um separador. | `texto[] segredos = aparecium("Segredos de Dumbledore", " ");`
+`legilimens(origem, destino)` |🧠 Copia o valor da variável de *origem* para a variável de *destino*. | `legilimens(senhaAntiga, senhaNova);`
+`priori_incantatem(variavel, novo_valor)` | 🪄 Tenta converter o valor de uma variável para o tipo de `novo_valor`. | `priori_incantatem(idade, "25");`
+`riddikulus([mensagem])` | 😂 Exibe uma mensagem na parte inferior da tela, como uma "resposta engraçada". | `riddikulus("Bicho-papão!");`
+`imperius(mensagem)` | 🗣️ Lança um erro com a `mensagem` personalizada, interrompendo o programa. | `imperius("Você não tem permissão!");`
+`crucio(comando)` | 😫 Executa um comando do sistema operacional. *Use com extrema cautela e responsabilidade!* | `crucio("ls -l");` (Linux/macOS)
 
 ## 🚀 Exemplos de Código
 
-**Olá, Mundo! (ou melhor, Olá, Outworld!):**
+**Olá, Mundo Bruxo!:**
 
-```markdown
-kombat OlaOutworld
+```potterscript
+magia OlaMundoBruxo
+    lumus("Olá, Mundo Bruxo!");
+fim_magia
+
+
+Calculadora Mágica:
+
+magia CalculadoraMagica
+
+feitico somar(inteiro a, inteiro b) retorna inteiro {
+    retorna a + b;
+} fim_feitico
+feitico subtrair(inteiro a, inteiro b) retorna inteiro{
+    retorna a - b;
+}fim_feitico
+
 inteiro main() {
-announce("Olá, Outworld!");
-retorna 0;
-}fimkombat
+    inteiro x;
+    inteiro y;
+    texto operacao;
+
+    lumus("Escolha sua operação: somar ou subtrair?");
+    accio(operacao);
+
+    lumus("Digite o primeiro número:");
+    accio(x);
+
+    lumus("Digite o segundo número:");
+    accio(y);
+
+    revelio (operacao == "somar") {
+        lumus("O resultado é: " + somar(x, y));
+    } protego (operacao == "subtrair") {
+        lumus("O resultado é: " + subtrair(x,y));
+    } colloportus {
+        lumus("Operação inválida!");
+    }
+     retorna 0;
+} fim_magia
 ```
 
-**Calculadora Simples:**
+**Usando Funções Mágicas:**
 
-```markdow
-kombat CalculadoraMK
+```potterscript
+magia FeiticosDivertidos
 
-funcao soma(inteiro a, inteiro b) retorna inteiro {
-retorna a + b;
-} fimfuncao
-
-inteiro main() {
-inteiro x;
-inteiro y;
-
-announce("Digite um número:");
-aguarda_comando(x);
-
-announce("Digite outro número:");
-aguarda_comando(y);
-
-announce("A soma é: " + soma(x, y));
- retorna 0;
-content_copy
-download
-Use code with caution.
-
-} fimkombat
-```
-
-
-**Usando Funções Temáticas:**
-
-```markdown
-kombat FuncoesTematicas
 inteiro main(){
-texto frase = "Finish Him!";
-texto[] partes;
+    texto frase = "Expecto Patronum!";
+    texto[] partes;
 
-raiden("PREPARE-SE!"); // Efeito de trovão
-subzero(1000);       // Congela por 1 segundo
+    lumus_maxima("Lumos Maxima!");  // Flash de luz
+    reparo(1000);                   // Espera 1 segundo
 
-partes = kano(frase, 6); //Corta a frase
-announce(partes[0]);//Finish
-announce(partes[1]);//Him!
+    partes = alohomora(frase, " ");    // Divide a frase
+    lumus(partes[0]);                  // Imprime "Expecto"
+    lumus(partes[1]);                  // Imprime "Patronum!"
 
-reptile();//Oculta a saída
-subzero(2000);
-reptile("Agora você me vê!"); // Revela a saída, com mensagem
-retorna 0;
-content_copy
-download
-Use code with caution.
+    reptile("Enviando mensagem secreta..."); // Oculta a saída (função de MK)
+    reparo(3000);
+    reptile("Mensagem secreta revelada!"); // Revela a saída
 
-}fimkombat
+    riddikulus("Bicho-papão virou aranha de patins!"); // Mensagem na parte inferior
+
+     retorna 0;
+}fim_magia
 ```
-**Usando Funções Temáticas II:**
 
-```markdown
-kombat FuncoesTematicasMKII
-inteiro main(){
-    shao_kahn("mkdir nova_pasta"); //CUIDADO, COMANDO DO SISTEMA OPERACIONAL
-    retorna 0;
-}fimkombat
-```
+**Funções Auxiliares:**
+
+Função | Descrição
+------ | --------
+tamanho_texto | Retorna o tamanho do texto
+caractere_em | Retorna o caractere em uma determinada posição
+texto_para_inteiro | Converte um texto para inteiro
+inteiro_para_texto | Converte um inteiro para texto
 
 ## 🛠️ Como Compilar e Executar
 
-1.  **Instale o KombatKompiler:** (Instruções detalhadas virão quando o compilador estiver pronto).
-2.  **Escreva seu código** em um arquivo com extensão `.kk` (ex: `meu_programa.kk`).
-3.  **Compile:** Use o comando `kombatkompiler meu_programa.kk` (ou similar). Isso gerará um executável.
+1.  **Instale o PotterScript:** (Instruções detalhadas virão quando o compilador estiver pronto).
+2.  **Escreva seu código** em um arquivo com extensão `.ps` (ex: `meu_feitiço.ps`).
+3.  **Compile:** Use o comando `potterscript meu_feitiço.ps` (ou similar). Isso gerará um executável.
 4.  **Execute:** Rode o executável!
 
 ## 🤝 Contribua
@@ -155,9 +157,9 @@ inteiro main(){
 Este é um projeto de código aberto! Se você quiser contribuir, siga estes passos:
 
 1.  Faça um *fork* deste repositório.
-2.  Crie uma *branch* para a sua funcionalidade (`git checkout -b feature/minha-funcionalidade`).
-3.  Faça *commit* das suas mudanças (`git commit -am 'Adiciona funcionalidade X'`).
-4.  Faça *push* para a *branch* (`git push origin feature/minha-funcionalidade`).
+2.  Crie uma *branch* para a sua funcionalidade (`git checkout -b feature/meu-feitico`).
+3.  Faça *commit* das suas mudanças (`git commit -am 'Adiciona o feitiço X'`).
+4.  Faça *push* para a *branch* (`git push origin feature/meu-feitico`).
 5.  Abra um *Pull Request*.
 
 ## 📝 Licença
@@ -166,5 +168,5 @@ Este projeto está sob a licença MIT – veja o arquivo [LICENSE.md](LICENSE.md
 
 ---
 
-**Desenvolvido com 🩸, 😅 e muito ☕ por um fã de Mortal Kombat!**
-**Kombat com K é mais divertido!**
+**Desenvolvido com ⚡️, ✨ e muito 🧪 por fãs de Harry Potter!**
+**Lumos Máxima!**
