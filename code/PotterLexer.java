@@ -1,3 +1,5 @@
+// File: PotterLexer.java
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,32 +8,31 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AnalisadorLexicoPotter {
+public class PotterLexer {
 
-    private String codigoFonte;
-    private int posicao;
-    private int linha;
-    private int coluna;
+    private String sourceCode;
+    private int position;
+    private int line;
+    private int column;
 
-    public AnalisadorLexicoPotter(String codigoFonte) {
-        this.codigoFonte = codigoFonte;
-        this.posicao = 0;
-        this.linha = 1;
-        this.coluna = 1;
+    public PotterLexer(String sourceCode) {
+        this.sourceCode = sourceCode;
+        this.position = 0;
+        this.line = 1;
+        this.column = 1;
     }
 
-    public List<Token> analisar() throws LexerException {
+    public List<Token> tokenize() throws LexerException {
         List<Token> tokens = new ArrayList<>();
         Token token;
 
-        while ((token = proximoToken()) != null) {
+        while ((token = nextToken()) != null) {
             tokens.add(token);
         }
 
         return tokens;
     }
-    
-    //Função para verificar se a string é um número
+
     private boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
@@ -41,165 +42,165 @@ public class AnalisadorLexicoPotter {
         }
     }
 
-    private Token proximoToken() throws LexerException {
-        ignorarEspacosEmBrancoEComentarios();
+    private Token nextToken() throws LexerException {
+        skipWhitespaceAndComments();
 
-        if (posicao >= codigoFonte.length()) {
-            return null; // Fim do código fonte
+        if (position >= sourceCode.length()) {
+            return null; // End of source code
         }
 
-        // Tentativa de casamento com os padrões de token
-        for (TipoToken tipo : TipoToken.values()) {
-            Pattern padrao = Pattern.compile(tipo.getRegex());
-            Matcher matcher = padrao.matcher(codigoFonte.substring(posicao));
+        // Attempt to match token patterns
+        for (TokenType type : TokenType.values()) { // TokenType em inglês
+            Pattern pattern = Pattern.compile(type.getRegex());
+            Matcher matcher = pattern.matcher(sourceCode.substring(position));
 
             if (matcher.find()) {
-                String lexema = matcher.group();
-                Token token = new Token(tipo, lexema, linha, coluna);
+                String lexeme = matcher.group();
+                Token token = new Token(type, lexeme, line, column);
 
-                //Ajuste da posição, linha e coluna
-                int tamanhoLexema = lexema.length();
-                posicao += tamanhoLexema;
-                coluna += tamanhoLexema;
+                // Adjust position, line, and column
+                int lexemeLength = lexeme.length();
+                position += lexemeLength;
+                column += lexemeLength;
 
-                //Tratamento para palavras-chave
-                if (tipo == TipoToken.IDENTIFICADOR) {
-                    if (lexema.equals("magia")) {
-                        token = new Token(TipoToken.MAGIA, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("fim_magia")) {
-                        token = new Token(TipoToken.FIM_MAGIA, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("feitico")) {
-                        token = new Token(TipoToken.FEITICO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("fim_feitico")) {
-                        token = new Token(TipoToken.FIM_FEITICO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("retorna")) {
-                        token = new Token(TipoToken.RETORNA, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("inteiro")) {
-                        token = new Token(TipoToken.INTEIRO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("decimal")) {
-                        token = new Token(TipoToken.DECIMAL, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("texto")) {
-                        token = new Token(TipoToken.TEXTO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("booleano")) {
-                        token = new Token(TipoToken.BOOLEANO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("revelio")) {
-                        token = new Token(TipoToken.REVELIO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("protego")) {
-                        token = new Token(TipoToken.PROTEGO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("colloportus")) {
-                        token = new Token(TipoToken.COLLOPORTUS, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("geminio")) {
-                        token = new Token(TipoToken.GEMINIO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("incendio")) {
-                        token = new Token(TipoToken.INCENDIO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("lumus")) {
-                        token = new Token(TipoToken.LUMUS, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("accio")) {
-                        token = new Token(TipoToken.ACCIO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("e")) {
-                        token = new Token(TipoToken.E, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("ou")) {
-                        token = new Token(TipoToken.OU, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("nao")) {
-                        token = new Token(TipoToken.NAO, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("atribui")) {
-                        token = new Token(TipoToken.ATRIBUI, lexema, linha, coluna - tamanhoLexema);
-                    } else if (lexema.equals("verdadeiro") ) {
-                        token = new Token(TipoToken.BOOLEANO, lexema, linha, coluna - tamanhoLexema, true);
+                // Handling for keywords (using PotterScript keywords)
+                if (type == TokenType.IDENTIFIER) { // TokenType em inglês
+                    if (lexeme.equals("magia")) {
+                        token = new Token(TokenType.MAGIA, lexeme, line, column - lexemeLength); // TokenType em inglês
+                    } else if (lexeme.equals("fim_magia")) {
+                        token = new Token(TokenType.FIM_MAGIA, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("feitico")) {
+                        token = new Token(TokenType.FEITICO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("fim_feitico")) {
+                        token = new Token(TokenType.FIM_FEITICO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("retorna")) {
+                        token = new Token(TokenType.RETORNA, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("inteiro")) {
+                        token = new Token(TokenType.INTEIRO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("decimal")) {
+                        token = new Token(TokenType.DECIMAL, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("texto")) {
+                        token = new Token(TokenType.TEXTO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("booleano")) {
+                        token = new Token(TokenType.BOOLEANO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("revelio")) {
+                        token = new Token(TokenType.REVELIO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("protego")) {
+                        token = new Token(TokenType.PROTEGO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("colloportus")) {
+                        token = new Token(TokenType.COLLOPORTUS, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("geminio")) {
+                        token = new Token(TokenType.GEMINIO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("incendio")) {
+                        token = new Token(TokenType.INCENDIO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("lumus")) {
+                        token = new Token(TokenType.LUMUS, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("accio")) {
+                        token = new Token(TokenType.ACCIO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("e")) {
+                        token = new Token(TokenType.E, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("ou")) {
+                        token = new Token(TokenType.OU, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("nao")) {
+                        token = new Token(TokenType.NAO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("atribui")) {
+                        token = new Token(TokenType.ATRIBUI, lexeme, line, column - lexemeLength);
+                    }  else if (lexeme.equals("verdadeiro") ) {
+                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength, true); //TokenType em inglês
                     }
-                    else if (lexema.equals("falso")) {
-                        token = new Token(TipoToken.BOOLEANO, lexema, linha, coluna - tamanhoLexema, false);
+                    else if (lexeme.equals("falso")) {
+                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength, false);//TokenType em inglês
                     }
+
                 }
-                else if (tipo == TipoToken.NUMERO)
+                else if(type == TokenType.NUMBER) //TokenType em inglês
                 {
-                    //Verifica se é inteiro ou decimal
-                    if(!lexema.contains(".")){
-                        token = new Token(TipoToken.INTEIRO, lexema, linha, coluna - tamanhoLexema, Integer.parseInt(lexema));
+                    if(!lexeme.contains(".")){
+                        token = new Token(TokenType.INTEIRO, lexeme, line, column - lexemeLength, Integer.parseInt(lexeme));
                     }
                     else{
-                        token = new Token(TipoToken.DECIMAL, lexema, linha, coluna - tamanhoLexema, Double.parseDouble(lexema));
+                        token = new Token(TokenType.DECIMAL, lexeme, line, column - lexemeLength, Double.parseDouble(lexeme));
                     }
                 }
-                else if(tipo == TipoToken.STRING){
-                    token = new Token(TipoToken.TEXTO, lexema.substring(1, lexema.length() -1), linha, coluna - tamanhoLexema);
+                else if(type == TokenType.STRING){ //TokenType em inglês
+                    token = new Token(TokenType.TEXTO, lexeme.substring(1, lexeme.length() -1), line, column - lexemeLength);
                 }
 
                 return token;
             }
         }
 
-        // Se chegou aqui, é porque encontrou um caractere inválido
-        throw new LexerException("Caractere inválido '" + codigoFonte.charAt(posicao) + "' na linha " + linha + ", coluna " + coluna);
+        // If it got here, it's because it found an invalid character
+        throw new LexerException("Invalid character '" + sourceCode.charAt(position) + "' at line " + line + ", column " + column);
     }
 
-    private void ignorarEspacosEmBrancoEComentarios() {
-        while (posicao < codigoFonte.length()) {
-            char c = codigoFonte.charAt(posicao);
+    private void skipWhitespaceAndComments() {
+        while (position < sourceCode.length()) {
+            char c = sourceCode.charAt(position);
 
-            // Ignora espaços em branco, tabulações e quebras de linha
+            // Ignore whitespace, tabs, and newlines
             if (Character.isWhitespace(c)) {
                 if (c == '\n') {
-                    linha++;
-                    coluna = 1;
+                    line++;
+                    column = 1;
                 } else {
-                    coluna++;
+                    column++;
                 }
-                posicao++;
+                position++;
                 continue;
             }
 
-            // Ignora comentários de linha (//)
-            if (c == '/' && posicao + 1 < codigoFonte.length() && codigoFonte.charAt(posicao + 1) == '/') {
-                while (posicao < codigoFonte.length() && codigoFonte.charAt(posicao) != '\n') {
-                    posicao++;
+            // Ignore single-line comments (//)
+            if (c == '/' && position + 1 < sourceCode.length() && sourceCode.charAt(position + 1) == '/') {
+                while (position < sourceCode.length() && sourceCode.charAt(position) != '\n') {
+                    position++;
                 }
                 continue;
             }
 
-            // Ignora comentários de bloco (/* ... */)
-            if (c == '/' && posicao + 1 < codigoFonte.length() && codigoFonte.charAt(posicao + 1) == '*') {
-                posicao += 2; // Avança os caracteres "/*"
-                while (posicao + 1 < codigoFonte.length()) {
-                    if (codigoFonte.charAt(posicao) == '*' && codigoFonte.charAt(posicao + 1) == '/') {
-                        posicao += 2; // Avança os caracteres "*/"
+            // Ignore block comments (/* ... */)
+            if (c == '/' && position + 1 < sourceCode.length() && sourceCode.charAt(position + 1) == '*') {
+                position += 2; // Advance past "/*"
+                while (position + 1 < sourceCode.length()) {
+                    if (sourceCode.charAt(position) == '*' && sourceCode.charAt(position + 1) == '/') {
+                        position += 2; // Advance past "*/"
                         break;
-                    } else if (codigoFonte.charAt(posicao) == '\n') {
-                        linha++;
-                        coluna = 1;
+                    } else if (sourceCode.charAt(position) == '\n') {
+                        line++;
+                        column = 1;
                     } else {
-                        coluna++;
+                        column++;
                     }
-                    posicao++;
+                    position++;
                 }
                 continue;
             }
 
-            break; // Se não for espaço em branco nem comentário, sai do loop
+            break; // If not whitespace or comment, exit loop
         }
     }
 
-    public static void main(String[] args) {
-        // Exemplo de uso
-        String codigoFonte = """
+     public static void main(String[] args) {
+        // Example usage
+        String sourceCode = """
             magia Exemplo
                 inteiro vida atribui 100;
                 texto nome atribui "Harry Potter";
-                // Comentário de linha
+                // Line comment
                 /*
-                 Comentário
-                 de bloco
+                 Block
+                 comment
                 */
                 lumus("Olá, " + nome + "! Sua vida é: " + vida);
                 
                 /*
-                Vamos testar as novas funcionalidades
+                Let's test the new features
                 */
                 
                 //geminio, incendio, etc
                 
                 geminio(vida > 50){
-                    lumus("Você ainda tem bastante vida");
+                    lumus("You still have a lot of life");
                 }
                 
                 
@@ -207,8 +208,8 @@ public class AnalisadorLexicoPotter {
             """;
 
         try {
-            AnalisadorLexicoPotter lexer = new AnalisadorLexicoPotter(codigoFonte);
-            List<Token> tokens = lexer.analisar();
+            PotterLexer lexer = new PotterLexer(sourceCode);
+            List<Token> tokens = lexer.tokenize();
 
             for (Token token : tokens) {
                 System.out.println(token);
@@ -216,120 +217,5 @@ public class AnalisadorLexicoPotter {
         } catch (LexerException e) {
             System.err.println(e.getMessage());
         }
-    }
-}
-
-// Classe Token
-class Token {
-    private TipoToken tipo;
-    private String lexema;
-    private int linha;
-    private int coluna;
-    private Object valor; // Adicionado para armazenar valor numérico, string, etc.
-
-    public Token(TipoToken tipo, String lexema, int linha, int coluna) {
-        this.tipo = tipo;
-        this.lexema = lexema;
-        this.linha = linha;
-        this.coluna = coluna;
-        this.valor = null; // Valor padrão é null
-    }
-    public Token(TipoToken tipo, String lexema, int linha, int coluna, Object valor) {
-        this.tipo = tipo;
-        this.lexema = lexema;
-        this.linha = linha;
-        this.coluna = coluna;
-        this.valor = valor; // Atribui um valor
-    }
-
-    public TipoToken getTipo() {
-        return tipo;
-    }
-
-    public String getLexema() {
-        return lexema;
-    }
-
-    public int getLinha() {
-        return linha;
-    }
-
-    public int getColuna() {
-        return coluna;
-    }
-    public Object getValor() {
-        return valor;
-    }
-
-    @Override
-    public String toString() {
-        return "<" + tipo + ", '" + lexema + "', " + linha + ":" + coluna + ">" + (valor != null ? " Valor: " + valor : "");
-    }
-}
-
-// Enum para os tipos de token
-enum TipoToken {
-    // Palavras-chave
-    MAGIA("magia"),
-    FIM_MAGIA("fim_magia"),
-    FEITICO("feitico"),
-    FIM_FEITICO("fim_feitico"),
-    RETORNA("retorna"),
-    INTEIRO("inteiro"),
-    DECIMAL("decimal"),
-    TEXTO("texto"),
-    BOOLEANO("booleano"),
-    REVELIO("revelio"),
-    PROTEGO("protego"),
-    COLLOPORTUS("colloportus"),
-    GEMINIO("geminio"),
-    INCENDIO("incendio"),
-    LUMUS("lumus"),
-    ACCIO("accio"),
-    E("e"),
-    OU("ou"),
-    NAO("nao"),
-    ATRIBUI("atribui"),
-
-
-    // Identificador e literais
-    IDENTIFICADOR("[a-zA-Z_][a-zA-Z0-9_]*"),
-    NUMERO("[0-9]+(\\.[0-9]+)?"), // Inteiro ou decimal
-    STRING("\"[^\"]*\""),
-
-    // Operadores e pontuação
-    MAIS("\\+"),
-    MENOS("-"),
-    VEZES("\\*"),
-    DIVIDE("/"),
-    IGUAL("=="),
-    DIFERENTE("!="),
-    MAIOR(">"),
-    MENOR("<"),
-    MAIOR_IGUAL(">="),
-    MENOR_IGUAL("<="),
-    PONTO_E_VIRGULA(";"),
-    VIRGULA(","),
-    PARENTESES_ESQ("\\("),
-    PARENTESES_DIR("\\)"),
-    CHAVES_ESQ("\\{"),
-    CHAVES_DIR("\\}");
-
-
-    private final String regex;
-
-    TipoToken(String regex) {
-        this.regex = regex;
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-}
-
-// Exceção para erros léxicos
-class LexerException extends Exception {
-    public LexerException(String message) {
-        super(message);
     }
 }
