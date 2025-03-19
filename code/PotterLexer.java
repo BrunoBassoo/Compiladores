@@ -50,7 +50,7 @@ public class PotterLexer {
         }
 
         // Attempt to match token patterns
-        for (TokenType type : TokenType.values()) { // TokenType em inglês
+        for (TokenType type : TokenType.values()) {
             Pattern pattern = Pattern.compile(type.getRegex());
             Matcher matcher = pattern.matcher(sourceCode.substring(position));
 
@@ -64,25 +64,25 @@ public class PotterLexer {
                 column += lexemeLength;
 
                 // Handling for keywords (using PotterScript keywords)
-                if (type == TokenType.IDENTIFIER) { // TokenType em inglês
-                    if (lexeme.equals("magia")) {
-                        token = new Token(TokenType.MAGIA, lexeme, line, column - lexemeLength); // TokenType em inglês
-                    } else if (lexeme.equals("fim_magia")) {
-                        token = new Token(TokenType.FIM_MAGIA, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("feitico")) {
-                        token = new Token(TokenType.FEITICO, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("fim_feitico")) {
-                        token = new Token(TokenType.FIM_FEITICO, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("retorna")) {
-                        token = new Token(TokenType.RETORNA, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("inteiro")) {
-                        token = new Token(TokenType.INTEIRO, lexeme, line, column - lexemeLength);
+                if (type == TokenType.IDENTIFIER) {
+                    if (lexeme.equals("magic")) {
+                        token = new Token(TokenType.MAGIC, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("endmagic")) {
+                        token = new Token(TokenType.END_MAGIC, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("spell")) {
+                        token = new Token(TokenType.SPELL, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("endspell")) {
+                        token = new Token(TokenType.END_SPELL, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("return")) {
+                        token = new Token(TokenType.RETURN, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("integer")) {
+                        token = new Token(TokenType.INTEGER, lexeme, line, column - lexemeLength);
                     } else if (lexeme.equals("decimal")) {
                         token = new Token(TokenType.DECIMAL, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("texto")) {
-                        token = new Token(TokenType.TEXTO, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("booleano")) {
-                        token = new Token(TokenType.BOOLEANO, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("string")) {
+                        token = new Token(TokenType.STRING, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("boolean")) {
+                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength);
                     } else if (lexeme.equals("revelio")) {
                         token = new Token(TokenType.REVELIO, lexeme, line, column - lexemeLength);
                     } else if (lexeme.equals("protego")) {
@@ -97,33 +97,32 @@ public class PotterLexer {
                         token = new Token(TokenType.LUMUS, lexeme, line, column - lexemeLength);
                     } else if (lexeme.equals("accio")) {
                         token = new Token(TokenType.ACCIO, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("e")) {
-                        token = new Token(TokenType.E, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("ou")) {
-                        token = new Token(TokenType.OU, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("nao")) {
-                        token = new Token(TokenType.NAO, lexeme, line, column - lexemeLength);
-                    } else if (lexeme.equals("atribui")) {
-                        token = new Token(TokenType.ATRIBUI, lexeme, line, column - lexemeLength);
-                    }  else if (lexeme.equals("verdadeiro") ) {
-                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength, true); //TokenType em inglês
+                    } else if (lexeme.equals("and")) {
+                        token = new Token(TokenType.AND, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("or")) {
+                        token = new Token(TokenType.OR, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("not")) {
+                        token = new Token(TokenType.NOT, lexeme, line, column - lexemeLength);
+                    } else if (lexeme.equals("assign")) {
+                        token = new Token(TokenType.ASSIGN, lexeme, line, column - lexemeLength);
+                    }  else if (lexeme.equals("true") ) {
+                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength, true);
                     }
-                    else if (lexeme.equals("falso")) {
-                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength, false);//TokenType em inglês
+                    else if (lexeme.equals("false")) {
+                        token = new Token(TokenType.BOOLEAN, lexeme, line, column - lexemeLength, false);
                     }
-
                 }
-                else if(type == TokenType.NUMBER) //TokenType em inglês
+                else if(type == TokenType.NUMBER)
                 {
                     if(!lexeme.contains(".")){
-                        token = new Token(TokenType.INTEIRO, lexeme, line, column - lexemeLength, Integer.parseInt(lexeme));
+                        token = new Token(TokenType.INTEGER, lexeme, line, column - lexemeLength, Integer.parseInt(lexeme));
                     }
                     else{
                         token = new Token(TokenType.DECIMAL, lexeme, line, column - lexemeLength, Double.parseDouble(lexeme));
                     }
                 }
-                else if(type == TokenType.STRING){ //TokenType em inglês
-                    token = new Token(TokenType.TEXTO, lexeme.substring(1, lexeme.length() -1), line, column - lexemeLength);
+                else if(type == TokenType.LITERAL_STRING){
+                    token = new Token(TokenType.STRING, lexeme.substring(1, lexeme.length() -1), line, column - lexemeLength); //Keep using STRING
                 }
 
                 return token;
@@ -180,31 +179,36 @@ public class PotterLexer {
         }
     }
 
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         // Example usage
         String sourceCode = """
-            magia Exemplo
-                inteiro vida atribui 100;
-                texto nome atribui "Harry Potter";
+            magic Exemplo
+                integer vida assign 100;
+                string nome assign "Harry Potter";
+                boolean teste assign true;
                 // Line comment
                 /*
                  Block
                  comment
                 */
                 lumus("Olá, " + nome + "! Sua vida é: " + vida);
-                
+
                 /*
                 Let's test the new features
                 */
-                
+
                 //geminio, incendio, etc
-                
+
                 geminio(vida > 50){
                     lumus("You still have a lot of life");
                 }
-                
-                
-            fim_magia
+
+                revelio(teste){
+                    lumus("O valor booleano é verdadeiro");
+                }
+
+
+            endmagic
             """;
 
         try {
