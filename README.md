@@ -15,56 +15,49 @@ Já imaginou controlar o fluxo do seu código com um *Accio* ou um *Alohomora*? 
 
 ## ✨ Características Principais
 
-*   **Sintaxe Mágica:** Palavras-chave inspiradas em Harry Potter (veja a lista completa abaixo).
+*   **Sintaxe:** Palavras-chave inspiradas em Harry Potter (veja a lista completa abaixo).
 *   **Propósito Geral:** Crie programas para qualquer finalidade, não apenas para simular feitiços!
-*   **Tipos de Dados Básicos:** `integer`, `decimal`, `string`, `boolean`.
-*   **Estruturas de Controle:** Condicionais (`revelio`, `colloportus`, `protego`) e laços (`geminio`, `incendio`).
-*   **Funções:** Crie suas próprias funções (feitiços!) e use funções mágicas pré-definidas (veja abaixo).
+*   **Tipos de Dados Básicos:** `int`, `dec`, `str`, `boolean`.
+*   **Estruturas de Controle:** Condicionais (`incendio`, `deflexio`, `protego`) e laços (`accio`, `crucio`).
+*   **Funções:** Crie suas próprias funções (feitiços!) e use funções pré-definidas (veja abaixo).
 *   **Comentários:** Use `//` para comentários de linha e `/* ... */` para blocos de comentário.
 *   **Fácil de Aprender:** Se você já conhece outras linguagens, vai tirar de letra (ou melhor, de varinha!).
 *   **Em Desenvolvimento:** A linguagem está sempre evoluindo. Novos feitiços serão adicionados em breve!
 
-## ⌨️ Palavras-chave
+## ⌨️ Palavras Reservadas
 
 Categoria | Palavra-chave | Descrição
 --------- | ------------- | -----------
 Declaração | `magic` ... `endmagic` | Delimita o início e o fim do programa.
-Tipos de Dados | `integer` | Números inteiros.
- | `decimal` | Números de ponto flutuante.
- | `string` | Strings (cadeias de caracteres).
- | `boolean` | Valores lógicos (`true` ou `false`).
-Condicional | `revelio` | Equivalente a `if`.
- | `protego` | Equivalente a `else if`.
- | `colloportus` | Equivalente a `else`.
-Laços | `geminio` | Equivalente a `while`.
- | `incendio` | Equivalente a `for`.
+Tipos de Dados | `int` | Números inteiros.
+ㅤ| `dec` | Números de ponto flutuante.
+ㅤ| `str` | Strings (cadeias de caracteres).
+ㅤ| `boolean` | Valores lógicos (`true` ou `false`).
+ㅤ| `deletrius` | Valores NULL.
+Controle de Fluxo | `incendio` | Equivalente a `if`.
+ㅤ| `deflexio` | Equivalente a `else if`.
+ㅤ| `protego` | Equivalente a `else`.
+ㅤ| `alohomora` | Equivalente a `switch`.
+ㅤ| `door` | Equivalente a `case`.
+ㅤ| `avadakedavra` | Equivalente a `break`.
+ㅤ| `relashio` | Equivalente a `continue`.
+ㅤ| `accio` | Equivalente a `for`.
+ㅤ| `crucio` | Equivalente a `while`.
 Funções | `spell` ... `endspell` | Define uma função.
- | `return` | Retorna um valor de uma função.
-Entrada/Saída | `lumus` | Exibe mensagens na tela (equivalente a `print`).
- | `nox` | Usada com `lumus` para criar efeitos.
- | `accio` | Lê entrada do usuário (equivalente a `input`).
+ㅤ| `finite` | Equivalente a `return`.
+Entrada/Saída | `revelio` | Exibe mensagens na tela (equivalente a `print`).
+ㅤ| `legilimens` | Lê entrada do usuário (equivalente a `input`).
 Outros | `and` | Operador lógico "E".
- | `or` | Operador lógico "OU".
- | `not` | Operador lógico "NÃO".
-Variados| `assign` | Atribui valor à variável.
+ㅤ| `or` | Operador lógico "OU".
+ㅤ| `not` | Operador lógico "NÃO".
 
-## 🧙 Funções Mágicas Pré-definidas
+## 🧙 Funções Pré-definidas
 
 Função | Descrição | Exemplo
 ------- | -------- | -------
-`avada_kedavra()` | 💀 Encerra o programa imediatamente. | `avada_kedavra();`
-`expelliarmus([nome_variavel])` | 💥 "Desarma" uma variável (torna-a indefinida). | `expelliarmus(varinha);`
 `reparo([tempo_ms])` | ⏳ "Conserta" o tempo, atrasando a execução (em milissegundos). |  `reparo(2000)`
 `obliviate()` | 💫 Limpa a tela. | `obliviate();`
-`alohomora(alvo, [separador], [parte])` | 🔑 "Abre" uma string, dividindo-a em partes. | `string[] partes = alohomora("Expecto Patronum", " ");`
-`diffindo(var1, var2, ...)` | ✂️ Troca os valores de duas ou mais variáveis. | `diffindo(nome, sobrenome);`
-`lumus_maxima([mensagem])` | 🔦 Exibe uma mensagem com efeito "flash" ou apenas simula o flash. | `lumus_maxima("Lumos Maxima!");`
-`aparecium(texto, [separador], [parte])` | 🪶 Revela as partes de uma *string*, dividindo-a por um separador. | `string[] segredos = aparecium("Segredos de Dumbledore", " ");`
-`legilimens(origem, destino)` |🧠 Copia o valor da variável de *origem* para a variável de *destino*. | `legilimens(senhaAntiga, senhaNova);`
-`priori_incantatem(variavel, novo_valor)` | 🪄 Tenta converter o valor de uma variável para o tipo de `novo_valor`. | `priori_incantatem(idade, "25");`
-`riddikulus([mensagem])` | 😂 Exibe uma mensagem na parte inferior da tela, como uma "resposta engraçada". | `riddikulus("Bicho-papão!");`
 `imperius(mensagem)` | 🗣️ Lança um erro com a `mensagem` personalizada, interrompendo o programa. | `imperius("Você não tem permissão!");`
-`crucio(comando)` | 😫 Executa um comando do sistema operacional. *Use com extrema cautela e responsabilidade!* | `crucio("ls -l");` (Linux/macOS)
 
 ## 🚀 Exemplos de Código
 
@@ -72,77 +65,46 @@ Função | Descrição | Exemplo
 
 ```potterscript
 magic OlaMundoBruxo
-    lumus("Olá, Mundo Bruxo!");
+    revelio("Olá, Mundo Bruxo!");
 endmagic
-
-
-Calculadora Mágica:
-
-magic CalculadoraMagica
-
-spell somar(integer a, integer b) return integer {
-    return a + b;
-} endspell
-
-spell subtrair(integer a, integer b) return integer {
-    return a - b;
-} endspell
-
-integer main() {
-    integer x;
-    integer y;
-    string operacao;
-
-    lumus("Escolha sua operação: somar ou subtrair?");
-    accio(operacao);
-
-    lumus("Digite o primeiro número:");
-    accio(x);
-
-    lumus("Digite o segundo número:");
-    accio(y);
-
-    revelio (operacao == "somar") {
-        lumus("O resultado é: " + somar(x, y));
-    } protego (operacao == "subtrair") {
-        lumus("O resultado é: " + subtrair(x,y));
-    } colloportus {
-        lumus("Operação inválida!");
-    }
-     return 0;
-} endmagic
 ```
-
-**Usando Funções Mágicas:**
 
 ```potterscript
-magic FeiticosDivertidos
+magic CalculadoraMagica
 
-integer main(){
-    string frase = "Expecto Patronum!";
-    string[] partes;
+spell somar(int a, int b) finite int {
+    finite a + b;
+} endspell
 
-    lumus_maxima("Lumos Maxima!");  // Flash de luz
-    reparo(1000);                   // Espera 1 segundo
+spell subtrair(int a, int b) finite int {
+    finite a - b;
+} endspell
 
-    partes = alohomora(frase, " ");    // Divide a frase
-    lumus(partes[0]);                  // Imprime "Expecto"
-    lumus(partes[1]);                  // Imprime "Patronum!"
+int main() {
+    int x;
+    int y;
+    str operacao;
 
-    riddikulus("Bicho-papão virou aranha de patins!"); // Mensagem na parte inferior
+    revelio("Escolha sua operação: somar ou subtrair?");
+    legilimens(operacao);
 
-     return 0;
-}endmagic
+    revelio("Digite o primeiro número:");
+    legilimens(x);
+
+    revelio("Digite o segundo número:");
+    legilimens(y);
+
+    incendio (operacao == "somar") {
+        revelio("O resultado é: " + somar(x, y));
+    } deflexio (operacao == "subtrair") {
+        revelio("O resultado é: " + subtrair(x,y));
+    } protego {
+        revelio("Operação inválida!");
+    }
+     finite 0;
+
+} endmagic
 ```
-
-**Funções Auxiliares:**
-
-Função | Descrição
------- | --------
-tamanho_texto | Retorna o tamanho do texto
-caractere_em | Retorna o caractere em uma determinada posição
-texto_para_inteiro | Converte um texto para inteiro
-inteiro_para_texto | Converte um inteiro para texto
 
 ## 🛠️ Como Compilar e Executar
 
@@ -160,10 +122,6 @@ Este é um projeto de código aberto! Se você quiser contribuir, siga estes pas
 3.  Faça *commit* das suas mudanças (`git commit -am 'Adiciona o feitiço X'`).
 4.  Faça *push* para a *branch* (`git push origin feature/meu-feitico`).
 5.  Abra um *Pull Request*.
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT – veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
 
 ---
 
