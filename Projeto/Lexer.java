@@ -14,6 +14,7 @@ public class Lexer {
         this.code = new StringCharacterIterator(code);
         this.afds.add(new CodeTokens());
         this.afds.add(new Number());
+        this.afds.add(new Identifier());
     }
 
     public void skipWhiteSpace(){

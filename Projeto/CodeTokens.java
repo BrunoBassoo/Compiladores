@@ -40,6 +40,9 @@ public class CodeTokens extends AFD {
             case '!':
                 code.next();
                 return new Token(TokenType.EXCLAMATION_MARK, "!");
+            case '=':
+                code.next();
+                return new Token(TokenType.EQUAL, "=");
             case '"':
                 code.next();
                 return new Token(TokenType.DOUBLE_QUOTES, "\"");
