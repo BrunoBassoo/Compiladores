@@ -1,5 +1,5 @@
 enum TokenType {
-    // Keywords (PotterScript keywords remain in Portuguese)
+    // Keywords (PotterScript keywords remain in Portuguese, but changed the reserved words in the last commit)
     MAGIC("magic"),
     END_MAGIC("endmagic"),
     SPELL("spell"),
