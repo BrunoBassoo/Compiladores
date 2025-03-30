@@ -38,8 +38,6 @@ public class Main {
         tokens.add(new Token(TokenType.EQUAL,"="));
         tokens.add(new Token(TokenType.NUMBER,"3"));
         tokens.add(new Token(TokenType.SEMICOLON, ";"));
-        // tokens.add(new Token(TokenType.EOF, "$"));
-
 
         // IF + CONDICAO
 
@@ -52,7 +50,7 @@ public class Main {
 
         // EXPRESSAO
 
-        tokens.add(new Token(TokenType.RIGHT_BRACE, "{"));
+        tokens.add(new Token(TokenType.LEFT_BRACE, "{"));
         tokens.add(new Token(TokenType.IDENTIFIER, "x"));
         tokens.add(new Token(TokenType.EQUAL, "="));
         tokens.add(new Token(TokenType.NUMBER,"10"));
