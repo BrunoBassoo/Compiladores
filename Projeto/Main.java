@@ -4,17 +4,20 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<Token> tokens = new ArrayList<>(); // = null
+        List<Token> tokens1 = null; // = null
 
         // ------------------------------------------------------ //
-        // ANALISADOR LEXICO //
+        System.out.println("---------------------");
+        System.out.println("ANALISADOR LEXICO\n");
 
-        // String data = "int x = 7; incendio(){revelio(oi)}";
-        // Lexer lexer = new Lexer(data);
-        // tokens = lexer.getTokens();
-        // for(Token token : tokens) {
-        //     System.out.println(token);
-        // }
+        String data = "int x = 3;incendio(amigo > 3){x = 10;}protego{x = 0;}";
+        Lexer lexer = new Lexer(data);
+        tokens1 = lexer.getTokens();
+        for(Token token : tokens1) {
+            System.out.println(token);
+        }
+        System.out.println("\nTUDO CERTO!");
+        System.out.println("---------------------\n");
 
         // ------------------------------------------------------ //
 
@@ -24,38 +27,44 @@ public class Main {
 
         // List<Token> tokens = new ArrayList<>();
 
-        // CODIGO ESPERADO: incendio(x > 3){arroz=10;}protego{arroz=0;}
+        // CODIGO ESPERADO: int x = 3;incendio(x > 3){arroz=10;}protego{arroz=0;}
 
-        // IF
+        List<Token> tokens =  new ArrayList<>();
+
+        // CRIAR VARIAVEL INTEIRO
+
+        tokens.add(new Token(TokenType.INT,"int"));
+        tokens.add(new Token(TokenType.IDENTIFIER, "x"));
+        tokens.add(new Token(TokenType.EQUAL,"="));
+        tokens.add(new Token(TokenType.NUMBER,"3"));
+        tokens.add(new Token(TokenType.SEMICOLON, ";"));
+        // tokens.add(new Token(TokenType.EOF, "$"));
+
+
+        // IF + CONDICAO
 
         tokens.add(new Token(TokenType.INCENDIO,"incendio"));
-
-        // CONDICAO
-
         tokens.add(new Token(TokenType.LEFT_PAREN,"("));
-        tokens.add(new Token(TokenType.IDENTIFIER, "amigao"));
+        tokens.add(new Token(TokenType.IDENTIFIER, "amigo"));
         tokens.add(new Token(TokenType.GREATER,">"));
         tokens.add(new Token(TokenType.NUMBER,"3"));
         tokens.add(new Token(TokenType.RIGHT_PAREN, ")"));
 
-        // EXPRESSAP
+        // EXPRESSAO
 
         tokens.add(new Token(TokenType.RIGHT_BRACE, "{"));
-        tokens.add(new Token(TokenType.IDENTIFIER, "arroz"));
+        tokens.add(new Token(TokenType.IDENTIFIER, "x"));
         tokens.add(new Token(TokenType.EQUAL, "="));
         tokens.add(new Token(TokenType.NUMBER,"10"));
         tokens.add(new Token(TokenType.SEMICOLON, ";"));
         tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
 
-        // ELSE 
+        // ELSE + EXPRESSAO
 
         tokens.add(new Token(TokenType.PROTEGO, "protego"));
-
-        // OPERADOR
-
         tokens.add(new Token(TokenType.RIGHT_BRACE, "{"));
-        tokens.add(new Token(TokenType.IDENTIFIER, "arroz"));
-        tokens.add(new Token(TokenType.EQUAL, "=="));
+        tokens.add(new Token(TokenType.IDENTIFIER, "x"));
+        tokens.add(new Token(TokenType.EQUAL, "="));
         tokens.add(new Token(TokenType.NUMBER,"0"));
         tokens.add(new Token(TokenType.SEMICOLON, ";"));
         tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
@@ -64,8 +73,8 @@ public class Main {
 
         tokens.add(new Token(TokenType.EOF, "$"));
 
-        Parser parser = new Parser(tokens);
-        parser.main();
+        Parser parser1 = new Parser(tokens);
+        parser1.main();
 
         // --------------------------------------------------------- //
     }

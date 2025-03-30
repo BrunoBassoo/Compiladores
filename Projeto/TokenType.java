@@ -38,6 +38,7 @@ public enum TokenType {
     LESS_EQUAL("<="),
     SEMICOLON(";"),
     COMMA(","),
+    POINT("."),
     LEFT_PAREN("("),
     RIGHT_PAREN(")"),
     LEFT_BRACE("{"),

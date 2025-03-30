@@ -43,6 +43,12 @@ public class CodeTokens extends AFD {
             case '=':
                 code.next();
                 return new Token(TokenType.EQUAL, "=");
+            case '>':
+                code.next();
+                return new Token(TokenType.GREATER, ">");
+            case '<':
+                code.next();
+                return new Token(TokenType.LESS, "<");
             case '"':
                 code.next();
                 return new Token(TokenType.DOUBLE_QUOTES, "\"");

@@ -21,13 +21,21 @@ public class Parser {
     private void erro(String regra){
         System.out.println("Regra: " + regra);
         System.out.println("token inválido: " + token.getLexema());
+        System.out.println(token);
+        System.out.println(getNextToken());
         System.exit(0);
     }
 
     public void main(){
         token = getNextToken();
-        if (ifelse()){
-            if(token.getTipo().equals("EOF")){
+        if (INCENDIO()){
+            if(token.getTipo().equals(TokenType.EOF)){
+                System.out.println("sintaticamente correto");
+                return;
+            }
+        }
+        else if(INTEIRO()){
+            if(token.getTipo().equals(TokenType.EOF)){
                 System.out.println("sintaticamente correto");
                 return;
             }
@@ -37,11 +45,43 @@ public class Parser {
 
     // CODIGO ESPERADO: incendio(x > 3){arroz=10;}protego{arroz=0;}
 
-    public boolean ifelse(){
-        if(matchL("incendio") && 
+    // CRIAR VARIAVEL INTEIRA
+    public boolean INTEIRO(){
+        return (matchT(TokenType.INT) && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchL("=") && 
+        matchT(TokenType.NUMBER) && 
+        matchT(TokenType.SEMICOLON));
+    }
+
+    // CRIAR VARIAVEL DECIMAL (FLOAT)
+    public boolean DECIMAL(){
+        return (matchT(TokenType.DEC) && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchL("=") && 
+        matchT(TokenType.NUMBER) && 
+        matchL(".") && 
+        matchT(TokenType.NUMBER) && 
+        matchT(TokenType.SEMICOLON));
+    }
+
+    // CRIAR STRING 
+    public boolean STRING(){
+        return (matchT(TokenType.STR) && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchL("=") && 
+        matchT(TokenType.DOUBLE_QUOTES) && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchT(TokenType.DOUBLE_QUOTES) && 
+        matchT(TokenType.SEMICOLON));
+    }
+
+    // PARTE DO IF E ELSE
+    public boolean INCENDIO(){
+        if(matchT(TokenType.INCENDIO) && 
             condicao() && 
             expressao() && 
-            matchL("protego") && 
+            matchT(TokenType.PROTEGO) && 
             expressao())
             {
             return true;
@@ -49,27 +89,33 @@ public class Parser {
         return false;
     }
     
+    // PADROES ------------------------------------
     public boolean condicao(){
-        return (matchL("(") && identifier() && operador() && number() && matchL(")") &&matchT("SEMICOLON"));
-    }
-
-    public boolean identifier(){
-        return (matchT("IDENTIFIER"));
-    }
-
-    public boolean number(){
-        return (matchT("NUMBER"));
+        return (matchL("(") && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchL(">") && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchL(")") && 
+        matchT(TokenType.SEMICOLON));
     }
 
     public boolean operador(){
-        return (matchL(">") || matchL("<") || matchL("=="));
+        return (matchL(">") || 
+        matchL("<") || 
+        matchL("="));
     }
 
     public boolean expressao(){
-        return (matchL("{") && identifier() && matchL("=") && number() && matchL("}") && matchT("SEMICOLON"));
+        return (matchL("{") && 
+        matchT(TokenType.IDENTIFIER) && 
+        matchL("=") && 
+        matchT(TokenType.NUMBER) && 
+        matchT(TokenType.SEMICOLON) && 
+        matchL("}"));
     }
     
 
+    // VALIDAR VALORES -------------------------
     public boolean matchL(String lexema){
         if(token.getLexema().equals(lexema)){
             token = getNextToken();
@@ -77,7 +123,7 @@ public class Parser {
         } return false;
     }
     
-    public boolean matchT(String tipo){
+    public boolean matchT(TokenType tipo){
         if(token.getTipo().equals(tipo)){
             token = getNextToken();
             return true;
