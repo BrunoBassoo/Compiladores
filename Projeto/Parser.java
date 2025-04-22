@@ -25,14 +25,27 @@ public class Parser {
     }
 
     public void main(){
+        header();
         token = getNextToken();
         if (INTEIRO()){
             if(token.getTipo().equals(TokenType.EOF)){
                 System.out.println("sintaticamente correto");
+                sholder();
                 return;
             }
         }
         erro("main");
+    }
+
+    // CRIANDO A MAIN 
+    private void header(){
+        System.out.println("public class Code{");
+        System.out.println("public static void main(String[]agrs){")
+    }
+
+    public class sholder(){
+        System.out.println("}");
+        System.out.println("}");
     }
 
     // CRIAR VARIAVEL INTEIRA
@@ -68,7 +81,7 @@ public class Parser {
 
     // PARTE DO IF E ELSE
     public boolean INCENDIO(){
-        return(matchT(TokenType.INCENDIO) && 
+        return(matchT(TokenType.INCENDIO, "if") && 
             condicao() && 
             expressao() && 
             matchT(TokenType.PROTEGO) && 
@@ -98,11 +111,11 @@ public class Parser {
     }
 
     public boolean operador(){
-        return (matchL(">") || 
-        matchL("<") || 
-        matchL("=") ||
-        matchL("{") ||
-        matchL("}"));
+        return (matchL(">", ">") || 
+        matchL("<", "<") || 
+        matchL("=", "=") ||
+        matchL("{", "{") ||
+        matchL("}", "}"));
     }
 
     public boolean expressao(){
