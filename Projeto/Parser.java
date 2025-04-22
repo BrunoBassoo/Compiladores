@@ -25,12 +25,12 @@ public class Parser {
     }
 
     public void main(){
-        header();
+        HEADER();
         token = getNextToken();
         if (INTEIRO()){
             if(token.getTipo().equals(TokenType.EOF)){
                 System.out.println("sintaticamente correto");
-                sholder();
+                SHOLDER();
                 return;
             }
         }
@@ -38,12 +38,12 @@ public class Parser {
     }
 
     // CRIANDO A MAIN 
-    private void header(){
+    private void HEADER(){
         System.out.println("public class Code{");
         System.out.println("public static void main(String[]agrs){")
     }
 
-    public class sholder(){
+    public class SHOLDER(){
         System.out.println("}");
         System.out.println("}");
     }
