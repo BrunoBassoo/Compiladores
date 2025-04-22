@@ -53,9 +53,9 @@ public class Parser {
     public boolean INCENDIO(){
         return(matchT(TokenType.INCENDIO, "if") && 
             condicao() && 
-            expressao() && 
+            bloco() && 
             matchT(TokenType.PROTEGO) &&
-            expressao()
+            bloco()
             );
     }
     
@@ -88,7 +88,7 @@ public class Parser {
         matchL("}", "}"));
     }
 
-    public boolean expressao(){
+    public boolean bloco(){
         return (operador() && 
         identifier() && 
         operador() && 
