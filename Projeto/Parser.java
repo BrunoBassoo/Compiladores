@@ -47,44 +47,14 @@ public class Parser {
         System.out.println("}");
         System.out.println("}");
     }
-
-    // CRIAR VARIAVEL INTEIRA
-    public boolean INTEIRO(){
-        return (matchT(TokenType.INT) && 
-        matchT(TokenType.IDENTIFIER) && 
-        matchT(TokenType.EQUAL) && 
-        matchT(TokenType.NUMBER) && 
-       fim() && INCENDIO());
-    }
-
-    // CRIAR VARIAVEL DECIMAL (FLOAT)
-    public boolean DECIMAL(){
-        return (matchT(TokenType.DEC) && 
-        matchT(TokenType.IDENTIFIER) && 
-        matchL("=") && 
-        matchT(TokenType.NUMBER) && 
-        matchL(".") && 
-        matchT(TokenType.NUMBER) && 
-        fim());
-    }
-
-    // CRIAR STRING 
-    public boolean STRING(){
-        return (matchT(TokenType.STR) && 
-        matchT(TokenType.IDENTIFIER) && 
-        matchL("=") && 
-        matchT(TokenType.DOUBLE_QUOTES) && 
-        matchT(TokenType.IDENTIFIER) && 
-        matchT(TokenType.DOUBLE_QUOTES) && 
-        fim());
-    }
+    
 
     // PARTE DO IF E ELSE
     public boolean INCENDIO(){
         return(matchT(TokenType.INCENDIO, "if") && 
             condicao() && 
             expressao() && 
-            matchT(TokenType.PROTEGO) && 
+            matchT(TokenType.PROTEGO) &&
             expressao()
             );
     }
