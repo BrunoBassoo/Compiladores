@@ -129,4 +129,26 @@ public class Parser {
             return true;
         } return false;
     }
+
+    // ------- NOVO CÓDIGO AULA ------
+
+    public boolean matchL(String lexema, String newcode){
+        if(token.getLexema().equals(lexema)){
+            traduz(newcode);
+            token = getNextToken();
+            return true;
+        } return false;
+    }
+    
+    public boolean matchT(TokenType tipo, String newcode){
+        if(token.getTipo().equals(tipo)){
+            traduz(newcode);
+            token = getNextToken();
+            return true;
+        } return false;
+    }
+
+    private void traduz(String code){
+        System.out.println(code)
+    }
 }
