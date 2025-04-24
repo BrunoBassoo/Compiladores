@@ -1,0 +1,16 @@
+
+I: 'if' '(' CondicaoIf ')' '{' Bloco ';' '}' Else 
+For: 'for' CondiçãoFor Bloco
+Else: '{' A ';' '}' | '{' ELSEIF ';' '}' | e
+A: 'else if' '(' CondicaoIf ')' '{' Bloco ';' '}' A | F | e
+F: 'else' '{' Bloco '}'
+CondicaoIf: 'id' op_comparacao 'num' | 'id' op_string Str | 'id' op_comparacao 'id'
+CondiçãoFor: 'id' '=' 'num' ';' 'id' op_comparacao 'num'; 'id' op_for |  'id' '=' 'num' ';' 'id' op_comparacao 'id'; 'id'op_for
+op_comparacao -> > | >= | < | <= | == | !=
+op_string -> == | !=
+Bloco: atribuição Bloco | atribuicao Bloco | atribuicao Bloco | I |
+
+atribuição: tipo_num 'id' '=' 'num' ';' | tipo_str 'id' '=' 'str' ';' | tipo_id'id' '=' 'id' ';'
+print: 'printf' '(' '"' String '"' ')' ';'
+
+String -> 'id' String | 'id' e
