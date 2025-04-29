@@ -1,4 +1,3 @@
-
 I: 'if' '(' CondicaoIf ')' '{' Bloco ';' '}' Else 
 For: 'for' CondiçãoFor Bloco
 Else: '{' A ';' '}' | '{' ELSEIF ';' '}' | e
@@ -14,3 +13,15 @@ atribuição: tipo_num 'id' '=' 'num' ';' | tipo_str 'id' '=' 'str' ';' | tipo_i
 print: 'printf' '(' '"' String '"' ')' ';'
 
 String -> 'id' String | 'id' e
+
+
+----- EXEMPLO DE CODIGO ----- 
+incendio ( x == 3 ){
+	x = 5;
+}
+deflexio ( x > 5 ){
+	x = 0;
+}
+protego{
+	x = DELETRIUS;
+}
