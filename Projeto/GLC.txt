@@ -16,7 +16,7 @@
 + Booleano -> true | false
 + Funcao -> tipo 'id' '(' tipo 'id' ')' '{' Bloco ';' '}'
 + valor -> 'num' | 'id' | Booleano  
-+ tipo -> int | void | 
++ tipo -> int | void | float | bool | char
 
 ----- EXEMPLO DE CODIGO ----- 
 
