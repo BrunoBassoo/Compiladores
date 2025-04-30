@@ -4,17 +4,19 @@
 + Else: '{' A ';' '}' | '{' ELSEIF ';' '}' | e
 + A: 'else if' '(' CondicaoIf ')' '{' Bloco ';' '}' A | F | e
 + F: 'else' '{' Bloco '}'
-+ CondicaoIf: 'id' op_comparacao 'valor' 
-+ CondicaoFor: 'id' '=' 'valor' ';' 'id' op_comparacao 'valor'; 'id' op_for |  'id' '=' 'valor' ';' 'id' op_comparacao 'id'; 'id'op_for
-+ CondicaoWhile: 'id' op_comparacao 'valor' | Booleano
++ CondicaoIf: 'id' op_comparacao valor 
++ CondicaoFor: 'id' '=' valor ';' 'id' op_comparacao valor; 'id' op_for |  'id' '=' valor ';' 'id' op_comparacao 'id'; 'id'op_for
++ CondicaoWhile: 'id' op_comparacao valor 
 + op_comparacao -> > | >= | < | <= | == | !=
 + op_string -> == | !=
 + Bloco: atribuição Bloco | I 
-+ atribuição: 'tipo' 'id' '=' valor ';'
++ atribuição: tipo 'id' '=' valor ';'
 + print: 'printf' '(' '"' String '"' ')' ';'
 + String -> 'id' String | 'id' e
 + Booleano -> true | false
-+ Funcao -> 'tipo' 'id' '('   ';' ')' 
++ Funcao -> tipo 'id' '(' tipo 'id' ')' '{' Bloco ';' '}'
++ valor -> 'num' | 'id' | Booleano  
++ tipo -> int | void | 
 
 ----- EXEMPLO DE CODIGO ----- 
 
