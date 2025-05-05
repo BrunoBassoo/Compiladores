@@ -33,7 +33,7 @@ Tipos de Dados | `int` | Números inteiros.
 ㅤ| `dec` | Números de ponto flutuante.
 ㅤ| `str` | Strings (cadeias de caracteres).
 ㅤ| `boolean` | Valores lógicos (`true` ou `false`).
-ㅤ| `deletrius` | Valores NULL.
+ㅤ| `NULL` | Valores NULL.
 Controle de Fluxo | `incendio` | Equivalente a `if`.
 ㅤ| `deflexio` | Equivalente a `else if`.
 ㅤ| `protego` | Equivalente a `else`.
