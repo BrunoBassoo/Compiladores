@@ -1,31 +1,42 @@
-+ I: 'if' '(' CondicaoIf ')' '{' Bloco ';' '}' Else 
-+ For: 'for' '(' CondicaoFor ')' '{' Bloco ';' '}'
-+ While: 'while' '(' CondicaoWhile ')' '{' Bloco ';' '}'
-+ Else: '{' A ';' '}' | '{' ELSEIF ';' '}' | e
-+ A: 'else if' '(' CondicaoIf ')' '{' Bloco ';' '}' A | F | e
-+ F: 'else' '{' Bloco '}'
-+ CondicaoIf: 'id' op_comparacao valor 
-+ CondicaoFor: 'id' '=' valor ';' 'id' op_comparacao valor; 'id' op_for |  'id' '=' valor ';' 'id' op_comparacao 'id'; 'id'op_for
-+ CondicaoWhile: 'id' op_comparacao valor 
-+ op_comparacao -> > | >= | < | <= | == | !=
-+ op_string -> == | !=
-+ Bloco: atribuição Bloco | I 
-+ atribuição: tipo 'id' '=' valor ';'
-+ print: 'printf' '(' '"' String '"' ')' ';'
-+ String -> 'id' String | 'id' e
-+ Booleano -> true | false
-+ Funcao -> tipo 'id' '(' tipo 'id' ')' '{' Bloco ';' '}'
-+ valor -> 'num' | 'id' | Booleano  
-+ tipo -> int | void | float | bool | char
+Programa → 'magic' ListaComandos 'endmagic'
 
------ EXEMPLO DE CODIGO ----- 
+ListaComandos → Comando ListaComandos | ε
 
-incendio ( x == 3 ){
-	x = 5;
-}
-deflexio ( x > 5 ){
-	x = 0;
-}
-protego{
-	x = DELETRIUS;
-}
+Comando → Declaracao | Atribuicao | Incendio | Accio | Crucio | Alohomora | Spell | Revelio | Legilimens | 'relashio' ';' | 'avadakedavra' ';' | 'finite' Expressao ';'
+
+Declaracao → Tipo 'id' ';' | Tipo 'id' '=' Expressao ';'
+Atribuicao → 'id' '=' Expressao ';'
+
+Tipo → 'int' | 'dec' | 'str' | 'boolean'
+
+Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
+Deflexio → 'deflexio' '(' Expressao ')' '{' ListaComandos '}' Deflexio | Protego | ε
+Protego → 'protego' '{' ListaComandos '}' | ε
+
+Accio → 'accio' '(' Atribuicao Expressao ';' Atualizacao ')' '{' ListaComandos '}'
+Crucio → 'crucio' '(' Expressao ')' '{' ListaComandos '}'
+
+Atualizacao → 'id' OpFor
+OpFor → '++' | '--'
+
+Alohomora → 'alohomora' '(' 'id' ')' '{' ListaCases '}'
+ListaCases → Case ListaCases | ε
+Case → 'door' Valor ':' ListaComandos 'avadakedavra' ';'
+
+Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 'endspell'
+Parametros → Tipo 'id' ListaParametros | ε
+ListaParametros → ',' Tipo 'id' ListaParametros | ε
+
+Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
+Texto → 'id' Texto | ε
+
+Legilimens → 'legilimens' '(' ')' ';'
+
+Expressao → 'id'Expressao' | 'num'Expressao' | 'true'Expressao' | 'false'Expressao' | 'NULL'Expressao' | 'str'Expressao' | '(' Expressao ')' Expressao'
+Expressao' → OpArit Expressao Expressao' | OpComp Expressao Expressao' | OpLogico Expressao Expressao' 
+
+OpArit → '+' | '-' | '*' | '/' | '%'
+OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
+OpLogico → 'and' | 'or' | 'not'
+
+Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
