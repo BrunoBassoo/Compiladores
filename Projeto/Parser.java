@@ -39,8 +39,10 @@ public class Parser {
 
     // CRIANDO A MAIN 
     private void HEADER(){
+        System.out.println("import java.Util.Scanner");
         System.out.println("public class Code{");
-        System.out.println("public static void main(String[]agrs){")
+        System.out.println("public static void main(String[]agrs){");
+        System.out.println("val scanner = Scanner()");
     }
 
     public class SHOLDER(){
@@ -49,24 +51,14 @@ public class Parser {
     }
     
 
-    // PARTE DO IF E ELSE
+    // Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
+
     public boolean INCENDIO(){
         return(matchT(TokenType.INCENDIO, "if") && 
-            condicao() && 
-            bloco() && 
-            matchT(TokenType.PROTEGO) &&
-            bloco()
+            matchL("(")
             );
     }
     
-    // PADROES ------------------------------------
-    public boolean condicao(){
-        return(matchL("(") &&
-        identifier() &&
-        operador() &&
-        number() &&
-        matchL(")"));
-    }
 
     public boolean identifier(){
         return (matchT(TokenType.IDENTIFIER));
@@ -76,29 +68,108 @@ public class Parser {
         return (matchT(TokenType.NUMBER));
     }
 
+    public boolean string(){
+        return (matchT(TokenType.STR));
+    }
+
+    public boolean bool(){
+        return (matchT(TokenType.BOOLEAN));
+    }
+
     public boolean fim(){
         return (matchT(TokenType.SEMICOLON));
     }
 
-    public boolean operador(){
-        return (matchL(">", ">") || 
-        matchL("<", "<") || 
-        matchL("=", "=") ||
-        matchL("{", "{") ||
-        matchL("}", "}"));
+    public boolean nu(){
+        return(matchT(TokenType.NULL));
     }
 
-    public boolean bloco(){
-        return (operador() && 
-        identifier() && 
-        operador() && 
-        number() && 
-        fim() && 
-        operador());
+    // OpArit → '+' | '-' | '*' | '/' | '%'
+    public boolean operadorArit(){
+        return (matchL("+") || 
+        matchL("*") || 
+        matchL("-") ||
+        matchL("/") ||
+        matchL("%"));
     }
+
+    // OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
+    public boolean operadorComp(){
+        return (matchL("==") || 
+        matchL("!=") || 
+        matchL(">") ||
+        matchL(">=") ||
+        matchL("<") ||
+        matchL("<="));
+    }
+
+    // OpLogico → 'and' | 'or' | 'not' // VER O NOT
+    public boolean operadorLogico(){
+        return (matchL("and", "&&") || 
+        matchL("or", "||") || 
+        matchL("not", "!"));
+    }
+
+    // Texto → 'id' Texto | ε
+    public bool
+
+    // Legilimens → 'legilimens' '(' ')' ';' | 'legilimens' '(' 'str' ')' ';'
+    public boolean legilimens(){
+
+        return(matchT(TokenType.LEGILIMENS, "Scanner()") &&)
+    }
+
     
+    // Expressao → 'id''Expressao' | 'num'Expressao' | 'true'Expressao' | 'false'Expressao' | 'NULL'Expressao' | 'str'Expressao' | '(' Expressao ')' 
+    public boolean expressao(){
+        return((identifier() && expressao())
+        || (number() && expressao())
+        || (bool() && expressao())
+        || (nu() && expressao())
+        || (string() && expressao())
+        || (matchL("(") && expressao() && matchL(")"))
+        );
+    }
 
-    // VALIDAR VALORES -------------------------
+    // Expressao' → OpArit Expressao Expressao' | OpComp Expressao Expressao' | OpLogico Expressao Expressao' | ε
+    public boolean expressaoL(){
+        return((operadorArit() && expressao() && expressaoL())
+        || (operadorComp() && expressao() && expressaoL())
+        || (operadorLogico() && expressao() && expressaoL())
+        || true);
+    }
+
+    // Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
+    public boolean Valor(){
+        return (number()
+        || identifier()
+        || string()
+        || bool()
+        || nu());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // // VALIDAR VALORES -------------------------
     public boolean matchL(String lexema){
         if(token.getLexema().equals(lexema)){
             token = getNextToken();
@@ -132,6 +203,6 @@ public class Parser {
     }
 
     private void traduz(String code){
-        System.out.println(code)
+        System.out.println(code);
     }
 }
