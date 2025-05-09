@@ -37,6 +37,7 @@ public class Parser {
         erro("main");
     }
 
+
     // CRIANDO A MAIN 
     private void HEADER(){
         System.out.println("import java.Util.Scanner");
@@ -52,13 +53,42 @@ public class Parser {
     
 
     // Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
-
-    public boolean INCENDIO(){
-        return(matchT(TokenType.INCENDIO, "if") && 
-            matchL("(")
+    public boolean incendio(){
+        return(matchT(TokenType.INCENDIO, "if") 
+            && matchL("(")
+            && expressao();
+            && matchL(")");
+            && matchL("{");
+            && listaComandos();
+            && matchL("}");
+            && deflexio();
             );
     }
+
+    // Deflexio → 'deflexio' '(' Expressao ')' '{' ListaComandos '}' Deflexio | Protego | ε
+    public boolean deflexio(){
+        return((matchT(TokenType.DEFLEXIO, "else if")
+        && matchL("(")
+        && expressao();
+        && matchL(")")
+        && matchL({);
+        && listaComandos();
+        && matchL("}");
+        && deflexio();)
+        || protego();
+        || true;
+        )
+    }
     
+    // Protego → 'protego' '{' ListaComandos '}' | ε
+    public boolean protego(){
+        return((matchT(TokenType.PROTEGO, "else");
+        && matchL("{");
+        && listaComandos();
+        && matchL("}");)
+        || true;
+        )
+    }
 
     public boolean identifier(){
         return (matchT(TokenType.IDENTIFIER));
