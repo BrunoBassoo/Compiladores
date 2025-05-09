@@ -21,8 +21,8 @@ Atualizacao → 'id' OpFor
 OpFor → '++' | '--'
 
 Alohomora → 'alohomora' '(' 'id' ')' '{' ListaCases '}'
-ListaCases → Case ListaCases | ε
-Case → 'door' Valor ':' ListaComandos 'avadakedavra' ';'
+ListaCases → Cases ListaCases | ε
+Cases → 'door' Valor ':' ListaComandos 'avadakedavra' ';'
 
 Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 'endspell'
 Parametros → Tipo 'id' ListaParametros | ε
