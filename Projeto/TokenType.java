@@ -23,7 +23,7 @@ public enum TokenType {
     AND("and"),
     OR("or"),
     NOT("not"),
-    NULL("null"),
+    NULL("NULL"),
 
     IDENTIFIER("[a-zA-Z_][a-zA-Z0-9_]*"),
     NUMBER("[0-9]+(.[0-9]+)?"),

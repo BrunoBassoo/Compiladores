@@ -40,10 +40,10 @@ public class Parser {
 
     // CRIANDO A MAIN 
     private void HEADER(){
-        System.out.println("import java.Util.Scanner");
+        System.out.println("import java.util.Scanner;");
         System.out.println("public class Code{");
         System.out.println("public static void main(String[]agrs){");
-        System.out.println("val scanner = Scanner()");
+        System.out.println("Scanner scanner = new Scanner(System.in);");
     }
 
     public void SHOLDER(){
@@ -323,11 +323,12 @@ public class Parser {
         );
     }
 
-    // Legilimens → 'legilimens' '(' ')' ';' | 'legilimens' '(' 'str' ')' ';'
+    // Legilimens → 'legilimens' '(' 'id' ')' ';' 
     // FALTA ESSE TB"
     public boolean legilimens(){
-
-        return(matchT(TokenType.LEGILIMENS, "Scanner()"));
+        return(identifier()
+        && matchL("=") 
+        && matchT(TokenType.LEGILIMENS, "scanner.nextLine();"));
     }
 
     

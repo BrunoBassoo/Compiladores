@@ -1,4 +1,3 @@
-
 Programa → 'magic' ListaComandos 'endmagic'
 
 ListaComandos → Comando ListaComandos | ε
@@ -31,7 +30,7 @@ ListaParametros → ',' Tipo 'id' ListaParametros | ε
 Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
 Texto → 'id' Texto | ε
 
-Legilimens → 'legilimens' '(' ')' ';' | 'legilimens' '(' 'id' ')' ';' 
+Legilimens → 'legilimens' '(' 'id' ')' ';'
 
 Expressao → 'id'Expressao' | 'num'Expressao' | 'true'Expressao' | 'false'Expressao' | 'NULL'Expressao' | 'str'Expressao' | '(' Expressao ')' Expressao'
 Expressao' → OpArit Expressao Expressao' | OpComp Expressao Expressao' | OpLogico Expressao Expressao' | ε
