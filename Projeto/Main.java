@@ -33,6 +33,8 @@ public class Main {
 
         // CRIAR VARIAVEL INTEIRO
 
+        tokens.add(new Token(TokenType.MAGIC,"magic"));
+        
         tokens.add(new Token(TokenType.INT,"int"));
         tokens.add(new Token(TokenType.IDENTIFIER, "x"));
         tokens.add(new Token(TokenType.EQUAL,"="));
@@ -41,33 +43,33 @@ public class Main {
 
         // IF + CONDICAO
 
-        tokens.add(new Token(TokenType.INCENDIO,"incendio"));
-        tokens.add(new Token(TokenType.LEFT_PAREN,"("));
-        tokens.add(new Token(TokenType.IDENTIFIER, "amigo"));
-        tokens.add(new Token(TokenType.GREATER,">"));
-        tokens.add(new Token(TokenType.NUMBER,"3"));
-        tokens.add(new Token(TokenType.RIGHT_PAREN, ")"));
+        // tokens.add(new Token(TokenType.INCENDIO,"incendio"));
+        // tokens.add(new Token(TokenType.LEFT_PAREN,"("));
+        // tokens.add(new Token(TokenType.IDENTIFIER, "amigo"));
+        // tokens.add(new Token(TokenType.GREATER,">"));
+        // tokens.add(new Token(TokenType.NUMBER,"3"));
+        // tokens.add(new Token(TokenType.RIGHT_PAREN, ")"));
 
-        // EXPRESSAO
+        // // EXPRESSAO
 
-        tokens.add(new Token(TokenType.LEFT_BRACE, "{"));
-        tokens.add(new Token(TokenType.IDENTIFIER, "x"));
-        tokens.add(new Token(TokenType.EQUAL, "="));
-        tokens.add(new Token(TokenType.NUMBER,"10"));
-        tokens.add(new Token(TokenType.SEMICOLON, ";"));
-        tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
+        // tokens.add(new Token(TokenType.LEFT_BRACE, "{"));
+        // tokens.add(new Token(TokenType.IDENTIFIER, "x"));
+        // tokens.add(new Token(TokenType.EQUAL, "="));
+        // tokens.add(new Token(TokenType.NUMBER,"10"));
+        // tokens.add(new Token(TokenType.SEMICOLON, ";"));
+        // tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
 
-        // ELSE + EXPRESSAO
+        // // ELSE + EXPRESSAO
 
-        tokens.add(new Token(TokenType.PROTEGO, "protego"));
-        tokens.add(new Token(TokenType.RIGHT_BRACE, "{"));
-        tokens.add(new Token(TokenType.IDENTIFIER, "x"));
-        tokens.add(new Token(TokenType.EQUAL, "="));
-        tokens.add(new Token(TokenType.NUMBER,"0"));
-        tokens.add(new Token(TokenType.SEMICOLON, ";"));
-        tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
+        // tokens.add(new Token(TokenType.PROTEGO, "protego"));
+        // tokens.add(new Token(TokenType.RIGHT_BRACE, "{"));
+        // tokens.add(new Token(TokenType.IDENTIFIER, "x"));
+        // tokens.add(new Token(TokenType.EQUAL, "="));
+        // tokens.add(new Token(TokenType.NUMBER,"0"));
+        // tokens.add(new Token(TokenType.SEMICOLON, ";"));
+        // tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
 
-        // FIM
+        // // FIM
 
         tokens.add(new Token(TokenType.EOF, "$"));
 

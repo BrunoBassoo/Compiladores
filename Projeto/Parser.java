@@ -109,7 +109,10 @@ public class Parser {
     // Tipo → 'int' | 'dec' | 'str' | 'boolean'
     // NAO SEI SE TA CERTO!
     public boolean tipo(){
-        return(matchT(token.getTipo()));
+        return(matchL("int", "val")
+        || matchL("dec", "val")
+        || matchL("str", "val")
+        || matchL("boolean", "val"));
     }
 
     // Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
@@ -266,7 +269,7 @@ public class Parser {
     }
 
     public boolean identifier(){
-        return (matchT(TokenType.IDENTIFIER));
+        return (matchL(TokenType.IDENTIFIER));
     }
 
     public boolean number(){
@@ -407,6 +410,7 @@ public class Parser {
     }
     
     public boolean matchT(TokenType tipo, String newcode){
+        System.out.println(tipo);
         if(token.getTipo().equals(tipo)){
             traduz(newcode);
             token = getNextToken();
