@@ -53,9 +53,9 @@ public class Parser {
     
     // Programa → 'magic' ListaComandos 'endmagic'
     public boolean programa(){
-        return(matchT(TokenType.MAGIC)
+        return(matchT(TokenType.MAGIC,token.getLexema())
         && listaComandos()
-        && matchT(TokenType.END_MAGIC)
+        && matchT(TokenType.END_MAGIC,token.getLexema())
         );
     }
 
@@ -87,12 +87,12 @@ public class Parser {
     public boolean declaracao(){
         return(tipo()
         && identifier()
-        && matchL(";","")
+        && matchT(TokenType.SEMICOLON,";")
         || tipo()
         && identifier()
         && matchT(TokenType.EQUAL,"=")
         && expressao()
-        && matchL(";","")
+        && matchT(TokenType.SEMICOLON,";")
         );
         
     }
@@ -102,7 +102,7 @@ public class Parser {
         return(identifier() 
         && matchT(TokenType.EQUAL,"=")
         && expressao()
-        && matchL(";",";")
+        && matchT(TokenType.SEMICOLON,";")
         );
     }
 
@@ -119,12 +119,12 @@ public class Parser {
     // Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
     public boolean incendio(){
         return(matchT(TokenType.INCENDIO, "if") 
-            && matchL("(")
+            && matchL("(","(")
             && expressao()
-            && matchL(")")
-            && matchL("{")
+            && matchL(")",")")
+            && matchL("{","{")
             && listaComandos()
-            && matchL("}")
+            && matchL("}","}")
             && deflexio()
             );
     }
@@ -132,12 +132,12 @@ public class Parser {
     // Deflexio → 'deflexio' '(' Expressao ')' '{' ListaComandos '}' Deflexio | Protego | ε
     public boolean deflexio(){
         return((matchT(TokenType.DEFLEXIO, "else if")
-        && matchL("(")
+        && matchL("(","(")
         && expressao()
-        && matchL(")")
-        && matchL("{")
+        && matchL(")",")")
+        && matchL("{","{")
         && listaComandos()
-        && matchL("}")
+        && matchL("}","}")
         && deflexio()) 
         || protego() 
         || true
@@ -147,9 +147,9 @@ public class Parser {
     // Protego → 'protego' '{' ListaComandos '}' | ε
     public boolean protego(){
         return((matchT(TokenType.PROTEGO, "else")
-        && matchL("{")
+        && matchL("{","{")
         && listaComandos()
-        && matchL("}"))
+        && matchL("}","}"))
         || true
         );
     }
@@ -158,25 +158,25 @@ public class Parser {
     // FALTA O FOR E VER O ";"
     public boolean accio(){
         return(matchT(TokenType.ACCIO, "for") 
-        && matchL("(")
+        && matchL("(","(")
         && atribuicao()
         && expressao()
-        && matchL(")")
-        && matchL("{")
+        && matchL(")",")")
+        && matchL("{","{")
         && listaComandos()
-        && matchL("}")
+        && matchL("}","}")
         );
     }
 
     // Crucio → 'crucio' '(' Expressao ')' '{' ListaComandos '}'
     public boolean crucio(){
         return(matchT(TokenType.CRUCIO,"while")
-        && matchL("(")
+        && matchL("(","(")
         && expressao()
-        && matchL(")")
-        && matchL("{")
+        && matchL(")",")")
+        && matchL("{","{")
         && listaComandos()
-        && matchL("}")
+        && matchL("}","}")
         );
     }
     
@@ -187,19 +187,19 @@ public class Parser {
 
     // OpFor → '++' | '--'
     public boolean operadorFor(){
-        return(matchL("++") 
-        || matchL("--"));
+        return(matchL("++","++") 
+        || matchL("--","--"));
     }
 
     // Alohomora → 'alohomora' '(' 'id' ')' '{' ListaCases '}'
     public boolean alohomora(){
         return(matchT(TokenType.ALOHOMORA, "switch")
-        && matchL("(")
+        && matchL("(","(")
         && identifier()
-        && matchL(")")
-        && matchL("{")
+        && matchL(")",")")
+        && matchL("{","{")
         && listaCases()
-        && matchL("}")
+        && matchL("}","}")
         );
     }
 
@@ -218,7 +218,7 @@ public class Parser {
         && matchL(":",";")
         && listaComandos()
         && matchT(TokenType.AVADAKEDAVRA, "break")
-        && matchL(";",";")
+        && matchT(TokenType.SEMICOLON,";")
         );
     }
 
@@ -228,13 +228,13 @@ public class Parser {
         return(matchT(TokenType.SPELL, "")
         && tipo()
         && identifier()
-        && matchL("(")
+        && matchL("(","(")
         && parametros()
-        && matchL(")")
-        && matchL("{")
+        && matchL(")",")")
+        && matchL("{","{")
         && listaComandos()
-        && matchL("}")
-        && matchT(TokenType.END_SPELL)
+        && matchL("}","}")
+        && matchT(TokenType.END_SPELL,token.getLexema())
         );
     }
 
@@ -249,7 +249,7 @@ public class Parser {
 
     // ListaParametros → ',' Tipo 'id' ListaParametros | ε
     public boolean ListaParametros(){
-        return(matchL(",")
+        return(matchL(",",",")
         && tipo()
         && identifier()
         && ListaParametros()
@@ -260,56 +260,56 @@ public class Parser {
     // Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
     public boolean revelio(){
         return(matchT(TokenType.REVELIO, "print")
-        && matchL("(")
-        && matchL("\"")
+        && matchL("(","(")
+        && matchL("\"","\"")
         && texto()
-        && matchL("\"")
-        && matchL(")")
-        && matchL(";")
+        && matchL("\"","\"")
+        && matchL(")",")")
+        && matchL(";",";")
         );
     }
 
     public boolean identifier(){
-        return (matchT(TokenType.IDENTIFIER));
+        return (matchT(TokenType.IDENTIFIER,token.getLexema()));
     }
 
     public boolean number(){
-        return (matchT(TokenType.NUMBER));
+        return (matchT(TokenType.NUMBER,token.getLexema()));
     }
 
     public boolean string(){
-        return (matchT(TokenType.STR));
+        return (matchT(TokenType.STR,token.getLexema()));
     }
 
     public boolean bool(){
-        return (matchT(TokenType.BOOLEAN));
+        return (matchT(TokenType.BOOLEAN,token.getLexema()));
     }
 
     public boolean fim(){
-        return (matchT(TokenType.SEMICOLON));
+        return (matchT(TokenType.SEMICOLON,token.getLexema()));
     }
 
     public boolean nu(){
-        return(matchT(TokenType.NULL));
+        return(matchT(TokenType.NULL,token.getLexema()));
     }
 
     // OpArit → '+' | '-' | '*' | '/' | '%'
     public boolean operadorArit(){
-        return (matchL("+") || 
-        matchL("*") || 
-        matchL("-") ||
-        matchL("/") ||
-        matchL("%"));
+        return (matchL("+","+") || 
+        matchL("*","*") || 
+        matchL("-","-") ||
+        matchL("/","/") ||
+        matchL("%","%"));
     }
 
     // OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
     public boolean operadorComp(){
-        return (matchL("==","=") || 
-        matchL("!=") || 
-        matchL(">") ||
-        matchL(">=") ||
-        matchL("<") ||
-        matchL("<="));
+        return (matchL("==","==") || 
+        matchL("!=","!=") || 
+        matchL(">",">") ||
+        matchL(">=",">=") ||
+        matchL("<","<") ||
+        matchL("<=","<="));
     }
 
     // OpLogico → 'and' | 'or' | 'not' // VER O NOT
@@ -338,12 +338,12 @@ public class Parser {
     
     // Expressao → 'id''Expressao' | 'num'Expressao' | 'true'Expressao' | 'false'Expressao' | 'NULL'Expressao' | 'str'Expressao' | '(' Expressao ')' 
     public boolean expressao(){
-        return((identifier() && expressao())
-        || (number() && expressao())
-        || (bool() && expressao())
-        || (nu() && expressao())
-        || (string() && expressao())
-        || (matchL("(") && expressao() && matchL(")"))
+        return((identifier() && expressaoL())
+        || (number() && expressaoL())
+        || (bool() && expressaoL())
+        || (nu() && expressaoL())
+        || (string() && expressaoL())
+        || (matchL("(","(") && expressaoL() && matchL(")",")"))
         );
     }
 
@@ -385,22 +385,20 @@ public class Parser {
 
 
 
-    // // VALIDAR VALORES -------------------------
-    public boolean matchL(String lexema){
-        if(token.getLexema().equals(lexema)){
-            System.out.println(token.getLexema());
-            token = getNextToken();
-            return true;
-        } return false;
-    }
+    // // // VALIDAR VALORES -------------------------
+    // public boolean matchL(String lexema){
+    //     if(token.getLexema().equals(lexema)){
+    //         token = getNextToken();
+    //         return true;
+    //     } return false;
+    // }
     
-    public boolean matchT(TokenType tipo){
-        if(token.getTipo().equals(tipo)){
-            System.out.println(token.getLexema());
-            token = getNextToken();
-            return true;
-        } return false;
-    }
+    // public boolean matchT(TokenType tipo){
+    //     if(token.getTipo().equals(tipo)){
+    //         token = getNextToken();
+    //         return true;
+    //     } return false;
+    // }
 
     // ------- NOVO CÓDIGO AULA ------
 
@@ -413,7 +411,6 @@ public class Parser {
     }
     
     public boolean matchT(TokenType tipo, String newcode){
-        System.out.println(tipo);
         if(token.getTipo().equals(tipo)){
             traduz(newcode);
             token = getNextToken();
