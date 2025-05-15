@@ -10,7 +10,19 @@ public class Main {
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
 
-        String data = "int x = 3;incendio(amigo > 3){x = 10;}protego{x = 0;}";
+        String data = "";
+
+        try (Scanner scanner = new Scanner(new File("code.txt"))) {
+            while (scanner.hasNextLine()) {
+                data += scanner.nextLine();
+            }
+            System.out.println("Conteúdo lido: " + data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+         // Remover todos os espaços da string
+        data = data.replace(" ", "");
         Lexer lexer = new Lexer(data);
         tokens1 = lexer.getTokens();
         for(Token token : tokens1) {
