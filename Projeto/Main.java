@@ -1,6 +1,8 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -9,6 +11,8 @@ public class Main {
         // ------------------------------------------------------ //
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
+
+        //String data = "int x;incendio(amigo > 3){x = 10;}protego{x = 0;}";
 
         String data = "";
 
@@ -20,9 +24,9 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
          // Remover todos os espaços da string
         data = data.replace(" ", "");
+
         Lexer lexer = new Lexer(data);
         tokens1 = lexer.getTokens();
         for(Token token : tokens1) {
