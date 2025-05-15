@@ -25,69 +25,22 @@ public class Main {
             e.printStackTrace();
         }
          // Remover todos os espaços da string
-        data = data.replace(" ", "");
+        //data = data.replace(" ", "");
+
+        List<Token> tokens =  new ArrayList<>();
 
         Lexer lexer = new Lexer(data);
         tokens1 = lexer.getTokens();
         for(Token token : tokens1) {
-            System.out.println(token);
+            String temp1 = token.getLexema();
+            TokenType temp = token.getTipo();
+            tokens.add(new Token(temp,temp1));
         }
         System.out.println("\nTUDO CERTO!");
         System.out.println("---------------------\n");
 
-        // ------------------------------------------------------ //
-
-
-        // ------------------------------------------------------ //
-        // ANALISADOR LEXICO
-
-        // List<Token> tokens = new ArrayList<>();
-
-        // CODIGO ESPERADO: int x = 3;incendio(x > 3){arroz=10;}protego{arroz=0;}
-
-        List<Token> tokens =  new ArrayList<>();
-
-        // CRIAR VARIAVEL INTEIRO
-
-        tokens.add(new Token(TokenType.MAGIC,"magic"));
-        
-        tokens.add(new Token(TokenType.INT,"int"));
-        tokens.add(new Token(TokenType.IDENTIFIER, "x"));
-        tokens.add(new Token(TokenType.EQUAL,"="));
-        tokens.add(new Token(TokenType.NUMBER,"3"));
-        tokens.add(new Token(TokenType.SEMICOLON, ";"));
-
-        // IF + CONDICAO
-
-        // tokens.add(new Token(TokenType.INCENDIO,"incendio"));
-        // tokens.add(new Token(TokenType.LEFT_PAREN,"("));
-        // tokens.add(new Token(TokenType.IDENTIFIER, "amigo"));
-        // tokens.add(new Token(TokenType.GREATER,">"));
-        // tokens.add(new Token(TokenType.NUMBER,"3"));
-        // tokens.add(new Token(TokenType.RIGHT_PAREN, ")"));
-
-        // // EXPRESSAO
-
-        // tokens.add(new Token(TokenType.LEFT_BRACE, "{"));
-        // tokens.add(new Token(TokenType.IDENTIFIER, "x"));
-        // tokens.add(new Token(TokenType.EQUAL, "="));
-        // tokens.add(new Token(TokenType.NUMBER,"10"));
-        // tokens.add(new Token(TokenType.SEMICOLON, ";"));
-        // tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
-
-        // // ELSE + EXPRESSAO
-
-        // tokens.add(new Token(TokenType.PROTEGO, "protego"));
-        // tokens.add(new Token(TokenType.RIGHT_BRACE, "{"));
-        // tokens.add(new Token(TokenType.IDENTIFIER, "x"));
-        // tokens.add(new Token(TokenType.EQUAL, "="));
-        // tokens.add(new Token(TokenType.NUMBER,"0"));
-        // tokens.add(new Token(TokenType.SEMICOLON, ";"));
-        // tokens.add(new Token(TokenType.RIGHT_BRACE, "}"));
-
-        // // FIM
-
-        tokens.add(new Token(TokenType.EOF, "$"));
+        System.out.println("---------------------");
+        System.out.println("ANALISADOR SINTÁTICO\n");
 
         Parser parser1 = new Parser(tokens);
         parser1.main();
