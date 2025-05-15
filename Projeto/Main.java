@@ -1,12 +1,13 @@
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         List<Token> tokens1 = null; // = null
+        String everything;
 
         // ------------------------------------------------------ //
         System.out.println("---------------------");
@@ -14,22 +15,26 @@ public class Main {
 
         //String data = "int x;incendio(amigo > 3){x = 10;}protego{x = 0;}";
 
-        String data = "";
+        BufferedReader br = new BufferedReader(new FileReader("code.txt"));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
 
-        try (Scanner scanner = new Scanner(new File("code.txt"))) {
-            while (scanner.hasNextLine()) {
-                data += scanner.nextLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
             }
-            System.out.println("Conteúdo lido: " + data);
-        } catch (IOException e) {
-            e.printStackTrace();
+            everything = sb.toString();
+        } finally {
+            br.close();
         }
-         // Remover todos os espaços da string
-        //data = data.replace(" ", "");
+
+        System.out.println(everything);
 
         List<Token> tokens =  new ArrayList<>();
 
-        Lexer lexer = new Lexer(data);
+        Lexer lexer = new Lexer(everything);
         tokens1 = lexer.getTokens();
         for(Token token : tokens1) {
             String temp1 = token.getLexema();

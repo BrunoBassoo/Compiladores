@@ -53,9 +53,9 @@ public class Parser {
     
     // Programa → 'magic' ListaComandos 'endmagic'
     public boolean programa(){
-        return(matchT(TokenType.MAGIC,token.getLexema())
+        return(matchT(TokenType.MAGIC,"")
         && listaComandos()
-        && matchT(TokenType.END_MAGIC,token.getLexema())
+        && matchT(TokenType.END_MAGIC,"")
         );
     }
 
@@ -85,9 +85,9 @@ public class Parser {
 
     // Declaracao → Tipo 'id' ';' | Tipo 'id' '=' Expressao ';'
     public boolean declaracao(){
-        return(tipo()
-        && identifier()
-        && matchT(TokenType.SEMICOLON,";")
+        return(tipo() 
+        && identifier() 
+        && matchT(TokenType.SEMICOLON,";") 
         || tipo()
         && identifier()
         && matchT(TokenType.EQUAL,"=")
@@ -162,6 +162,7 @@ public class Parser {
         && atribuicao()
         && expressao()
         && matchL(";",";")
+        && atualizacao()
         && matchL(")",")")
         && matchL("{","{")
         && listaComandos()
@@ -188,8 +189,8 @@ public class Parser {
 
     // OpFor → '++' | '--'
     public boolean operadorFor(){
-        return(matchL("++","++") 
-        || matchL("--","--"));
+        return(matchL("+","+") && matchL("+","+") 
+        || matchL("-","-") && matchL("-","-"));
     }
 
     // Alohomora → 'alohomora' '(' 'id' ')' '{' ListaCases '}'
@@ -266,7 +267,7 @@ public class Parser {
         && texto()
         && matchL("\"","\"")
         && matchL(")",")")
-        && matchL(";",";")
+        && matchL(";",";\n")
         );
     }
 
@@ -420,6 +421,6 @@ public class Parser {
     }
 
     private void traduz(String code){
-        System.out.println(code);
+        System.out.print(code);
     }
 }
