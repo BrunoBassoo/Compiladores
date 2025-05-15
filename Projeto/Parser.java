@@ -77,9 +77,9 @@ public class Parser {
         || spell()
         || revelio()
         || legilimens()
-        || matchT(TokenType.RELASHIO, "continue") && matchL(";")
+        || matchT(TokenType.RELASHIO, "continue") && matchL(";",";")
         || matchT(TokenType.AVADAKEDAVRA, "break")
-        || matchT(TokenType.FINITE,"return") && expressao() && matchL(";")
+        || matchT(TokenType.FINITE,"return") && expressao() && matchL(";",";")
         );
     }
 
@@ -87,21 +87,22 @@ public class Parser {
     public boolean declaracao(){
         return(tipo()
         && identifier()
-        && matchL(";")
+        && matchL(";","")
         || tipo()
         && identifier()
-        && matchL("=")
+        && matchT(TokenType.EQUAL,"=")
         && expressao()
-        && matchL(";")
+        && matchL(";","")
         );
+        
     }
 
     // Atribuicao → 'id' '=' Expressao ';'
     public boolean atribuicao(){
         return(identifier() 
-        && matchL("=")
+        && matchT(TokenType.EQUAL,"=")
         && expressao()
-        && matchL(";")
+        && matchL(";",";")
         );
     }
 
@@ -214,10 +215,10 @@ public class Parser {
     public boolean cases(){
         return(matchT(TokenType.DOOR, "case")
         && valor()
-        && matchL(":")
+        && matchL(":",";")
         && listaComandos()
         && matchT(TokenType.AVADAKEDAVRA, "break")
-        && matchL(";")
+        && matchL(";",";")
         );
     }
 
@@ -269,7 +270,7 @@ public class Parser {
     }
 
     public boolean identifier(){
-        return (matchL(TokenType.IDENTIFIER));
+        return (matchT(TokenType.IDENTIFIER));
     }
 
     public boolean number(){
@@ -303,7 +304,7 @@ public class Parser {
 
     // OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
     public boolean operadorComp(){
-        return (matchL("==") || 
+        return (matchL("==","=") || 
         matchL("!=") || 
         matchL(">") ||
         matchL(">=") ||
@@ -330,7 +331,7 @@ public class Parser {
     // FALTA ESSE TB"
     public boolean legilimens(){
         return(identifier()
-        && matchL("=") 
+        && matchT(TokenType.EQUAL,"=") 
         && matchT(TokenType.LEGILIMENS, "scanner.nextLine();"));
     }
 
@@ -387,6 +388,7 @@ public class Parser {
     // // VALIDAR VALORES -------------------------
     public boolean matchL(String lexema){
         if(token.getLexema().equals(lexema)){
+            System.out.println(token.getLexema());
             token = getNextToken();
             return true;
         } return false;
@@ -394,6 +396,7 @@ public class Parser {
     
     public boolean matchT(TokenType tipo){
         if(token.getTipo().equals(tipo)){
+            System.out.println(token.getLexema());
             token = getNextToken();
             return true;
         } return false;
