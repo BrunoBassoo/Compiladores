@@ -161,6 +161,7 @@ public class Parser {
         && matchL("(","(")
         && atribuicao()
         && expressao()
+        && matchL(";",";")
         && matchL(")",")")
         && matchL("{","{")
         && listaComandos()
