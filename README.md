@@ -72,11 +72,11 @@ endmagic
 ```potterscript
 magic CalculadoraMagica
 
-spell somar(int a, int b) finite int {
+spell int somar(int a, int b) {
     finite a + b;
 } endspell
 
-spell subtrair(int a, int b) finite int {
+spell int subtrair(int a, int b) {
     finite a - b;
 } endspell
 
@@ -94,12 +94,15 @@ int main() {
     revelio("Digite o segundo número:");
     legilimens(y);
 
-    incendio (operacao == "somar") {
-        revelio("O resultado é: " + somar(x, y));
-    } deflexio (operacao == "subtrair") {
-        revelio("O resultado é: " + subtrair(x,y));
+    int soma = somar(x, y);
+    revelio("O resultado da soma é: " + soma);
+
+    incendio (soma < 10){
+        soma = soma * 2
+    } deflexio (soma > 100) {
+        soma = soma / 5;
     } protego {
-        revelio("Operação inválida!");
+        revelio("O valor da soma está adequado");
     }
      finite 0;
 
