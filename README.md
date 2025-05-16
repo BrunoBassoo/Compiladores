@@ -64,13 +64,13 @@ Função | Descrição | Exemplo
 **Olá, Mundo Bruxo!:**
 
 ```potterscript
-magic OlaMundoBruxo
+magic
     revelio("Olá, Mundo Bruxo!");
 endmagic
 ```
 
 ```potterscript
-magic CalculadoraMagica
+magic
 
 spell int somar(int a, int b) {
     finite a + b;
