@@ -76,14 +76,9 @@ spell int somar(int a, int b) {
     finite a + b;
 } endspell
 
-spell int subtrair(int a, int b) {
-    finite a - b;
-} endspell
-
 int main() {
     int x;
     int y;
-    str operacao;
 
     revelio("Escolha sua operação: somar ou subtrair?");
     legilimens(operacao);
