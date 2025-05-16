@@ -6,30 +6,29 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<Token> tokens1 = null; // = null
-        String everything;
-
+        List<Token> tokens1 = null; // = null 
         // ------------------------------------------------------ //
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
 
         //String data = "int x;incendio(amigo > 3){x = 10;}protego{x = 0;}";
 
-        BufferedReader br = new BufferedReader(new FileReader("code.txt"));
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
 
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
+        String filePath = "code.txt"; // Arquivo deve estar no mesmo diretório do projeto
+        StringBuilder result = new StringBuilder();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Substitui tabulações por espaço e concatena com espaço no final
+                result.append(line.replace("\t", " ")).append(" ");
             }
-            everything = sb.toString();
-        } finally {
-            br.close();
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
         }
 
+        // String final sem espaços extras no início/fim
+        String everything = result.toString().trim();
         System.out.println(everything);
 
         List<Token> tokens =  new ArrayList<>();

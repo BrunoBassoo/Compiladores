@@ -29,7 +29,7 @@ public class Parser {
         token = getNextToken();
         if (programa()){
             if(token.getTipo().equals(TokenType.EOF)){
-                System.out.println("sintaticamente correto");
+                System.out.println("\n\nSintaticamente correto!");
                 SHOLDER();
                 return;
             }
@@ -40,14 +40,12 @@ public class Parser {
 
     // CRIANDO A MAIN 
     private void HEADER(){
-        System.out.println("import java.util.Scanner;");
-        System.out.println("public class Code{");
-        System.out.println("public static void main(String[]agrs){");
-        System.out.println("Scanner scanner = new Scanner(System.in);");
+        System.out.println("import java.util.Scanner;\n");
+        System.out.println("fun main(){");
+        System.out.println("    Scanner scanner = new Scanner(System.in);\n");
     }
 
     public void SHOLDER(){
-        System.out.println("}");
         System.out.println("}");
     }
     
@@ -68,18 +66,18 @@ public class Parser {
 
     // Comando → Declaracao | Atribuicao | Incendio | Accio | Crucio | Alohomora | Spell | Revelio | Legilimens | 'relashio' ';' | 'avadakedavra' ';' | 'finite' Expressao ';'
     public boolean comando(){
-        return(declaracao()
-        || atribuicao()
-        || incendio()
-        || accio()
-        || crucio()
+        return(declaracao() //
+        || atribuicao() //
+        || incendio() //
+        || accio() //
+        || crucio() //
         || alohomora()
         || spell()
         || revelio()
         || legilimens()
         || matchT(TokenType.RELASHIO, "continue") && matchL(";",";")
         || matchT(TokenType.AVADAKEDAVRA, "break")
-        || matchT(TokenType.FINITE,"return") && expressao() && matchL(";",";")
+        || matchT(TokenType.FINITE,"\nreturn") && expressao() && matchL(";",";")
         );
     }
 
@@ -227,15 +225,15 @@ public class Parser {
     // Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 'endspell'
     // PRECISA VER ESSA PARTE DE CRIAR FUNCAO
     public boolean spell(){
-        return(matchT(TokenType.SPELL, "")
+        return(matchT(TokenType.SPELL, "fun")
         && tipo()
         && identifier()
-        && matchL("(","(")
+        && matchL("(","(\n")
         && parametros()
         && matchL(")",")")
-        && matchL("{","{")
+        && matchL("{","{\n")
         && listaComandos()
-        && matchL("}","}")
+        && matchL("}","}\n")
         && matchT(TokenType.END_SPELL,token.getLexema())
         );
     }
@@ -261,11 +259,11 @@ public class Parser {
 
     // Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
     public boolean revelio(){
-        return(matchT(TokenType.REVELIO, "print")
+        return(matchT(TokenType.REVELIO, "println")
         && matchL("(","(")
-        && matchL("\"","\"")
+        //&& matchL("\"","\"")
         && texto()
-        && matchL("\"","\"")
+        //&& matchL("\"","\"")  
         && matchL(")",")")
         && matchL(";",";\n")
         );
@@ -306,13 +304,15 @@ public class Parser {
 
     // OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
     public boolean operadorComp(){
-        return (matchL("==","==") || 
-        matchL("!=","!=") || 
+        return (matchL("=","=") && matchL("=","=") || 
+        matchL("!","!") && matchL("=","=") || 
+        matchL(">",">") && matchL("=","=") ||
         matchL(">",">") ||
-        matchL(">=",">=") ||
-        matchL("<","<") ||
-        matchL("<=","<="));
+        matchL("<","<") && matchL("=","=") ||
+        matchL("<","<"));
     }
+
+    
 
     // OpLogico → 'and' | 'or' | 'not' // VER O NOT
     public boolean operadorLogico(){
@@ -321,12 +321,10 @@ public class Parser {
         matchL("not", "!"));
     }
 
-    // Texto → 'id' Texto | ε
-    public boolean texto(){
-        return(identifier() 
-        && texto() 
-        || true
-        );
+    // Texto → valor Texto | e
+    public boolean texto() {
+        return (matchT(TokenType.TEXT, token.getLexema()) && texto()
+            || true);
     }
 
     // Legilimens → 'legilimens' '(' 'id' ')' ';' 
@@ -366,41 +364,6 @@ public class Parser {
         || nu());
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // // // VALIDAR VALORES -------------------------
-    // public boolean matchL(String lexema){
-    //     if(token.getLexema().equals(lexema)){
-    //         token = getNextToken();
-    //         return true;
-    //     } return false;
-    // }
-    
-    // public boolean matchT(TokenType tipo){
-    //     if(token.getTipo().equals(tipo)){
-    //         token = getNextToken();
-    //         return true;
-    //     } return false;
-    // }
 
     // ------- NOVO CÓDIGO AULA ------
 

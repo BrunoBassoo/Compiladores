@@ -1,13 +1,8 @@
 magic
+
 int x;
-incendio(amigo > 3){
-    x = 10;
-    }
-protego{
-    x = 0;
-    }
-accio (x = 2; x>1; x++){
-    x = 2 + 2 + 2;
+crucio(x > 3){
+    x = 2 * 4;
 }
 
 endmagic
