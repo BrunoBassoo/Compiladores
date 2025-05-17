@@ -52,7 +52,7 @@ public class Main {
         System.out.println("---------------------");
         System.out.println("ANALISADOR SEMÂNTICO\n");
 
-        // int resultado = semantico.evaluate(parser1);
+        // int resultado = Semantico.evaluate(parser1);
         // System.out.println("Resultado: " + resultado);
 
     
