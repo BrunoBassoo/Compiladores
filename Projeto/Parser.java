@@ -329,14 +329,23 @@ public class Parser {
             || true);
     }
 
-    // Legilimens → 'legilimens' '(' 'id' ')' ';' 
+    // Legilimens → tipo 'id' ''='' legilimens  '(' legilimensL ')'  `;`
+
     // FALTA ESSE TB"
     public boolean legilimens(){
-        return(identifier()
+        return( tipo()
+        && identifier()
         && matchT(TokenType.EQUAL,"=") 
-        && matchT(TokenType.LEGILIMENS, "scanner.nextLine();"));
+        && matchT(TokenType.LEGILIMENS, "scanner.nextLine")
+        && matchL("(", "(")
+        && legilimensL()
+        && matchL(")", ")")
+        && matchL(";", "\n"));
     }
 
+    public boolean legilimensL(){
+        return(number() || identifier());
+    }
     
     // Expressao → 'id''Expressao' | 'num'Expressao' | 'true'Expressao' | 'false'Expressao' | 'NULL'Expressao' | 'str'Expressao' | '(' Expressao ')' 
     public boolean expressao(){
