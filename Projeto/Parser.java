@@ -81,7 +81,7 @@ public class Parser {
         );
     }
 
-    // Declaracao → Tipo 'id' ';' | Tipo 'id' '=' Expressao ';'
+    // Declaracao → Tipo 'id' ';' | Tipo 'id' '=' 'valor' ';'
     public boolean declaracao(){
         return(tipo() 
         && identifier() 
@@ -90,6 +90,11 @@ public class Parser {
         && identifier()
         && matchT(TokenType.EQUAL,"=")
         && expressao()
+        && matchT(TokenType.SEMICOLON,";")
+        || tipo()
+        && identifier()
+        && matchT(TokenType.EQUAL,"=")
+        && valor()
         && matchT(TokenType.SEMICOLON,";")
         );
         
@@ -261,9 +266,7 @@ public class Parser {
     public boolean revelio(){
         return(matchT(TokenType.REVELIO, "println")
         && matchL("(","(")
-        //&& matchL("\"","\"")
         && texto()
-        //&& matchL("\"","\"")  
         && matchL(")",")")
         && matchL(";",";\n")
         );
@@ -275,10 +278,6 @@ public class Parser {
 
     public boolean number(){
         return (matchT(TokenType.NUMBER,token.getLexema()));
-    }
-
-    public boolean string(){
-        return (matchT(TokenType.STR,token.getLexema()));
     }
 
     public boolean bool(){
@@ -306,10 +305,12 @@ public class Parser {
     public boolean operadorComp(){
         return (matchL("=","=") && matchL("=","=") || 
         matchL("!","!") && matchL("=","=") || 
-        matchL(">",">") && matchL("=","=") ||
-        matchL(">",">") ||
-        matchL("<","<") && matchL("=","=") ||
-        matchL("<","<"));
+        matchL(">",">") && operadorComp2());
+    }
+
+    public boolean operadorComp2(){
+        return (matchL("=","=") 
+        || true);
     }
 
     
@@ -324,7 +325,7 @@ public class Parser {
     // Texto → valor Texto | e
     public boolean texto() {
         return (matchT(TokenType.TEXT, token.getLexema()) && texto()
-            || true);
+            || matchT(TokenType.TEXT, token.getLexema()));
     }
 
     // Legilimens → 'legilimens' '(' 'id' ')' ';' 
@@ -342,7 +343,7 @@ public class Parser {
         || (number() && expressaoL())
         || (bool() && expressaoL())
         || (nu() && expressaoL())
-        || (string() && expressaoL())
+        || (texto() && expressaoL())
         || (matchL("(","(") && expressaoL() && matchL(")",")"))
         );
     }
@@ -358,10 +359,11 @@ public class Parser {
     // Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
     public boolean valor(){
         return (number()
+        || texto()
         || identifier()
-        || string()
         || bool()
-        || nu());
+        || nu()
+        || texto());
     }
 
 
