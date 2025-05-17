@@ -15,6 +15,7 @@ public class Lexer {
         this.afds.add(new CodeTokens());
         this.afds.add(new Number());
         this.afds.add(new Identifier());
+        this.afds.add(new text());
     }
 
     public void skipWhiteSpace(){
@@ -37,7 +38,10 @@ public class Lexer {
     private Token searchNextToken() {
         int pos = code.getIndex();
         for (AFD afd : afds) {
+            System.out.println(code.current());
             Token t = afd.evaluate(code);
+            System.out.println(afd.getClass());
+            System.out.println(t);
             if (t != null) return t;
             code.setIndex(pos);
         }

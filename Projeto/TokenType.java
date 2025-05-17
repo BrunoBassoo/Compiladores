@@ -27,7 +27,7 @@ public enum TokenType {
 
     IDENTIFIER("[a-zA-Z_][a-zA-Z0-9_]*"),
     NUMBER("[0-9]+(.[0-9]+)?"),
-    TEXT("\"([^\"\\\\]|\\\\.)*\""),
+    TEXT("\"[^\"]*\""),
 
 
     PLUS("+"),
@@ -46,8 +46,6 @@ public enum TokenType {
     RIGHT_BRACE("}"),
     QUESTION_MARK("?"),
     EXCLAMATION_MARK("!"),
-    DOUBLE_QUOTES("\""),
-    QUOTES("'"),
 
     EOF("$");
 

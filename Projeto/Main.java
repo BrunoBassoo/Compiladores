@@ -49,6 +49,12 @@ public class Main {
         Parser parser1 = new Parser(tokens);
         parser1.main();
 
-        // --------------------------------------------------------- //
+        System.out.println("---------------------");
+        System.out.println("ANALISADOR SEMÂNTICO\n");
+
+        // int resultado = semantico.evaluate(parser1);
+        // System.out.println("Resultado: " + resultado);
+
+    
     }
 }

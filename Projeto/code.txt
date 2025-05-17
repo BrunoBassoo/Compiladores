@@ -1,8 +1,5 @@
 magic
 
-int x;
-crucio(x > 3){
-    x = 2 * 4;
-}
+legilimens(a);
 
 endmagic

@@ -49,12 +49,6 @@ public class CodeTokens extends AFD {
             case '<':
                 code.next();
                 return new Token(TokenType.LESS, "<");
-            case '"':
-                code.next();
-                return new Token(TokenType.DOUBLE_QUOTES, "\"");
-            case '\'':
-                code.next();
-                return new Token(TokenType.QUOTES, "\'");
             case CharacterIterator.DONE:
                 code.next();
                 return new Token(TokenType.EOF, "$");
@@ -115,6 +109,8 @@ public class CodeTokens extends AFD {
                             return new Token(TokenType.OR, lexema);
                         case "not":
                             return new Token(TokenType.NOT, lexema);
+                        case "text":
+                            return new Token(TokenType.TEXT, lexema);
                             }
                         }
                     }
