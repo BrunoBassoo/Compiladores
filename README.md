@@ -72,6 +72,28 @@ endmagic
 ```potterscript
 magic
 
+int x;
+int y = 3;
+incendio(x > 3){
+    incendio ( x >= 3 ){
+        accio (x = 2; x<=10;x++){
+            finite true;
+        }
+    } deflexio( x < 3){
+        crucio(true){
+            finite true;
+        }
+    }
+} protego{
+    x = x + y;
+}
+
+endmagic
+```
+
+```potterscript
+magic
+
 spell int somar(int a, int b) {
     finite a + b;
 } endspell
