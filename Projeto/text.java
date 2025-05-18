@@ -7,7 +7,6 @@ public class text extends AFD {
         String letter = readString(code);
         System.out.println(code.current());
         if (isTokenSeparator(code)){
-
             return new Token(TokenType.TEXT, letter);
         }
         

@@ -2,7 +2,6 @@ public enum TokenType {
     MAGIC("magic"),
     END_MAGIC("endmagic"),
     SPELL("spell"),
-    END_SPELL("endspell"),
     FINITE("finite"),
     INT("int"),
     DEC("dec"),

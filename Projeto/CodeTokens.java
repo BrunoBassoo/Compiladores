@@ -67,8 +67,6 @@ public class CodeTokens extends AFD {
                             return new Token(TokenType.END_MAGIC, lexema);
                         case "spell":
                             return new Token(TokenType.SPELL, lexema);
-                        case "endspell":
-                            return new Token(TokenType.END_SPELL, lexema);
                         case "finite":
                             return new Token(TokenType.FINITE, lexema);
                         case "int":
