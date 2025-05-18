@@ -3,24 +3,30 @@ import java.util.List;
 public class Semantico {
     private List<Token> tokens;
     private List<Token> tokensCriadosList;
+    private Token previousToken;
 
     public Semantico(List<Token> tokens){
         this.tokens = tokens;
+        this.previousToken = null;
     }
 
     
     public void análise(){
-        //System.out.println(tokens);
-        System.out.println(tokens.size());
+
+
         for(int i = 0; i < tokens.size();i++){ 
             Token currentToken = tokens.get(i);
+            if(i == 0){
+                previousToken = tokens.get(i);
+            } else{
+                currentToken = tokens.get(i);
+            }
             if(currentToken.getTipo().equals(TokenType.IDENTIFIER) && i > 0){
-                Token anterior = tokens.get(i-1);
     
-                if(anterior.getTipo().equals(TokenType.BOOLEAN) 
-                || anterior.getTipo().equals(TokenType.INT)
-                || anterior.getTipo().equals(TokenType.STR)
-                || anterior.getTipo().equals(TokenType.DEC)){
+                if(previousToken.getTipo().equals(TokenType.BOOLEAN) 
+                || previousToken.getTipo().equals(TokenType.INT)
+                || previousToken.getTipo().equals(TokenType.STR)
+                || previousToken.getTipo().equals(TokenType.DEC)){
                     tokensCriadosList.add(currentToken);
                     System.out.println(tokensCriadosList);
 
@@ -30,7 +36,7 @@ public class Semantico {
 
             
 
-
+            previousToken = currentToken;
         }
         
     } 
