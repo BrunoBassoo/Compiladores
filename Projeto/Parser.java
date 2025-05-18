@@ -7,6 +7,7 @@ public class Parser {
     private List<Token> tokens;
     private Token token;
     private Node node;
+    private Tree tree = new Tree();
 
     public Parser(List<Token> tokens){
         this.tokens = tokens;
@@ -28,13 +29,17 @@ public class Parser {
     public void main(){
         HEADER();
         token = getNextToken();
+        node = new Node(token);
+        tree.setRoot(node);     
+
         if (programa()){
             if(token.getTipo().equals(TokenType.EOF)){
-                System.out.println("\n\nSintaticamente correto!");
                 SHOLDER();
+                System.out.println("\n\nSintaticamente correto!");
                 return;
             }
         }
+        
         erro("main");
     }
 
@@ -68,14 +73,14 @@ public class Parser {
 
     // V = Comando → Declaracao | Atribuicao | Incendio | Accio | Crucio | Alohomora | Spell | Revelio | Legilimens | 'relashio' ';' | 'avadakedavra' ';' | 'finite' Expressao ';'
     public boolean comando(){
-        return(declaracao() //
-        || atribuicao() //
-        || incendio() //
-        || accio() //
-        || crucio() //
+        return(declaracao() 
+        || atribuicao() 
+        || incendio() 
+        || accio() 
+        || crucio() 
         || alohomora()
         || spell()
-        || revelio()
+        || revelio(node)
         || legilimens()
         || matchT(TokenType.RELASHIO, "continue",node) && matchT(TokenType.SEMICOLON,"\n",node)
         || matchT(TokenType.AVADAKEDAVRA, "break",node)
@@ -262,13 +267,16 @@ public class Parser {
     }
 
     // V = Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
-    public boolean revelio(){
-        return(matchT(TokenType.REVELIO, "println",node)
-        && matchL("(","(",node)
-        && texto()
-        && matchL(")",")",node)
-        && matchT(TokenType.SEMICOLON,"\n",node)
-        );
+    public boolean revelio(Node node){
+        Node revelio = node.addNode(token);
+        if(matchT(TokenType.REVELIO, "println",revelio)
+        && matchL("(","(",revelio)
+        && texto(revelio)
+        && matchL(")",")",revelio)
+        && matchT(TokenType.SEMICOLON,"\n",revelio)
+        ){
+            return true;
+        } return false;
     }
 
     public boolean identifier(){
@@ -322,8 +330,9 @@ public class Parser {
     }
 
     // V = Texto → valor Texto | e
-    public boolean texto() {
-        return (matchT(TokenType.TEXT, token.getLexema(),node) && texto()
+    public boolean texto(Node node) {
+        Node texto = node.addNode(token);
+        return (matchT(TokenType.TEXT, token.getLexema(),node) && texto(texto)
             || true);
     }
 
@@ -344,7 +353,7 @@ public class Parser {
         || (number() && expressaoL())
         || (bool() && expressaoL())
         || (nu() && expressaoL())
-        || (texto() && expressaoL())
+        //|| (texto() && expressaoL())
         || (matchL("(","(",node) && expressao() && matchL(")",")",node))
         );
     }
@@ -360,11 +369,11 @@ public class Parser {
     // V = Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
     public boolean valor(){
         return (number()
-        || texto()
+        //|| texto()
         || identifier()
         || bool()
-        || nu()
-        || texto());
+        || nu());
+        //|| texto());
     }
 
 

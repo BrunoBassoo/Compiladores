@@ -12,6 +12,9 @@ public class Node {
 
 
   public Node(Token token) {
+    // System.out.println("Token: " + token);
+    // System.out.println("Token Lexema: " + token.getLexema());
+    // System.out.println("Token: " + token.getTipo());
     this.nome = token.getLexema();
     this.tipo = token.getTipo();
     nodes = new ArrayList<>();

@@ -1,10 +1,5 @@
 magic
 
 revelio("babi e sua tatuagem");
-int a = legilimens();
 
-spell int a(int a, int b){
-    revelio("brunao gay");
-    revelio("bruno ama a bruna");
-} endspell
 endmagic
