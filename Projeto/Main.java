@@ -53,7 +53,7 @@ public class Main {
     
         
         Semantico semantico = new Semantico(tokens);
-        semantico.análise();
+        semantico.analise();
 
     }
 }
