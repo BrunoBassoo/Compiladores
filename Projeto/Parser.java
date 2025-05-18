@@ -112,7 +112,8 @@ public class Parser {
     // V = AtribuicaoL → expressao ';' | valor ';'
     public boolean atribuicaoL(){
         return(expressao() && matchT(TokenType.SEMICOLON, "\n")
-        || valor() && matchT(TokenType.SEMICOLON, "\n"));
+        || valor() && matchT(TokenType.SEMICOLON, "\n")
+        || texto() && matchT(TokenType.SEMICOLON, "\n"));
     }
 
 
