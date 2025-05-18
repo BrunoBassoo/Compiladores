@@ -29,8 +29,13 @@ public class Parser {
     public void main(){
         HEADER();
         token = getNextToken();
+        System.out.println(token);
+        if (token == null) {
+            erro("main: nenhum token recebido");
+        }
+
         node = new Node(token);
-        tree.setRoot(node);     
+        tree.setRoot(node);    
 
         if (programa()){
             if(token.getTipo().equals(TokenType.EOF)){
