@@ -374,7 +374,7 @@ public class Parser {
         if(token.getLexema().equals(lexema)){
             traduz(newcode);
             token = getNextToken();
-            node.addNode(token.getLexema());
+            node.addNode(token);
             return true;
         } return false;
     }
@@ -383,7 +383,7 @@ public class Parser {
         if(token.getTipo().equals(tipo)){
             traduz(newcode);
             token = getNextToken();
-            node.addNode(token.getLexema());
+            node.addNode(token);
             return true;
         } return false;
     }

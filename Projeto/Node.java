@@ -5,6 +5,7 @@ import java.util.List;
 public class Node {
 
   String nome;
+  TokenType tipo;
   List<Node> nodes;
   String enter;
   String exit;
@@ -12,6 +13,7 @@ public class Node {
 
   public Node(Token token) {
     this.nome = token.getLexema();
+    this.tipo = token.getTipo();
     nodes = new ArrayList<>();
     this.enter = "";
     this.exit = "";
@@ -21,14 +23,14 @@ public class Node {
     nodes.add(newNode);
   }
 
-  public Node addNode(String nodeName) {
-    Node newNode = new Node(nodeName);
+  public Node addNode(Token token) {
+    Node newNode = new Node(token);
     nodes.add(newNode);
     return newNode;
   }
 
-  public Node addNode(String enter, String nodeName, String exit) {
-    Node newNode = new Node(nodeName);
+  public Node addNode(String enter, Token token, String exit) {
+    Node newNode = new Node(token);
     newNode.enter = enter;
     newNode.exit = exit;
     nodes.add(newNode);

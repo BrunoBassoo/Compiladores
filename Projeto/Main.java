@@ -43,8 +43,6 @@ public class Main {
             System.out.println(token.getLexema());
             System.out.println(token.getTipo());
             System.out.println(token.getClass());
-            Node node = new Node(token);
-            nodeA.addNode(token.getLexema());
 
             
         }
@@ -60,7 +58,7 @@ public class Main {
         System.out.println("---------------------");
         System.out.println("ANALISADOR SEMÂNTICO\n");
 
-        Tree tree= new Tree(nodeA);
+        Tree tree= new Tree();
         tree.printTree();
 
     
