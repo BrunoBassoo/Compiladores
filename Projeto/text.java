@@ -5,7 +5,6 @@ public class text extends AFD {
     @Override
     public Token evaluate(CharacterIterator code){
         String letter = readString(code);
-        System.out.println(code.current());
         if (isTokenSeparator(code)){
             return new Token(TokenType.TEXT, letter);
         }
@@ -14,7 +13,6 @@ public class text extends AFD {
     }
     private String readString(CharacterIterator code){
         String letter="\"";
-        System.out.println("a");
         if (code.current() == '"') {
             code.next();
         } else {

@@ -38,11 +38,10 @@ public class Lexer {
     private Token searchNextToken() {
         int pos = code.getIndex();
         for (AFD afd : afds) {
-            System.out.println(code.current());
             Token t = afd.evaluate(code);
-            System.out.println(afd.getClass());
-            System.out.println(t);
+            
             if (t != null) return t;
+            System.out.println(afd.getClass());
             code.setIndex(pos);
         }
         return null;

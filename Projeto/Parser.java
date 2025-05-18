@@ -6,6 +6,7 @@ public class Parser {
     // PADRAO DE QUALQUER CÓDIGO //
     private List<Token> tokens;
     private Token token;
+    private Node node;
 
     public Parser(List<Token> tokens){
         this.tokens = tokens;
@@ -52,9 +53,9 @@ public class Parser {
     
     // V = Programa → 'magic' ListaComandos 'endmagic'
     public boolean programa(){
-        return(matchT(TokenType.MAGIC,"")
+        return(matchT(TokenType.MAGIC,"",node)
         && listaComandos()
-        && matchT(TokenType.END_MAGIC,"")
+        && matchT(TokenType.END_MAGIC,"",node)
         );
     }
 
@@ -76,9 +77,9 @@ public class Parser {
         || spell()
         || revelio()
         || legilimens()
-        || matchT(TokenType.RELASHIO, "continue") && matchT(TokenType.SEMICOLON,"\n")
-        || matchT(TokenType.AVADAKEDAVRA, "break")
-        || matchT(TokenType.FINITE,"\nreturn ") && expressao() && matchT(TokenType.SEMICOLON,"\n")
+        || matchT(TokenType.RELASHIO, "continue",node) && matchT(TokenType.SEMICOLON,"\n",node)
+        || matchT(TokenType.AVADAKEDAVRA, "break",node)
+        || matchT(TokenType.FINITE,"\nreturn ",node) && expressao() && matchT(TokenType.SEMICOLON,"\n",node)
         );
     }
 
@@ -92,55 +93,55 @@ public class Parser {
 
     // V = Declaracao →  ';' |  '=' valor'';'
     public boolean declaracaoL(){
-        return(matchT(TokenType.SEMICOLON,"\n") 
-        || matchT(TokenType.EQUAL,"=") && valor() && matchT(TokenType.SEMICOLON,"\n"));
+        return(matchT(TokenType.SEMICOLON,"\n",node) 
+        || matchT(TokenType.EQUAL,"=",node) && valor() && matchT(TokenType.SEMICOLON,"\n",node));
     }
 
     // V = Atribuicao → 'id' '=' atribuicaoL
     public boolean atribuicao(){
         return(identifier() 
-        && matchT(TokenType.EQUAL,"=")
+        && matchT(TokenType.EQUAL,"=",node)
         && atribuicaoL()
         );
     }
 
     // V = AtribuicaoL → expressao ';' | valor ';'
     public boolean atribuicaoL(){
-        return(expressao() && matchT(TokenType.SEMICOLON, "\n")
-        || valor() && matchT(TokenType.SEMICOLON, "\n"));
+        return(expressao() && matchT(TokenType.SEMICOLON, "\n",node)
+        || valor() && matchT(TokenType.SEMICOLON, "\n",node));
     }
 
 
     // V = Tipo → 'int' | 'dec' | 'str' | 'boolean'
     public boolean tipo(){
-        return(matchL("int", "val ")
-        || matchL("dec", "val ")
-        || matchL("str", "val ")
-        || matchL("boolean", "val "));
+        return(matchL("int", "val ",node)
+        || matchL("dec", "val ",node)
+        || matchL("str", "val ",node)
+        || matchL("boolean", "val ",node));
     }
 
     // V = Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
     public boolean incendio(){
-        return(matchT(TokenType.INCENDIO, "if ") 
-            && matchL("(","(")
+        return(matchT(TokenType.INCENDIO, "if ",node) 
+            && matchL("(","(",node)
             && expressao()
-            && matchL(")",")")
-            && matchL("{","{\n\t")
+            && matchL(")",")",node)
+            && matchL("{","{\n\t",node)
             && listaComandos()
-            && matchL("}","}")
+            && matchL("}","}",node)
             && deflexio()
             );
     }
 
     // V = Deflexio → 'deflexio' '(' Expressao ')' '{' ListaComandos '}' Deflexio | Protego | ε
     public boolean deflexio(){
-        return((matchT(TokenType.DEFLEXIO, "else if ")
-        && matchL("(","(")
+        return((matchT(TokenType.DEFLEXIO, "else if ",node)
+        && matchL("(","(",node)
         && expressao()
-        && matchL(")",")")
-        && matchL("{","{\n\t")
+        && matchL(")",")",node)
+        && matchL("{","{\n\t",node)
         && listaComandos()
-        && matchL("}","}")
+        && matchL("}","}",node)
         && deflexio()) 
         || protego() 
         || true
@@ -149,10 +150,10 @@ public class Parser {
     
     // V = Protego → 'protego' '{' ListaComandos '}' | ε
     public boolean protego(){
-        return((matchT(TokenType.PROTEGO, "else")
-        && matchL("{","{\n\t")
+        return((matchT(TokenType.PROTEGO, "else",node)
+        && matchL("{","{\n\t",node)
         && listaComandos()
-        && matchL("}","}"))
+        && matchL("}","}",node))
         || true
         );
     }
@@ -160,28 +161,28 @@ public class Parser {
     // V = Accio → 'accio' '(' Atribuicao Expressao ';' Atualizacao ')' '{' ListaComandos '}'
     // FALTA O FOR E VER O ";"
     public boolean accio(){
-        return(matchT(TokenType.ACCIO, "for ") 
-        && matchL("(","(")
+        return(matchT(TokenType.ACCIO, "for ",node) 
+        && matchL("(","(",node)
         && atribuicao()
         && expressao()
-        && matchT(TokenType.SEMICOLON,"\n")
+        && matchT(TokenType.SEMICOLON,"\n",node)
         && atualizacao()
-        && matchL(")",")")
-        && matchL("{","{\n\t")
+        && matchL(")",")",node)
+        && matchL("{","{\n\t",node)
         && listaComandos()
-        && matchL("}","}")
+        && matchL("}","}",node)
         );
     }
 
     // V = Crucio → 'crucio' '(' Expressao ')' '{' ListaComandos '}'
     public boolean crucio(){
-        return(matchT(TokenType.CRUCIO,"while ")
-        && matchL("(","(")
+        return(matchT(TokenType.CRUCIO,"while ",node)
+        && matchL("(","(",node)
         && expressao()
-        && matchL(")",")")
-        && matchL("{","{\n\t")
+        && matchL(")",")",node)
+        && matchL("{","{\n\t",node)
         && listaComandos()
-        && matchL("}","}")
+        && matchL("}","}",node)
         );
     }
     
@@ -192,19 +193,19 @@ public class Parser {
 
     // V = OpFor → '++' | '--'
     public boolean operadorFor(){
-        return(matchL("+","+") && matchL("+","+") 
-        || matchL("-","-") && matchL("-","-"));
+        return(matchL("+","+",node) && matchL("+","+",node) 
+        || matchL("-","-",node) && matchL("-","-",node));
     }
 
     // Alohomora → 'alohomora' '(' 'id' ')' '{' ListaCases '}'
     public boolean alohomora(){
-        return(matchT(TokenType.ALOHOMORA, "switch ")
-        && matchL("(","(")
+        return(matchT(TokenType.ALOHOMORA, "switch ",node)
+        && matchL("(","(",node)
         && identifier()
-        && matchL(")",")")
-        && matchL("{","{\n\t")
+        && matchL(")",")",node)
+        && matchL("{","{\n\t",node)
         && listaCases()
-        && matchL("}","}")
+        && matchL("}","}",node)
         );
     }
 
@@ -218,26 +219,26 @@ public class Parser {
 
     // Case → 'door' Valor ':' ListaComandos 'avadakedavra' ';'
     public boolean cases(){
-        return(matchT(TokenType.DOOR, "case")
+        return(matchT(TokenType.DOOR, "case",node)
         && valor()
-        && matchT(TokenType.SEMICOLON,"\n")
+        && matchT(TokenType.SEMICOLON,"\n",node)
         && listaComandos()
-        && matchT(TokenType.AVADAKEDAVRA, "break")
-        && matchT(TokenType.SEMICOLON,"\n")
+        && matchT(TokenType.AVADAKEDAVRA, "break",node)
+        && matchT(TokenType.SEMICOLON,"\n",node)
         );
     }
 
     // V = Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 
     public boolean spell(){
-        return(matchT(TokenType.SPELL, "fun ")
+        return(matchT(TokenType.SPELL, "fun ",node)
         && tipo()
         && identifier()
-        && matchL("(","(")
+        && matchL("(","(",node)
         && parametros()
-        && matchL(")",")")
-        && matchL("{","{\n")
+        && matchL(")",")",node)
+        && matchL("{","{\n",node)
         && listaComandos()
-        && matchL("}","}\n")
+        && matchL("}","}\n",node)
         );
     }
 
@@ -252,7 +253,7 @@ public class Parser {
 
     // V = ListaParametros → ',' Tipo 'id' ListaParametros | ε
     public boolean ListaParametros(){
-        return(matchL(",",",")
+        return(matchL(",",",",node)
         && tipo()
         && identifier()
         && ListaParametros()
@@ -262,67 +263,67 @@ public class Parser {
 
     // V = Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
     public boolean revelio(){
-        return(matchT(TokenType.REVELIO, "println")
-        && matchL("(","(")
+        return(matchT(TokenType.REVELIO, "println",node)
+        && matchL("(","(",node)
         && texto()
-        && matchL(")",")")
-        && matchT(TokenType.SEMICOLON,"\n")
+        && matchL(")",")",node)
+        && matchT(TokenType.SEMICOLON,"\n",node)
         );
     }
 
     public boolean identifier(){
-        return (matchT(TokenType.IDENTIFIER,token.getLexema()));
+        return (matchT(TokenType.IDENTIFIER,token.getLexema(),node));
     }
 
     public boolean number(){
-        return (matchT(TokenType.NUMBER,token.getLexema()));
+        return (matchT(TokenType.NUMBER,token.getLexema(),node));
     }
 
     public boolean bool(){
-        return (matchT(TokenType.BOOLEAN,token.getLexema()));
+        return (matchT(TokenType.BOOLEAN,token.getLexema(),node));
     }
 
     public boolean fim(){
-        return (matchT(TokenType.SEMICOLON,token.getLexema()));
+        return (matchT(TokenType.SEMICOLON,token.getLexema(),node));
     }
 
     public boolean nu(){
-        return(matchT(TokenType.NULL,token.getLexema()));
+        return(matchT(TokenType.NULL,token.getLexema(),node));
     }
 
     // V = OpArit → '+' | '-' | '*' | '/' | '%'
     public boolean operadorArit(){
-        return (matchL("+","+") || 
-        matchL("*","*") || 
-        matchL("-","-") ||
-        matchL("/","/") ||
-        matchL("%","%"));
+        return (matchL("+","+",node) || 
+        matchL("*","*",node) || 
+        matchL("-","-",node) ||
+        matchL("/","/",node) ||
+        matchL("%","%",node));
     }
 
     // V = OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
     public boolean operadorComp(){
-        return (matchL("=","=") && matchL("=","=") || 
-        matchL("!","!") && matchL("=","=") || 
-        matchL(">",">") && operadorCompL() ||
-        matchL("<","<") && operadorCompL());
+        return (matchL("=","=",node) && matchL("=","=",node) || 
+        matchL("!","!",node) && matchL("=","=",node) || 
+        matchL(">",">",node) && operadorCompL() ||
+        matchL("<","<",node) && operadorCompL());
     }
 
     // V
     public boolean operadorCompL(){
-        return (matchL("=","=") 
+        return (matchL("=","=",node) 
         || true);
     }
 
     // V = OpLogico → 'and' | 'or' | 'not' // VER O NOT
     public boolean operadorLogico(){
-        return (matchL("and", "&&") || 
-        matchL("or", "||") || 
-        matchL("not", "!"));
+        return (matchL("and", "&&",node) || 
+        matchL("or", "||",node) || 
+        matchL("not", "!",node));
     }
 
     // V = Texto → valor Texto | e
     public boolean texto() {
-        return (matchT(TokenType.TEXT, token.getLexema()) && texto()
+        return (matchT(TokenType.TEXT, token.getLexema(),node) && texto()
             || true);
     }
 
@@ -330,10 +331,10 @@ public class Parser {
 
     public boolean legilimens(){
         return( 
-        matchT(TokenType.LEGILIMENS, "scanner.nextLine")
-        && matchL("(", "(")
-        && matchL(")", ")")
-        && matchL(";", "\n"));
+        matchT(TokenType.LEGILIMENS, "scanner.nextLine",node)
+        && matchL("(", "(",node)
+        && matchL(")", ")",node)
+        && matchL(";", "\n",node));
     }
 
     
@@ -344,12 +345,11 @@ public class Parser {
         || (bool() && expressaoL())
         || (nu() && expressaoL())
         || (texto() && expressaoL())
-        || (matchL("(","(") && expressao() && matchL(")",")"))
-
+        || (matchL("(","(",node) && expressao() && matchL(")",")",node))
         );
     }
 
-    // Expressao' → OpArit Expressao Expressao' | OpComp Expressao Expressao' | OpLogico Expressao Expressao' | ε
+    // V = Expressao' → OpArit Expressao Expressao' | OpComp Expressao Expressao' | OpLogico Expressao Expressao' | ε
     public boolean expressaoL(){
         return((operadorArit() && expressao() && expressaoL())
         || (operadorComp() && expressao() && expressaoL())
@@ -357,7 +357,7 @@ public class Parser {
         || true);
     }
 
-    // Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
+    // V = Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
     public boolean valor(){
         return (number()
         || texto()
@@ -370,18 +370,20 @@ public class Parser {
 
     // ------- NOVO CÓDIGO AULA ------
 
-    public boolean matchL(String lexema, String newcode){
+    public boolean matchL(String lexema, String newcode, Node node){
         if(token.getLexema().equals(lexema)){
             traduz(newcode);
             token = getNextToken();
+            node.addNode(token.getLexema());
             return true;
         } return false;
     }
     
-    public boolean matchT(TokenType tipo, String newcode){
+    public boolean matchT(TokenType tipo, String newcode, Node node){
         if(token.getTipo().equals(tipo)){
             traduz(newcode);
             token = getNextToken();
+            node.addNode(token.getLexema());
             return true;
         } return false;
     }

@@ -7,6 +7,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         List<Token> tokens1 = null; // = null 
+
         // ------------------------------------------------------ //
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
@@ -39,6 +40,13 @@ public class Main {
             String temp1 = token.getLexema();
             TokenType temp = token.getTipo();
             tokens.add(new Token(temp,temp1));
+            System.out.println(token.getLexema());
+            System.out.println(token.getTipo());
+            System.out.println(token.getClass());
+            Node node = new Node(token);
+            nodeA.addNode(token.getLexema());
+
+            
         }
         System.out.println("\nTUDO CERTO!");
         System.out.println("---------------------\n");
@@ -46,14 +54,14 @@ public class Main {
         System.out.println("---------------------");
         System.out.println("ANALISADOR SINTÁTICO\n");
 
-        Parser parser1 = new Parser(tokens);
-        parser1.main();
+        Parser parser = new Parser(tokens);
+        parser.main();
 
         System.out.println("---------------------");
         System.out.println("ANALISADOR SEMÂNTICO\n");
 
-        // int resultado = Semantico.evaluate(parser1);
-        // System.out.println("Resultado: " + resultado);
+        Tree tree= new Tree(nodeA);
+        tree.printTree();
 
     
     }
