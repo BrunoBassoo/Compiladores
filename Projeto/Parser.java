@@ -97,7 +97,12 @@ public class Parser {
     // V = Declaracao →  ';' |  '=' declaracaoL2
     public boolean declaracaoL(){
         return(matchT(TokenType.SEMICOLON,"\n") 
-        || matchT(TokenType.EQUAL,"=") && expressao() && matchL(";","\n"));
+        || matchT(TokenType.EQUAL,"=") && declaracaoL2());
+    }
+
+    public boolean declaracaoL2(){
+        return(expressao() && matchL(";","\n")
+        || texto() && matchL(";","\n"));
     }
 
 
@@ -351,7 +356,7 @@ public class Parser {
         || (number() && expressaoL())
         || (bool() && expressaoL())
         || (nu() && expressaoL())
-        //|| (texto() && expressaoL())
+        || (texto() && expressaoL())
         || (matchL("(","(") && expressao() && matchL(")",")"))
         );
     }
@@ -367,11 +372,10 @@ public class Parser {
     // V = Valor → 'num' | 'id' | 'str' | 'true' | 'false' | 'NULL'
     public boolean valor(){
         return (number()
-        //|| texto()
+        || texto()
         || identifier()
         || bool()
         || nu());
-        //|| texto());
     }
 
 

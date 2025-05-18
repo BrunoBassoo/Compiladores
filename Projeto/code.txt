@@ -1,14 +1,18 @@
 magic
 
 int a;
+str b = "oi";
 revelio("babi e sua tatuagem");
+str c = "oi" + "oi";
 
-
+str x;
 int y = 5 + x;
 
-incendio(i = "arroz"){
+str i;
+incendio(i == "arroz"){
     revelio("vsf");
 }
 
+dec babi = 5.2;
 
 endmagic
