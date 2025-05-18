@@ -46,7 +46,7 @@ public class Parser {
     private void HEADER(){
         System.out.println("import java.util.Scanner;\n");
         System.out.println("fun main(){");
-        System.out.println("    Scanner scanner = new Scanner(System.'in')\n");
+        System.out.println("\tScanner scanner = new Scanner(System.'in')\n");
     }
 
     // V
@@ -138,7 +138,7 @@ public class Parser {
             && matchL(")",")")
             && matchL("{","{\n\t")
             && listaComandos()
-            && matchL("}","}")
+            && matchL("}","} \n" )
             && deflexio()
             );
     }
@@ -207,36 +207,39 @@ public class Parser {
         || matchL("-","-") && matchL("-","-"));
     }
 
-    // Alohomora → 'alohomora' '(' 'id' ')' '{' ListaCases '}'
+    // Alohomora → 'alohomora' '(' 'id' ')' '{' listaDoor '}'
     public boolean alohomora(){
-        return(matchT(TokenType.ALOHOMORA, "switch ")
+        return( matchL("", "val ")
+        && matchT(TokenType.ALOHOMORA, "when ")
         && matchL("(","(")
         && identifier()
         && matchL(")",")")
         && matchL("{","{\n\t")
-        && listaCases()
+        && listaDoor()
         && matchL("}","}")
         );
     }
 
-    // ListaCases → Case ListaCases | ε
-    public boolean listaCases(){
-        return(cases() 
-        && listaCases() 
+    // listaDoor → Case listaDoor | ε
+    public boolean listaDoor(){
+        return(door() 
+        && listaDoor() 
         || true
         );
     }
 
     // Case → 'door' Valor ':' ListaComandos 'avadakedavra' ';'
-    public boolean cases(){
-        return(matchT(TokenType.DOOR, "case")
+    public boolean door(){
+        return(matchT(TokenType.DOOR, "")
         && valor()
+        && matchL("", "->")
         && matchT(TokenType.SEMICOLON,"\n")
         && listaComandos()
         && matchT(TokenType.AVADAKEDAVRA, "break")
         && matchT(TokenType.SEMICOLON,"\n")
         );
     }
+
 
     // V = Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 
     public boolean spell(){
@@ -383,8 +386,9 @@ public class Parser {
 
     public boolean matchL(String lexema, String newcode){
         if(token.getLexema().equals(lexema)){
-            traduz(newcode);
             token = getNextToken();
+            DerivationTree node = new DerivationTree(token.getLexema());
+            traduz(newcode);
             return true;
         } return false;
     }

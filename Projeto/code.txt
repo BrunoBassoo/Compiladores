@@ -1,12 +1,5 @@
 magic
 
-int a;
-str b = "oi";
-revelio("babi e sua tatuagem");
-str c = "oi" + "oi";
-
-str x;
-int y = 5 + x;
 
 str i;
 incendio(i == "arroz"){
