@@ -100,7 +100,6 @@ public class Parser {
         || incendio(comando) 
         || accio(comando) 
         || crucio(comando) 
-        || alohomora(comando)
         || spell(comando)
         || revelio(comando)
         || legilimens(comando)
@@ -307,50 +306,6 @@ public class Parser {
         return false;
     }
 
-    // Alohomora → 'alohomora' '(' 'id' ')' '{' listaDoor '}'
-    public boolean alohomora(Node root){
-        Node alohomora = new Node("ALOHOMORA");
-        if( matchL("", "val ",alohomora)
-        && matchT(TokenType.ALOHOMORA, "when ",alohomora)
-        && matchL("(","(",alohomora)
-        && identifier(alohomora)
-        && matchL(")",")",alohomora)
-        && matchL("{","{\n\t",alohomora)
-        && listaDoor(alohomora)
-        && matchL("}","}",alohomora)
-        ){
-            root.addNode(alohomora);
-            return true;
-        } 
-        return false;
-    }
-
-    // listaDoor → Case listaDoor | ε
-    public boolean listaDoor(Node root){
-        Node listaDoor = new Node("LISTA DOOR");
-        if(door(listaDoor) 
-        && listaDoor(listaDoor) 
-        || true
-        ){
-            root.addNode(listaDoor);
-            return true;
-        } 
-        return false;
-    }
-
-    // Case → 'door' Valor ':' ListaComandos 'avadakedavra' ';'
-    public boolean door(Node root){
-        Node door = new Node("SPELL");
-        root.addNode(door);
-        return(matchT(TokenType.DOOR, "",door)
-        && valor(door)
-        && matchL("", "->",door)
-        && fim(door)
-        && listaComandos(door)
-        && matchT(TokenType.AVADAKEDAVRA, "break",door)
-        && fim(door)
-        );
-    }
 
 
     // V = Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 
