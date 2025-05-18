@@ -1,5 +1,11 @@
 magic
 
+int a;
 revelio("babi e sua tatuagem");
+
+
+int x = 2;
+int y = 5 + x;
+
 
 endmagic

@@ -7,13 +7,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         List<Token> tokens1 = null; // = null 
-        
 
         // ------------------------------------------------------ //
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
-
-
 
         String filePath = "code.txt"; // Arquivo deve estar no mesmo diretório do projeto
         StringBuilder result = new StringBuilder();
@@ -30,7 +27,6 @@ public class Main {
 
         // String final sem espaços extras no início/fim
         String everything = result.toString().trim();
-        System.out.println(everything);
 
         List<Token> tokens =  new ArrayList<>();
 
@@ -40,7 +36,6 @@ public class Main {
             String temp1 = token.getLexema();
             TokenType temp = token.getTipo();
             tokens.add(new Token(temp,temp1));
-
         }
 
         System.out.println("\nTUDO CERTO!");
@@ -49,15 +44,16 @@ public class Main {
         System.out.println("---------------------");
         System.out.println("ANALISADOR SINTÁTICO\n");
 
+        
         Parser parser = new Parser(tokens);
         parser.main();
 
         System.out.println("---------------------");
         System.out.println("ANALISADOR SEMÂNTICO\n");
-
-        Tree tree= new Tree();
-        tree.printTree();
-
     
+        
+        Semantico semantico = new Semantico(tokens);
+        semantico.análise();
+
     }
 }
