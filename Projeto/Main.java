@@ -37,6 +37,8 @@ public class Main {
             TokenType temp = token.getTipo();
             tokens.add(new Token(temp,temp1));
         }
+        System.out.println("--Lista de tokens--\n");
+        System.out.println(tokens);
 
         System.out.println("\nTUDO CERTO!");
         System.out.println("---------------------\n");
@@ -46,14 +48,27 @@ public class Main {
 
         
         Parser parser = new Parser(tokens);
-        parser.main();
+        Tree tree = parser.main();
+        if(tree != null){
+            System.out.println("\n---------------------");
+            System.out.println("--ÁRVORE--\n\n");
+            tree.printTree();
+
+            System.out.println("ÁRVORE CORRETA!");
+            System.out.println("---------------------\n\n");
+        }
+        
+
 
         System.out.println("---------------------");
         System.out.println("ANALISADOR SEMÂNTICO\n");
-    
-        
+
         Semantico semantico = new Semantico(tokens);
         semantico.analise();
 
+        System.out.println("\nSEMÂNTICO CORRETO!");
+        System.out.println("---------------------\n\n");
+
+        
     }
 }

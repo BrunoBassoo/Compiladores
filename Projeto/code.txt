@@ -1,11 +1,6 @@
 magic
 
 
-str i;
-incendio(i == "arroz"){
-    revelio("vsf");
-}
-
 dec babi = 5.2;
 
 endmagic

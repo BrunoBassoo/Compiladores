@@ -41,7 +41,6 @@ public class Lexer {
             Token t = afd.evaluate(code);
             
             if (t != null) return t;
-            System.out.println(afd.getClass());
             code.setIndex(pos);
         }
         return null;
