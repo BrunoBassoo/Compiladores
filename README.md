@@ -51,14 +51,6 @@ Outros | `and` | Operador lógico "E".
 ㅤ| `or` | Operador lógico "OU".
 ㅤ| `not` | Operador lógico "NÃO".
 
-## 🧙 Funções Pré-definidas
-
-Função | Descrição | Exemplo
-------- | -------- | -------
-`reparo([tempo_ms])` | ⏳ "Conserta" o tempo, atrasando a execução (em milissegundos). |  `reparo(2000)`
-`obliviate()` | 💫 Limpa a tela. | `obliviate();`
-`imperius(mensagem)` | 🗣️ Lança um erro com a `mensagem` personalizada, interrompendo o programa. | `imperius("Você não tem permissão!");`
-
 ## 🚀 Exemplos de Código
 
 **Olá, Mundo Bruxo!:**
