@@ -10,142 +10,184 @@ public class Semantico {
 
     public void analise() {
         for (int i = 0; i < tokens.size(); i++) {
-            Token current = tokens.get(i);
+            Token token = tokens.get(i);
 
-            // Declaração de variável
-            if (isTipo(current)) {
-                Token proximo = tokens.get(i + 1);
-                if (proximo.getTipo() == TokenType.IDENTIFIER) {
-                    String tipo = current.getLexema();
-                    String nome = proximo.getLexema();
-                    if (variaveisDeclaradas.containsKey(nome)) {
-                        System.out.println("Erro: variável '" + nome + "' já declarada.");
+            // Declaração de variável: tipo seguido de identificador
+            if (isTipo(token.getTipo())) {
+                if (i + 1 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.IDENTIFIER) {
+                    String tipo = token.getTipo().toString().toLowerCase();
+                    String nomeVar = tokens.get(i + 1).getLexema();
+
+                    if (variaveisDeclaradas.containsKey(nomeVar)) {
+                        System.out.println("Erro: variável '" + nomeVar + "' já foi declarada.");
                     } else {
-                        variaveisDeclaradas.put(nome, tipo);
-                        System.out.println("Declarada variável '" + nome + "' do tipo " + tipo.toUpperCase());
+                        variaveisDeclaradas.put(nomeVar, tipo);
                     }
 
-                    // Verifica se há uma atribuição
+
+                    // Atribuição direta no momento da declaração
                     if (i + 2 < tokens.size() && tokens.get(i + 2).getTipo() == TokenType.EQUAL) {
-                        int j = i + 3;
-                        List<Token> expressao = new ArrayList<>();
-                        while (j < tokens.size() && tokens.get(j).getTipo() != TokenType.SEMICOLON) {
-                            expressao.add(tokens.get(j));
-                            j++;
+                        int fimExpr = encontrarFimExpressao(i + 3);
+                        String tipoExpr = avaliarExpressao(i + 3, fimExpr);
+                        if (!tipoExpr.equals(tipo)) {
+                            System.out.println("Erro: atribuição incompatível para '" + nomeVar + "'");
                         }
-                        String tipoExpressao = avaliarExpressao(expressao);
-                        if (!tipoExpressao.equals(tipo) && !tipoExpressao.equals("erro")) {
-                            System.out.println("Erro: atribuição incompatível para '" + nome + "'");
-                        }
+                        i = fimExpr;
+                    } else {
+                        i += 1;
                     }
                 }
             }
 
-            // Atribuição sem declaração
-            if (current.getTipo() == TokenType.IDENTIFIER &&
-                i + 1 < tokens.size() &&
-                tokens.get(i + 1).getTipo() == TokenType.EQUAL) {
-                String nome = current.getLexema();
-                if (!variaveisDeclaradas.containsKey(nome)) {
-                    System.out.println("Erro: variável '" + nome + "' não declarada.");
+            // Atribuição fora da declaração
+            if (token.getTipo() == TokenType.IDENTIFIER && i + 1 < tokens.size()
+                    && tokens.get(i + 1).getTipo() == TokenType.EQUAL) {
+                String nomeVar = token.getLexema();
+                String tipoVar = variaveisDeclaradas.get(nomeVar);
+
+                if (tipoVar == null) {
+                    System.out.println("Erro: variável '" + nomeVar + "' não foi declarada.");
                 } else {
-                    int j = i + 2;
-                    List<Token> expressao = new ArrayList<>();
-                    while (j < tokens.size() && tokens.get(j).getTipo() != TokenType.SEMICOLON) {
-                        expressao.add(tokens.get(j));
-                        j++;
+                    int fimExpr = encontrarFimExpressao(i + 2);
+                    String tipoExpr = avaliarExpressao(i + 2, fimExpr);
+                    if (!tipoExpr.equals(tipoVar)) {
+                        System.out.println("Erro: atribuição incompatível para '" + nomeVar + "'");
                     }
-                    String tipoEsperado = variaveisDeclaradas.get(nome);
-                    String tipoExpressao = avaliarExpressao(expressao);
-                    if (!tipoExpressao.equals(tipoEsperado) && !tipoExpressao.equals("erro")) {
-                        System.out.println("Erro: atribuição incompatível para '" + nome + "'");
-                    }
+                    i = fimExpr;
                 }
             }
 
-            // Condições em comandos como 'incendio'
-            if (isComandoCondicional(current)) {
-                int j = i + 1;
-                List<Token> condicao = new ArrayList<>();
-                int par = 0;
-                while (j < tokens.size()) {
-                    if (tokens.get(j).getTipo() == TokenType.LEFT_PAREN) {
-                        par++;
-                    } else if (tokens.get(j).getTipo() == TokenType.RIGHT_PAREN) {
-                        par--;
-                        if (par == 0) break;
+            // Comando com expressão lógica: incendio(condição)
+            if (isComandoCondicional(token.getTipo())) {
+                
+                if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
+                    int fimExpr = encontrarParentesesFechando(i + 1);
+                    System.out.println(i);
+                    System.out.println(fimExpr);
+                    String tipoCondicao = avaliarExpressao(i + 2, fimExpr);
+                    if (!tipoCondicao.equals("boolean")) {
+                        System.out.println("Erro: condição inválida em comando '" + token.getLexema() + "'");
                     }
-                    condicao.add(tokens.get(j));
-                    j++;
-                }
-                String tipoCondicao = avaliarExpressao(condicao);
-                if (!tipoCondicao.equals("boolean")) {
-                    System.out.println("Erro: condição inválida em comando '" + current.getLexema() + "'");
+                    i = fimExpr;
                 }
             }
+
+            if (isComandoLoop(token.getTipo())) {
+                if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
+                    int fimExpr = encontrarParentesesFechando(i + 1);
+                    String tipoCondicao = avaliarExpressao(i + 2, fimExpr - 1);
+                    if (!tipoCondicao.equals("boolean")) {
+                        System.out.println("Erro: condição inválida em loop '" + token.getLexema() + "'");
+                    }
+                    i = fimExpr;
+                }
+            }
+
+            // Comando de saída: revellio(expr)
+            if (token.getTipo() == TokenType.REVELIO) {
+                System.out.println("caiuaq");
+                if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
+                    int fimExpr = encontrarParentesesFechando(i + 1);
+                    String tipoExpr = avaliarExpressao(i + 2, fimExpr - 1);
+                    // Aqui você pode validar se o tipo é permitido para print, se quiser
+                    i = fimExpr;
+                }
+            }
+
         }
     }
 
-    private boolean isTipo(Token token) {
-        return token.getTipo() == TokenType.INT ||
-               token.getTipo() == TokenType.STR ||
-               token.getTipo() == TokenType.BOOLEAN ||
-               token.getTipo() == TokenType.DEC;
+    private boolean isTipo(TokenType tipo) {
+        return tipo == TokenType.INT || tipo == TokenType.DEC || tipo == TokenType.STR || tipo == TokenType.BOOLEAN;
     }
 
-    private boolean isComandoCondicional(Token token) {
-        return token.getTipo() == TokenType.INCENDIO || token.getTipo() == TokenType.PROTEGO;
+    private boolean isComandoCondicional(TokenType tipo) {
+        return tipo == TokenType.INCENDIO || tipo == TokenType.PROTEGO || tipo == TokenType.DEFLEXIO;
     }
 
-    private String avaliarExpressao(List<Token> expressao) {
-        if (expressao.isEmpty()) return "erro";
+    private boolean isComandoLoop(TokenType tipo) {
+        return tipo == TokenType.CRUCIO || tipo == TokenType.ACCIO;
+    }
 
-        // Expressão com um único valor
-        if (expressao.size() == 1) {
-            Token t = expressao.get(0);
-            return obterTipoToken(t);
+    private int encontrarParentesesFechando(int inicio) {
+        int contador = 0;
+        for (int i = inicio; i < tokens.size(); i++) {
+            if (tokens.get(i).getTipo() == TokenType.LEFT_PAREN)
+                contador++;
+            else if (tokens.get(i).getTipo() == TokenType.RIGHT_PAREN)
+                contador--;
+            if (contador == 0)
+                return i;
         }
+        return tokens.size() - 1;
+    }
 
-        // Expressão binária simples (a + b, x == y, etc.)
-        if (expressao.size() == 3) {
-            String tipoEsq = obterTipoToken(expressao.get(0));
-            Token op = expressao.get(1);
-            String tipoDir = obterTipoToken(expressao.get(2));
+    private int encontrarFimExpressao(int inicio) {
+        for (int i = inicio; i < tokens.size(); i++) {
+            TokenType tipo = tokens.get(i).getTipo();
+            if (tipo == TokenType.SEMICOLON || tipo == TokenType.RIGHT_PAREN)
+                return i - 1;
+        }
+        return tokens.size() - 1;
+    }
 
-            switch (op.getTipo()) {
-                case PLUS:
-                    if (tipoEsq.equals("int") && tipoDir.equals("int")) return "int";
-                    if (tipoEsq.equals("dec") && tipoDir.equals("dec")) return "dec";
-                    if (tipoEsq.equals("str") && tipoDir.equals("str")) return "str";
-                    break;
-                case MINUS: case TIMES: case DIVIDE:
-                    if (tipoEsq.equals("int") && tipoDir.equals("int")) return "int";
-                    if (tipoEsq.equals("dec") && tipoDir.equals("dec")) return "dec";
-                    break;
-                case EQUAL: case GREATER: case LESS:
-                    if (tipoEsq.equals(tipoDir)) return "boolean";
-                    System.out.println("Erro: comparação entre tipos incompatíveis: '" + tipoEsq + "' e '" + tipoDir + "'");
+    private String avaliarExpressao(int start, int end) {
+        System.out.println(start + " - " + end);
+        if (start > end)
+            return "erro";
+
+        // Expressão simples: um valor ou identificador
+        if (start == end) {
+            Token token = tokens.get(start);
+            switch (token.getTipo()) {
+                case NUMBER:
+                    return "int";
+                case TEXT:
+                    return "str";
+                case IDENTIFIER:
+
+                    String tipo = variaveisDeclaradas.get(token.getLexema());
+                    if (tipo == null) {
+                        System.out.println("Erro: variável '" + token.getLexema() + "' não foi declarada.");
+                        return "erro";
+                    }
+                    return tipo;
+                default:
                     return "erro";
-                case AND: case OR:
-                    if (tipoEsq.equals("boolean") && tipoDir.equals("boolean")) return "boolean";
-                    break;
             }
         }
 
-        return "erro";
-    }
+        // Expressão binária simples: x + y, x == y
+        if (end - start == 2) {
+            String tipoEsq = avaliarExpressao(start, start);
+            Token operador = tokens.get(start + 1);
+            String tipoDir = avaliarExpressao(end, end);
 
-    private String obterTipoToken(Token token) {
-        switch (token.getTipo()) {
-            case NUMBER:
-                if (token.getLexema().contains(".")) return "dec";
-                return "int";
-            case TEXT: return "str";
-            case NULL: return "null";
-            case NOT: return "boolean";
-            case IDENTIFIER:
-                return variaveisDeclaradas.getOrDefault(token.getLexema(), "erro");
-            default: return "erro";
+            switch (operador.getTipo()) {
+                case PLUS:
+                    if (tipoEsq.equals("int") && tipoDir.equals("int"))
+                        return "int";
+                    if (tipoEsq.equals("str") && tipoDir.equals("str"))
+                        return "str";
+                    System.out.println("Erro: operador '+' inválido entre '" + tipoEsq + "' e '" + tipoDir + "'");
+                    return "erro";
+                case EQUAL_EQUAL:
+                case LESS:
+                case GREATER:
+                case LESS_EQUAL:
+                case GREATER_EQUAL:
+                case NOT_EQUAL:
+                    if (tipoEsq.equals(tipoDir))
+                        return "boolean";
+                    System.out.println(
+                            "Erro: operador '==' entre tipos incompatíveis '" + tipoEsq + "' e '" + tipoDir + "'");
+                    return "erro";
+                default:
+                    System.out.println("Erro: operador '" + operador.getLexema() + "' não suportado.");
+                    return "erro";
+            }
         }
+
+        return "indefinido"; // para casos mais complexos
     }
 }

@@ -1,6 +1,5 @@
 magic
 
-
-dec babi = 5.2;
+revelio(x);
 
 endmagic

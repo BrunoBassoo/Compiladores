@@ -66,7 +66,7 @@ public class Main {
         Semantico semantico = new Semantico(tokens);
         semantico.analise();
 
-        System.out.println("\nSEMÂNTICO CORRETO!");
+        // System.out.println("\nSEMÂNTICO CORRETO!");
         System.out.println("---------------------\n\n");
 
         

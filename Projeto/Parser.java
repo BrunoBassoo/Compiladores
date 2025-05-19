@@ -357,21 +357,37 @@ public class Parser {
         return false;
     }
 
-    // V = Revelio → 'revelio' '(' '"' Texto '"' ')' ';'
+    // V = Revelio → 'revelio' '(' '"' Revelio2 '"' ')' ';'
     public boolean revelio(Node root){
         Node revelio = new Node("REVELIO");
 
         if(matchT(TokenType.REVELIO, "println",revelio)
         && matchL("(","(",revelio)
-        && texto(revelio)
-        && matchL(")",")",revelio)
-        && fim(revelio)
+        && revelio2(revelio)
+        
         ){
             root.addNode(revelio);
             return true;
         } 
         return false;
     }
+
+    public boolean revelio2(Node root){
+        Node revelio2 = new Node("REVELIO 2");
+
+        if(texto(revelio2) 
+        && matchL(")",")",revelio2)
+        && fim(revelio2)
+        || identifier(revelio2)
+        && matchL(")",")",revelio2)
+        && fim(revelio2)
+        ){
+            root.addNode(revelio2);
+            return true;
+        } 
+        return false;
+    }
+
 
     public boolean identifier(Node root){
         Node identifier = new Node("IDENTIFIER");

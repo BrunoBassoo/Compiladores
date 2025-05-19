@@ -77,8 +77,6 @@ public class CodeTokens extends AFD {
                             return new Token(TokenType.STR, lexema);
                         case "boolean":
                             return new Token(TokenType.BOOLEAN, lexema);
-                        case "deletrius":
-                            return new Token(TokenType.DELETRIUS, lexema);
                         case "incendio":
                             return new Token(TokenType.INCENDIO, lexema);
                         case "deflexio":
