@@ -2,8 +2,8 @@ magic
 
 int x = 1;
 
-incendio(x == 1) { 
-    revelio("aaaaa");
+accio (x = 2; x<=10;x++){
+    finite true;
 }
 
 endmagic

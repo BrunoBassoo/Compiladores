@@ -72,6 +72,7 @@ public class Semantico {
             }
 
             if (isComandoLoop(token.getTipo())) {
+                loopCerto = true;
                 if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
                     int fimExpr = encontrarParentesesFechando(i + 1);
                     String tipoCondicao = avaliarExpressao(i + 2, fimExpr);
@@ -100,7 +101,7 @@ public class Semantico {
     }
 
     private boolean isComandoCondicional(TokenType tipo) {
-        return tipo == TokenType.INCENDIO || tipo == TokenType.DEFLEXIO; 
+        return tipo == TokenType.INCENDIO || tipo == TokenType.DEFLEXIO;
     }
 
     private boolean isComandoLoop(TokenType tipo) {
@@ -115,6 +116,14 @@ public class Semantico {
             else if (tokens.get(i).getTipo() == TokenType.RIGHT_PAREN)
                 contador--;
             if (contador == 0)
+                return i;
+        }
+        return tokens.size() - 1;
+    }
+
+    private int encontrarPontoVirgula(int inicio) {
+        for (int i = inicio; i < tokens.size(); i++) {
+            if (tokens.get(i).getTipo() == TokenType.SEMICOLON)
                 return i;
         }
         return tokens.size() - 1;
@@ -194,7 +203,7 @@ public class Semantico {
                 Token operador = tokens.get(start + 1);
                 System.out.println("operador: " + operador.getLexema());
                 System.out.println("operador: " + operador.getTipo());
-                String tipoDir = avaliarExpressao(end-1, end-1);
+                String tipoDir = avaliarExpressao(end - 1, end - 1);
                 System.out.println("tipoDir: " + tipoDir);
 
                 switch (operador.getTipo()) {
@@ -221,18 +230,34 @@ public class Semantico {
                 }
             }
 
-            if(loopCerto){
+            if (loopCerto) {
                 String tipoEsq = avaliarExpressao(start, start);
                 System.out.println("tipoEsq: " + tipoEsq);
                 Token operador = tokens.get(start + 1);
-                System.out.println("operador: " + operador.getLexema());
-                System.out.println("operador: " + operador.getTipo());
-                String tipoDir = avaliarExpressao(end-1, end-1);
+                String tipoDir = avaliarExpressao(start + 2,start + 2);
                 System.out.println("tipoDir: " + tipoDir);
+                if (tipoEsq.equals(tipoDir)) {
+                    int primeiroPontoVirgula = encontrarPontoVirgula(start + 3);
+                    System.out.println(primeiroPontoVirgula);
+                    String tipoEsq2 = avaliarExpressao(primeiroPontoVirgula + 1, primeiroPontoVirgula + 1);
+                    System.out.println("tipoEsq2: " + tipoEsq2);
+                    String tipoDir2 = avaliarExpressao(primeiroPontoVirgula + 4, primeiroPontoVirgula + 4);
+                    System.out.println("tipoDir2: " + tipoDir2);
+                    if(tipoEsq2.equals(tipoDir2)){
+                        int segundoPontoVirgula = encontrarPontoVirgula(primeiroPontoVirgula + 1);
+                        String tipoDir3 = avaliarExpressao( segundoPontoVirgula + 2, segundoPontoVirgula + 2);
+                        System.out.println("tipoDir3: " + tipoDir3);
+                        String tipoDir3_2 = avaliarExpressao( segundoPontoVirgula + 3, segundoPontoVirgula + 3);
+                        System.out.println("tipoDir3_2: " + tipoDir3_2);
+                        if(tipoDir3 == "+" && tipoDir3_2 == "+" || tipoDir3 == "-" && tipoDir3_2 == "-" ) {
+                            return "boolean";
+                        }
+                    }
+                    return "boolean";
+                    
+                }
 
-               
-            }
-             else {
+            } else {
                 return "indefinido";
             }
 
