@@ -139,7 +139,6 @@ public class Semantico {
     }
 
     private String avaliarExpressao(int start, int end) {
-        System.out.println(end + " - " + start);
         if (start > end)
             return "erro";
 
@@ -232,28 +231,15 @@ public class Semantico {
 
             if (loopCerto) {
                 String tipoEsq = avaliarExpressao(start, start);
-                System.out.println("tipoEsq: " + tipoEsq);
                 Token operador = tokens.get(start + 1);
                 String tipoDir = avaliarExpressao(start + 2,start + 2);
-                System.out.println("tipoDir: " + tipoDir);
                 if (tipoEsq.equals(tipoDir)) {
                     int primeiroPontoVirgula = encontrarPontoVirgula(start + 3);
-                    System.out.println(primeiroPontoVirgula);
                     String tipoEsq2 = avaliarExpressao(primeiroPontoVirgula + 1, primeiroPontoVirgula + 1);
-                    System.out.println("tipoEsq2: " + tipoEsq2);
                     String tipoDir2 = avaliarExpressao(primeiroPontoVirgula + 4, primeiroPontoVirgula + 4);
-                    System.out.println("tipoDir2: " + tipoDir2);
                     if(tipoEsq2.equals(tipoDir2)){
-                        int segundoPontoVirgula = encontrarPontoVirgula(primeiroPontoVirgula + 1);
-                        String tipoDir3 = avaliarExpressao( segundoPontoVirgula + 2, segundoPontoVirgula + 2);
-                        System.out.println("tipoDir3: " + tipoDir3);
-                        String tipoDir3_2 = avaliarExpressao( segundoPontoVirgula + 3, segundoPontoVirgula + 3);
-                        System.out.println("tipoDir3_2: " + tipoDir3_2);
-                        if(tipoDir3 == "+" && tipoDir3_2 == "+" || tipoDir3 == "-" && tipoDir3_2 == "-" ) {
-                            return "boolean";
-                        }
+                        return "boolean";
                     }
-                    return "boolean";
                     
                 }
 
@@ -262,6 +248,6 @@ public class Semantico {
             }
 
         }
-        return "indefinido"; // para casos mais complexos
+        return "indefinido";
     }
 }
