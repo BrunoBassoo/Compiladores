@@ -57,8 +57,6 @@ public class Main {
             System.out.println("ÁRVORE CORRETA!");
             System.out.println("---------------------\n\n");
         }
-        
-
 
         System.out.println("---------------------");
         System.out.println("ANALISADOR SEMÂNTICO\n");

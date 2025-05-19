@@ -388,7 +388,6 @@ public class Parser {
         return false;
     }
 
-
     public boolean identifier(Node root){
         Node identifier = new Node("IDENTIFIER");
 

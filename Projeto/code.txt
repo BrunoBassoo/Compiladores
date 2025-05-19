@@ -1,5 +1,9 @@
 magic
 
-revelio(x);
+int x = 1;
+
+incendio(x == 1) { 
+    revelio("aaaaa");
+}
 
 endmagic

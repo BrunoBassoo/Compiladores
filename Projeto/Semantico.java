@@ -3,6 +3,8 @@ import java.util.*;
 public class Semantico {
     private List<Token> tokens;
     private Map<String, String> variaveisDeclaradas = new HashMap<>();
+    public boolean ifCerto = false;
+    public boolean loopCerto = false;
 
     public Semantico(List<Token> tokens) {
         this.tokens = tokens;
@@ -24,10 +26,9 @@ public class Semantico {
                         variaveisDeclaradas.put(nomeVar, tipo);
                     }
 
-
                     // Atribuição direta no momento da declaração
                     if (i + 2 < tokens.size() && tokens.get(i + 2).getTipo() == TokenType.EQUAL) {
-                        int fimExpr = encontrarFimExpressao(i + 3);
+                        int fimExpr = encontrarFimExpressao(i + 1);
                         String tipoExpr = avaliarExpressao(i + 3, fimExpr);
                         if (!tipoExpr.equals(tipo)) {
                             System.out.println("Erro: atribuição incompatível para '" + nomeVar + "'");
@@ -50,7 +51,7 @@ public class Semantico {
                 } else {
                     int fimExpr = encontrarFimExpressao(i + 2);
                     String tipoExpr = avaliarExpressao(i + 2, fimExpr);
-                    if (!tipoExpr.equals(tipoVar)) {
+                    if (!tipoExpr.equalsIgnoreCase(tipoVar)) {
                         System.out.println("Erro: atribuição incompatível para '" + nomeVar + "'");
                     }
                     i = fimExpr;
@@ -59,11 +60,9 @@ public class Semantico {
 
             // Comando com expressão lógica: incendio(condição)
             if (isComandoCondicional(token.getTipo())) {
-                
+                ifCerto = true;
                 if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
                     int fimExpr = encontrarParentesesFechando(i + 1);
-                    System.out.println(i);
-                    System.out.println(fimExpr);
                     String tipoCondicao = avaliarExpressao(i + 2, fimExpr);
                     if (!tipoCondicao.equals("boolean")) {
                         System.out.println("Erro: condição inválida em comando '" + token.getLexema() + "'");
@@ -75,7 +74,7 @@ public class Semantico {
             if (isComandoLoop(token.getTipo())) {
                 if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
                     int fimExpr = encontrarParentesesFechando(i + 1);
-                    String tipoCondicao = avaliarExpressao(i + 2, fimExpr - 1);
+                    String tipoCondicao = avaliarExpressao(i + 2, fimExpr);
                     if (!tipoCondicao.equals("boolean")) {
                         System.out.println("Erro: condição inválida em loop '" + token.getLexema() + "'");
                     }
@@ -85,7 +84,6 @@ public class Semantico {
 
             // Comando de saída: revellio(expr)
             if (token.getTipo() == TokenType.REVELIO) {
-                System.out.println("caiuaq");
                 if (i + 2 < tokens.size() && tokens.get(i + 1).getTipo() == TokenType.LEFT_PAREN) {
                     int fimExpr = encontrarParentesesFechando(i + 1);
                     String tipoExpr = avaliarExpressao(i + 2, fimExpr - 1);
@@ -102,7 +100,7 @@ public class Semantico {
     }
 
     private boolean isComandoCondicional(TokenType tipo) {
-        return tipo == TokenType.INCENDIO || tipo == TokenType.PROTEGO || tipo == TokenType.DEFLEXIO;
+        return tipo == TokenType.INCENDIO || tipo == TokenType.DEFLEXIO; 
     }
 
     private boolean isComandoLoop(TokenType tipo) {
@@ -132,7 +130,7 @@ public class Semantico {
     }
 
     private String avaliarExpressao(int start, int end) {
-        System.out.println(start + " - " + end);
+        System.out.println(end + " - " + start);
         if (start > end)
             return "erro";
 
@@ -188,6 +186,57 @@ public class Semantico {
             }
         }
 
+        if (end != start) {
+
+            if (ifCerto) {
+                String tipoEsq = avaliarExpressao(start, start);
+                System.out.println("tipoEsq: " + tipoEsq);
+                Token operador = tokens.get(start + 1);
+                System.out.println("operador: " + operador.getLexema());
+                System.out.println("operador: " + operador.getTipo());
+                String tipoDir = avaliarExpressao(end-1, end-1);
+                System.out.println("tipoDir: " + tipoDir);
+
+                switch (operador.getTipo()) {
+                    case PLUS:
+                        if (tipoEsq.equals("int") && tipoDir.equals("int"))
+                            return "int";
+                        if (tipoEsq.equals("str") && tipoDir.equals("str"))
+                            return "str";
+                        System.out.println("Erro: operador '+' inválido entre '" + tipoEsq + "' e '" + tipoDir + "'");
+                        return "erro";
+                    case EQUAL:
+                    case GREATER:
+                    case LESS:
+                        if (tokens.get(start + 2).getTipo() == TokenType.EQUAL) {
+                            if (tipoEsq.equals(tipoDir)) {
+                                return "boolean";
+                            } else {
+                                System.out.println(
+                                        "Erro: operador '==' entre tipos incompatíveis '" + tipoEsq + "' e '" + tipoDir
+                                                + "'");
+                                return "erro";
+                            }
+                        }
+                }
+            }
+
+            if(loopCerto){
+                String tipoEsq = avaliarExpressao(start, start);
+                System.out.println("tipoEsq: " + tipoEsq);
+                Token operador = tokens.get(start + 1);
+                System.out.println("operador: " + operador.getLexema());
+                System.out.println("operador: " + operador.getTipo());
+                String tipoDir = avaliarExpressao(end-1, end-1);
+                System.out.println("tipoDir: " + tipoDir);
+
+               
+            }
+             else {
+                return "indefinido";
+            }
+
+        }
         return "indefinido"; // para casos mais complexos
     }
 }
