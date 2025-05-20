@@ -22,7 +22,6 @@ Já imaginou controlar o fluxo do seu código com um *Accio* ou um *Alohomora*? 
 *   **Funções:** Crie suas próprias funções (feitiços!) e use funções pré-definidas (veja abaixo).
 *   **Comentários:** Use `//` para comentários de linha e `/* ... */` para blocos de comentário.
 *   **Fácil de Aprender:** Se você já conhece outras linguagens, vai tirar de letra (ou melhor, de varinha!).
-*   **Em Desenvolvimento:** A linguagem está sempre evoluindo. Novos feitiços serão adicionados em breve!
 
 ## ⌨️ Palavras Reservadas
 
