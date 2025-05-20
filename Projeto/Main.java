@@ -12,7 +12,7 @@ public class Main {
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
 
-        String filePath = "code.txt"; // Arquivo deve estar no mesmo diretório do projeto
+        String filePath = "Projeto/code.txt"; // Arquivo deve estar no mesmo diretório do projeto
         StringBuilder result = new StringBuilder();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

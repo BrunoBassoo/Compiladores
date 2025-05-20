@@ -56,9 +56,9 @@ public class Parser {
 
     // V = CRIANDO A MAIN 
     private void HEADER(){
-        System.out.println("import java.util.Scanner;\n");
+        System.out.println("import java.util.Scanner\n");
         System.out.println("fun main(){");
-        System.out.println("\tScanner scanner = new Scanner(System.'in')\n");
+        System.out.println("val scanner = Scanner(System.`in`)\n");
     }
 
     // V
@@ -181,10 +181,10 @@ public class Parser {
     // V = Tipo → 'int' | 'dec' | 'str' | 'boolean'
     public boolean tipo(Node root){
         Node tipo = new Node("TIPO");
-        if(matchL("int", "val ",tipo)
-        || matchL("dec", "val ",tipo)
-        || matchL("str", "val ",tipo)
-        || matchL("boolean", "val ",tipo)){
+        if(matchL("int", "var ",tipo)
+        || matchL("dec", "var ",tipo)
+        || matchL("str", "var ",tipo)
+        || matchL("boolean", "var ",tipo)){
             root.addNode(tipo);
             return true;
         } 
