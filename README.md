@@ -1,7 +1,7 @@
 # ⚡️ PotterScript: A Linguagem de Programação do Mundo Bruxo 🪄
 
 [![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-brightgreen.svg)](https://shields.io/)
-[![Versão](https://img.shields.io/badge/Versão-0.1-blue.svg)](https://shields.io/)
+[![Versão](https://img.shields.io/badge/Versão-1.0-blue.svg)](https://shields.io/)
 
 [![harrypotter](https://media1.tenor.com/m/M9kOGVX74UsAAAAC/abell46s-voldemor.gif)](https://www.youtube.com/watch?v=PIwhCiZeVjg)
 
