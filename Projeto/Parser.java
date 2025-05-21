@@ -178,6 +178,17 @@ public class Parser {
     }
 
 
+    public boolean atribuicaoFor(Node root){
+        Node atribuicaoFor = new Node("atribuicaoFor");
+
+        if(matchT(TokenType.INT, "", atribuicaoFor) && identifier(atribuicaoFor) && matchL("=", "", atribuicaoFor) && number(atribuicaoFor)){
+            root.addNode(atribuicaoFor);
+            return true;
+        } // int x = 0; ====== x in 0
+        return false;
+    }
+
+
     // V = Tipo → 'int' | 'dec' | 'str' | 'boolean'
     public boolean tipo(Node root){
         Node tipo = new Node("TIPO");
@@ -252,10 +263,10 @@ public class Parser {
 
         if(matchT(TokenType.ACCIO, "for ",accio) 
         && matchL("(","(",accio)
-        && atribuicao(accio)
-        && expressao(accio) //id
+        && atribuicaoFor(accio) // id = 0
+        && expressaoFor(accio) 
         && matchL(";", "in", accio) //in
-        && atualizacao(accio)
+        && atualizacaoFor(accio)
         && matchL(")",")",accio)
         && matchL("{","{\n\t",accio)
         && listaComandos(accio)
@@ -266,6 +277,87 @@ public class Parser {
         } 
         return false;
     }
+
+    public boolean expressaoFor(Node root){
+        Node expressaoFor = new Node("EXPRESSAO FOR");
+        
+        if((matchT(TokenType.IDENTIFIER, "", expressaoFor) && expressaoForL(expressaoFor))
+        ){
+            root.addNode(expressaoFor);
+            return true;
+        } 
+        return false;        
+    }
+
+    public boolean expressaoForL(Node root){
+        Node expressaoForL = new Node("EXPRESSAO FOR L");
+
+        if((operadorAritFor(expressaoForL))
+        || (operadorCompFor(expressaoForL))
+        || (operadorLogicoFor(expressaoForL))){
+            root.addNode(expressaoForL);
+            return true;
+        } 
+        return false;
+    }
+
+    // V = OpArit → '+' | '-' | '*' | '/' | '%'
+    public boolean operadorAritFor(Node root){
+        Node operadorAritFor = new Node("OPERADOR ARIT FOR");
+
+        if (matchL("+","",operadorAritFor) || 
+        matchL("*","",operadorAritFor) || 
+        matchL("-","",operadorAritFor) ||
+        matchL("/","",operadorAritFor) ||
+        matchL("%","",operadorAritFor)){
+            root.addNode(operadorAritFor);
+            return true;
+        } 
+        return false;
+    }
+
+    // V = OpComp → '==' | '!=' | '>' | '>=' | '<' | '<='
+    public boolean operadorCompFor(Node root){
+        Node operadorCompFor = new Node("OPERADOR COMP FOR");
+
+        if (matchL("=","",operadorCompFor) && matchL("=","",operadorCompFor) || 
+        matchL("!","",operadorCompFor) && matchL("=","",operadorCompFor) || 
+        matchL(">","",operadorCompFor) && operadorCompForL(operadorCompFor) ||
+        matchL("<","",operadorCompFor) && operadorCompForL(operadorCompFor)){
+            root.addNode(operadorCompFor);
+            return true;
+        } 
+        return false;
+    }
+
+    // V
+    public boolean operadorCompForL(Node root){
+        Node operadorCompForL = new Node("OPERADOR COMP FOR L");
+
+        if (matchL("=","",operadorCompForL) 
+        || true){
+            root.addNode(operadorCompForL);
+            return true;
+        } 
+        return false;
+    }
+
+    // V = OpLogico → 'and' | 'or' | 'not' // VER O NOT
+    public boolean operadorLogicoFor(Node root){
+        Node operadorLogico = new Node("OPERADOR LOGICO");
+
+        if (matchL("and", "",operadorLogico) || 
+        matchL("or", "",operadorLogico) || 
+        matchL("not", "",operadorLogico)){
+            root.addNode(operadorLogico);
+            return true;
+        } 
+        return false;
+    }
+
+
+
+    
 
     // V = Crucio → 'crucio' '(' Expressao ')' '{' ListaComandos '}'
     public boolean crucio(Node root){
@@ -286,10 +378,10 @@ public class Parser {
     }
     
     // V = Atualizacao → 'id' OpFor
-    public boolean atualizacao(Node root){
-        Node atualizacao = new Node("ATUALIZACAO");
-        if(number(atualizacao) && matchL("+", "..", atualizacao) && number(atualizacao)){
-            root.addNode(atualizacao);
+    public boolean atualizacaoFor(Node root){
+        Node atualizacaofor = new Node("ATUALIZACAO FOR");
+        if(number(atualizacaofor) && operadorFor(atualizacaofor) && number(atualizacaofor)){
+            root.addNode(atualizacaofor);
             return true;
         } 
         return false;
@@ -298,8 +390,8 @@ public class Parser {
     // V = OpFor → '++' | '--'
     public boolean operadorFor(Node root){
         Node operadorFor = new Node("OPERADOR FOR");
-        if(matchL("+","+",operadorFor) && matchL("+","+",operadorFor) 
-        || matchL("-","-",operadorFor) && matchL("-","-",operadorFor)){
+        if(matchL("+",".",operadorFor) && matchL("+",".",operadorFor) && number(operadorFor) 
+        || matchL("-",".",operadorFor) && matchL("-",".",operadorFor) && number(operadorFor)){
             root.addNode(operadorFor);
             return true;
         } 
