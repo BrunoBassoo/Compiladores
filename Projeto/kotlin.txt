@@ -1,10 +1,14 @@
-import java.util.Scanner
 fun main(){
-val scanner = Scanner(System.`in`)
+var x=3
+var y=5
 
-var x=0
-while (x<3){
-	println("brunao")
- break
+if (x>y){
+println(x)
+}
+else{
+println(y)
+}
+for (z in 20 downTo 10){
+println(z)
 }
 }

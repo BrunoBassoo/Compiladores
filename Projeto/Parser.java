@@ -56,12 +56,8 @@ public class Parser {
 
     // V = CRIANDO A MAIN 
     private void HEADER(){
-        System.out.println("import java.util.Scanner\n");
         System.out.println("fun main(){\n");
-        System.out.println("val scanner = Scanner(System.`in`)\n");
-        writer.write("import java.util.Scanner\n");
         writer.write("fun main(){\n");
-        writer.write("val scanner = Scanner(System.`in`)\n\n");
     }
 
     // V
@@ -107,8 +103,8 @@ public class Parser {
         || spell(comando)
         || revelio(comando)
         || legilimens(comando)
-        || matchT(TokenType.RELASHIO, "continue",comando) && fim(comando)
-        || matchT(TokenType.AVADAKEDAVRA, " break",comando) && fim(comando)
+        || matchT(TokenType.RELASHIO, "\ncontinue",comando) && fim(comando)
+        || matchT(TokenType.AVADAKEDAVRA, "\nbreak",comando) && fim(comando)
         || matchT(TokenType.FINITE,"\nreturn ",comando) && expressao(comando) && fim(comando)
         ){
             root.addNode(comando);
@@ -185,7 +181,16 @@ public class Parser {
     public boolean atribuicaoFor(Node root){
         Node atribuicaoFor = new Node("atribuicaoFor");
 
-        if(matchT(TokenType.INT, "", atribuicaoFor) && identifier(atribuicaoFor) && matchL("=", " in ", atribuicaoFor) && number(atribuicaoFor) && matchL(";", "", atribuicaoFor)){
+        if((matchT(TokenType.INT, "", atribuicaoFor) 
+            && identifier(atribuicaoFor) 
+            && matchL("=", " in ", atribuicaoFor) 
+            && number(atribuicaoFor) 
+            && matchL(";", "", atribuicaoFor))
+            ||
+            (identifier(atribuicaoFor) 
+            && matchL("=", " in ", atribuicaoFor) 
+            && number(atribuicaoFor) 
+            && matchL(";", "", atribuicaoFor))){
             root.addNode(atribuicaoFor);
             return true;
         } // int x = 0; ====== x in 0
@@ -208,15 +213,15 @@ public class Parser {
 
     // V = Incendio → 'incendio' '(' Expressao ')' '{' ListaComandos '}' Deflexio
     public boolean incendio(Node root){
-        Node incendio = new Node("DEFLEXIO");
+        Node incendio = new Node("INCENDIO");
         
-        if(matchT(TokenType.INCENDIO, "if ",incendio) 
+        if(matchT(TokenType.INCENDIO, "\nif ",incendio) 
             && matchL("(","(",incendio)
             && expressao(incendio)
             && matchL(")",")",incendio)
             && matchL("{","{\n",incendio)
             && listaComandos(incendio)
-            && matchL("}","} \n",incendio)
+            && matchL("}","}",incendio)
             && deflexio(incendio)
             ){
             root.addNode(incendio);
@@ -228,7 +233,7 @@ public class Parser {
     // V = Deflexio → 'deflexio' '(' Expressao ')' '{' ListaComandos '}' Deflexio | Protego | ε
     public boolean deflexio(Node root){
         Node deflexio = new Node("DEFLEXIO");
-        if((matchT(TokenType.DEFLEXIO, "else if ",deflexio)
+        if((matchT(TokenType.DEFLEXIO, "\nelse if ",deflexio)
         && matchL("(","(",deflexio)
         && expressao(deflexio)
         && matchL(")",")",deflexio)
@@ -248,7 +253,7 @@ public class Parser {
     // V = Protego → 'protego' '{' ListaComandos '}' | ε
     public boolean protego(Node root){
         Node protego = new Node("PROTEGO");
-        if((matchT(TokenType.PROTEGO, "else",protego)
+        if((matchT(TokenType.PROTEGO, "\nelse",protego)
         && matchL("{","{\n",protego)
         && listaComandos(protego)
         && matchL("}","}",protego))
@@ -265,18 +270,17 @@ public class Parser {
     public boolean accio(Node root){
         Node accio = new Node("ACCIO");
 
-        if(matchT(TokenType.ACCIO, "for ",accio) //
+        if(matchT(TokenType.ACCIO, "\nfor ",accio) //
         && matchL("(","(",accio) //
         && atribuicaoFor(accio) // int id = 0 ;//
         && expressaoFor(accio) 
         && number(accio) //in
         && matchL(";","", accio)
         && atualizacaoFor(accio)
-        && matchL(")",")",accio)
+        && matchL(")","",accio)
         && matchL("{","{\n",accio)
         && listaComandos(accio)
-        && matchL("}","}",accio)
-        ){
+        && matchL("}","}",accio)){
             root.addNode(accio);
             return true;
         } 
@@ -310,7 +314,7 @@ public class Parser {
     public boolean operadorAritFor(Node root){
         Node operadorAritFor = new Node("OPERADOR ARIT FOR");
 
-        if (matchL("+","",operadorAritFor) || 
+        if(matchL("+","",operadorAritFor) || 
         matchL("*","",operadorAritFor) || 
         matchL("-","",operadorAritFor) ||
         matchL("/","",operadorAritFor) ||
@@ -325,10 +329,10 @@ public class Parser {
     public boolean operadorCompFor(Node root){
         Node operadorCompFor = new Node("OPERADOR COMP FOR");
 
-        if (matchL("=",".",operadorCompFor) && matchL("=",".",operadorCompFor) || 
-        matchL("!",".",operadorCompFor) && matchL("=",".",operadorCompFor) || 
-        matchL(">",".",operadorCompFor) && operadorCompForL(operadorCompFor) ||
-        matchL("<",".",operadorCompFor) && operadorCompForL(operadorCompFor)){
+        if (matchL("=","..",operadorCompFor) && matchL("=","",operadorCompFor) || 
+        matchL("!","..",operadorCompFor) && matchL("=","",operadorCompFor) || 
+        matchL(">"," downTo ",operadorCompFor) && operadorCompForL(operadorCompFor) ||
+        matchL("<","..",operadorCompFor) && operadorCompForL(operadorCompFor)){
             root.addNode(operadorCompFor);
             return true;
         } 
@@ -339,7 +343,7 @@ public class Parser {
     public boolean operadorCompForL(Node root){
         Node operadorCompForL = new Node("OPERADOR COMP FOR L");
 
-        if (matchL("=",".",operadorCompForL) 
+        if (matchL("=","",operadorCompForL) 
         || true){
             root.addNode(operadorCompForL);
             return true;
@@ -368,7 +372,7 @@ public class Parser {
     public boolean crucio(Node root){
         Node crucio = new Node("CRUCIO");
 
-        if(matchT(TokenType.CRUCIO,"while ",crucio)
+        if(matchT(TokenType.CRUCIO,"\nwhile ",crucio)
         && matchL("(","(",crucio)
         && expressao(crucio)
         && matchL(")",")",crucio)
@@ -386,7 +390,7 @@ public class Parser {
     public boolean atualizacaoFor(Node root){
         Node atualizacaofor = new Node("ATUALIZACAO FOR");
         if(matchT(TokenType.IDENTIFIER,"",atualizacaofor) && operadorFor(atualizacaofor)
-        || matchL("-","", atualizacaofor) && operadorFor(atualizacaofor)){
+        ){
             root.addNode(atualizacaofor);
             return true;
         } 
@@ -396,8 +400,8 @@ public class Parser {
         // V = Atualizacao → 'id' OpFor
     public boolean operadorFor(Node root){
         Node operadorFor = new Node("OPERADOR FOR");
-        if(matchL("+","", operadorFor) && matchL("+","",operadorFor)  
-        || matchL("-","", operadorFor) && matchL("-","",operadorFor)){
+        if(matchL("+","", operadorFor) && matchL("+"," step 1)",operadorFor)  
+        || matchL("-","", operadorFor) && matchL("-",")",operadorFor)){
             root.addNode(operadorFor);
             return true;
         } 
@@ -605,7 +609,7 @@ public class Parser {
     public boolean legilimens(Node root){
         Node legilimens = new Node("LEGILIMENS");
 
-        if( matchT(TokenType.LEGILIMENS, "scanner.nextLine",legilimens)
+        if(matchT(TokenType.LEGILIMENS, "scanner.nextLine",legilimens)
         && matchL("(", "(",legilimens)
         && matchL(")", ")",legilimens)
         && matchL(";", "\n",legilimens)){

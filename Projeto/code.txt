@@ -1,10 +1,17 @@
 magic
 
-int x = 0;
+int x = 3;
+int y = 5;
 
-crucio(x < 3){
-    revelio("brunao");
-    avadakedavra;
+incendio(x > y){
+    revelio(x);
+}
+protego{
+    revelio(y);
+}
+
+accio(int z = 20; z >= 10; z--){
+    revelio(z);
 }
 
 endmagic
