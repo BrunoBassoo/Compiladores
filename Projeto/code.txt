@@ -6,6 +6,8 @@ revelio("2- Lealdade");
 revelio("3- Ambição");
 revelio("4- Coragem");
 
+->" arroz "<-
+
 int choice = legilimens();
 
 revelio("Sua casa é...");

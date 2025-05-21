@@ -4,7 +4,7 @@ println("1- Curiosidade")
 println("2- Lealdade")
 println("3- Ambição")
 println("4- Coragem")
-var choice=readLine()?.toInt()
+/*" arroz "*/var choice=readLine()?.toInt()
 println("Sua casa é...")
 
 if (choice==1){

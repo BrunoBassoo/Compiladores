@@ -103,6 +103,7 @@ public class Parser {
         || spell(comando)
         || revelio(comando)
         || legilimens(comando)
+        || comentario(comando)
         || matchT(TokenType.RELASHIO, "\ncontinue",comando) && fim(comando)
         || matchT(TokenType.AVADAKEDAVRA, "\nbreak",comando) && fim(comando)
         || matchT(TokenType.FINITE,"\nreturn ",comando) && expressao(comando) && fim(comando)
@@ -585,6 +586,21 @@ public class Parser {
         if (matchT(TokenType.TEXT, token.getLexema(),texto) && texto(texto)
         || true){
             root.addNode(texto);
+            return true;
+        } 
+        return false;
+    }
+
+    // V = Texto → valor Texto | e
+    public boolean comentario(Node root) {
+        Node comentario = new Node("COMENTARIO");
+
+        if (matchL("-", "/", comentario)
+        && matchL(">", "*", comentario)
+        && matchT(TokenType.TEXT, token.getLexema(),comentario) && texto(comentario)
+        && matchL("<", "*", comentario)
+        && matchL("-", "/", comentario)){
+            root.addNode(comentario);
             return true;
         } 
         return false;
