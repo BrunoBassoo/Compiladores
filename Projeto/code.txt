@@ -1,11 +1,7 @@
 magic
 
-int x = 3;
-incendio(x == 3){
-    revelio("Charlao");
-}
-protego{
-    revelio("balbine");
+for(int x = 0; i<3; i++){
+    
 }
 
 endmagic

@@ -157,7 +157,7 @@ public class Parser {
 
         if(identifier(atribuicao) 
         && matchT(TokenType.EQUAL,"=",atribuicao)
-        && atribuicaoL(atribuicao)
+        && atribuicaoL(atribuicao) || true
         ){
             root.addNode(atribuicao);
             return true;
@@ -244,8 +244,8 @@ public class Parser {
         } 
         return false;
     }
-
-    // V = Accio → 'accio' '(' Atribuicao Expressao ';' Atualizacao ')' '{' ListaComandos '}'
+ 
+    // V = Accio → 'accio' '(' Atribuicao Expressao ';' Atualizacao ')' '{' ListaComandos '}'   for (x in 0..10){}
     // FALTA O FOR E VER O ";"
     public boolean accio(Node root){
         Node accio = new Node("ACCIO");
@@ -253,8 +253,8 @@ public class Parser {
         if(matchT(TokenType.ACCIO, "for ",accio) 
         && matchL("(","(",accio)
         && atribuicao(accio)
-        && expressao(accio)
-        && fim(accio)
+        && expressao(accio) //id
+        && matchL(";", "in", accio) //in
         && atualizacao(accio)
         && matchL(")",")",accio)
         && matchL("{","{\n\t",accio)
@@ -288,7 +288,7 @@ public class Parser {
     // V = Atualizacao → 'id' OpFor
     public boolean atualizacao(Node root){
         Node atualizacao = new Node("ATUALIZACAO");
-        if(identifier(atualizacao) && operadorFor(atualizacao)){
+        if(number(atualizacao) && matchL("+", "..", atualizacao) && number(atualizacao)){
             root.addNode(atualizacao);
             return true;
         } 
