@@ -157,7 +157,7 @@ public class Parser {
 
         if(identifier(atribuicao) 
         && matchT(TokenType.EQUAL,"=",atribuicao)
-        && atribuicaoL(atribuicao) || true
+        && atribuicaoL(atribuicao)
         ){
             root.addNode(atribuicao);
             return true;
@@ -181,7 +181,7 @@ public class Parser {
     public boolean atribuicaoFor(Node root){
         Node atribuicaoFor = new Node("atribuicaoFor");
 
-        if(matchT(TokenType.INT, "", atribuicaoFor) && identifier(atribuicaoFor) && matchL("=", "", atribuicaoFor) && number(atribuicaoFor)){
+        if(matchT(TokenType.INT, "", atribuicaoFor) && identifier(atribuicaoFor) && matchL("=", " in ", atribuicaoFor) && number(atribuicaoFor) && matchL(";", "", atribuicaoFor)){
             root.addNode(atribuicaoFor);
             return true;
         } // int x = 0; ====== x in 0
@@ -261,11 +261,12 @@ public class Parser {
     public boolean accio(Node root){
         Node accio = new Node("ACCIO");
 
-        if(matchT(TokenType.ACCIO, "for ",accio) 
-        && matchL("(","(",accio)
-        && atribuicaoFor(accio) // id = 0
+        if(matchT(TokenType.ACCIO, "for ",accio) //
+        && matchL("(","(",accio) //
+        && atribuicaoFor(accio) // int id = 0 ;//
         && expressaoFor(accio) 
-        && matchL(";", "in", accio) //in
+        && number(accio) //in
+        && matchL(";","", accio)
         && atualizacaoFor(accio)
         && matchL(")",")",accio)
         && matchL("{","{\n\t",accio)
@@ -320,10 +321,10 @@ public class Parser {
     public boolean operadorCompFor(Node root){
         Node operadorCompFor = new Node("OPERADOR COMP FOR");
 
-        if (matchL("=","",operadorCompFor) && matchL("=","",operadorCompFor) || 
-        matchL("!","",operadorCompFor) && matchL("=","",operadorCompFor) || 
-        matchL(">","",operadorCompFor) && operadorCompForL(operadorCompFor) ||
-        matchL("<","",operadorCompFor) && operadorCompForL(operadorCompFor)){
+        if (matchL("=",".",operadorCompFor) && matchL("=",".",operadorCompFor) || 
+        matchL("!",".",operadorCompFor) && matchL("=",".",operadorCompFor) || 
+        matchL(">",".",operadorCompFor) && operadorCompForL(operadorCompFor) ||
+        matchL("<",".",operadorCompFor) && operadorCompForL(operadorCompFor)){
             root.addNode(operadorCompFor);
             return true;
         } 
@@ -334,7 +335,7 @@ public class Parser {
     public boolean operadorCompForL(Node root){
         Node operadorCompForL = new Node("OPERADOR COMP FOR L");
 
-        if (matchL("=","",operadorCompForL) 
+        if (matchL("=",".",operadorCompForL) 
         || true){
             root.addNode(operadorCompForL);
             return true;
@@ -380,25 +381,24 @@ public class Parser {
     // V = Atualizacao → 'id' OpFor
     public boolean atualizacaoFor(Node root){
         Node atualizacaofor = new Node("ATUALIZACAO FOR");
-        if(number(atualizacaofor) && operadorFor(atualizacaofor) && number(atualizacaofor)){
+        if(matchT(TokenType.IDENTIFIER,"",atualizacaofor) && operadorFor(atualizacaofor)
+        || matchL("-","", atualizacaofor) && operadorFor(atualizacaofor)){
             root.addNode(atualizacaofor);
             return true;
         } 
         return false;
     }
 
-    // V = OpFor → '++' | '--'
+        // V = Atualizacao → 'id' OpFor
     public boolean operadorFor(Node root){
         Node operadorFor = new Node("OPERADOR FOR");
-        if(matchL("+",".",operadorFor) && matchL("+",".",operadorFor) && number(operadorFor) 
-        || matchL("-",".",operadorFor) && matchL("-",".",operadorFor) && number(operadorFor)){
+        if(matchL("+","", operadorFor) && matchL("+","",operadorFor)  
+        || matchL("-","", operadorFor) && matchL("-","",operadorFor)){
             root.addNode(operadorFor);
             return true;
         } 
         return false;
     }
-
-
 
     // V = Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 
     public boolean spell(Node root){
