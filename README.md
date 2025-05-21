@@ -61,76 +61,27 @@ endmagic
 ```potterscript
 magic
 
-int x;
-int y = 3;
-incendio(x > 3){
-    incendio ( x >= 3 ){
-        accio (x = 2; x<=10;x++){
-            finite true;
-        }
-    } deflexio( x < 3){
-        crucio(true){
-            finite true;
-        }
-    }
-} protego{
-    x = x + y;
+int nota = legilimens();
+
+incendio(nota < 5){
+	revelio("abaixo da media");
+}
+deflexio (nota == 5) {
+	revelio("na media");
+}
+protego{
+	revelio("acima da media");
 }
 
 endmagic
 ```
 
-```potterscript
-magic
-
-spell int somar(int a, int b) {
-    finite a + b;
-} endspell
-
-int main() {
-    int x;
-    int y;
-
-    revelio("Escolha sua operação: somar ou subtrair?");
-    legilimens(operacao);
-
-    revelio("Digite o primeiro número:");
-    legilimens(x);
-
-    revelio("Digite o segundo número:");
-    legilimens(y);
-
-    int soma = somar(x, y);
-    revelio("O resultado da soma é: " + soma);
-
-    incendio (soma < 10){
-        soma = soma * 2
-    } deflexio (soma > 100) {
-        soma = soma / 5;
-    } protego {
-        revelio("O valor da soma está adequado");
-    }
-     finite 0;
-
-} endmagic
-```
-
 ## 🛠️ Como Compilar e Executar
 
-1.  **Instale o PotterScript:** (Instruções detalhadas virão quando o compilador estiver pronto).
-2.  **Escreva seu código** em um arquivo com extensão `.ps` (ex: `meu_feitiço.ps`).
-3.  **Compile:** Use o comando `potterscript meu_feitiço.ps` (ou similar). Isso gerará um executável.
-4.  **Execute:** Rode o executável!
-
-## 🤝 Contribua
-
-Este é um projeto de código aberto! Se você quiser contribuir, siga estes passos:
-
-1.  Faça um *fork* deste repositório.
-2.  Crie uma *branch* para a sua funcionalidade (`git checkout -b feature/meu-feitico`).
-3.  Faça *commit* das suas mudanças (`git commit -am 'Adiciona o feitiço X'`).
-4.  Faça *push* para a *branch* (`git push origin feature/meu-feitico`).
-5.  Abra um *Pull Request*.
+1.  **Instale o Java** na sua máquina
+2.  **Escreva seu código** em um arquivo `.txt` e insira o caminho juntamente com o nome no arquivo `Main.java`.
+3.  **Compile** (rode o código). Isso gerará um executável `.kt`.
+4.  **Execute**
 
 ---
 
