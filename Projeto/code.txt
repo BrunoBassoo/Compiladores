@@ -1,17 +1,28 @@
 magic
 
-int x = 3;
-int y = 5;
+int choice;
 
-incendio(x > y){
-    revelio(x);
-}
-protego{
-    revelio(y);
-}
+revelio("Qual é a caracteristica mais importante pra você?");
+revelio("1- Curiosidade");
+revelio("2- Lealdade");
+revelio("3- Ambição");
+revelio("4- Coragem");
 
-accio(int z = 20; z >= 10; z--){
-    revelio(z);
+choice = legilimens();
+
+revelio("Sua casa é...");
+
+incendio(choice == 1){
+    revelio("Corvinal");
+}
+deflexio(choice == 2){
+    revelio("Lufa-Lufa");
+}
+deflexio(choice == 3){
+    revelio("Sonserina");
+}
+deflexio(choice == 4){
+    revelio("Grifinória");
 }
 
 endmagic

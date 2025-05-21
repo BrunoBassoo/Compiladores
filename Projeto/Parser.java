@@ -609,7 +609,7 @@ public class Parser {
     public boolean legilimens(Node root){
         Node legilimens = new Node("LEGILIMENS");
 
-        if(matchT(TokenType.LEGILIMENS, "scanner.nextLine",legilimens)
+        if(matchT(TokenType.LEGILIMENS, "readLine",legilimens)
         && matchL("(", "(",legilimens)
         && matchL(")", ")",legilimens)
         && matchL(";", "\n",legilimens)){

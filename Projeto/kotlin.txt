@@ -1,14 +1,23 @@
 fun main(){
-var x=3
-var y=5
+var choice
+println("Qual é a caracteristica mais importante pra você?")
+println("1- Curiosidade")
+println("2- Lealdade")
+println("3- Ambição")
+println("4- Coragem")
+choice=scanner.nextLine()
+println("Sua casa é...")
 
-if (x>y){
-println(x)
+if (choice==1){
+println("Corvinal")
 }
-else{
-println(y)
+else if (choice==2){
+println("Lufa-Lufa")
 }
-for (z in 20 downTo 10){
-println(z)
+else if (choice==3){
+println("Sonserina")
+}
+else if (choice==4){
+println("Grifinória")
 }
 }
