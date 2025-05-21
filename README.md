@@ -36,8 +36,6 @@ Tipos de Dados | `int` | Números inteiros.
 Controle de Fluxo | `incendio` | Equivalente a `if`.
 ㅤ| `deflexio` | Equivalente a `else if`.
 ㅤ| `protego` | Equivalente a `else`.
-ㅤ| `alohomora` | Equivalente a `switch`.
-ㅤ| `door` | Equivalente a `case`.
 ㅤ| `avadakedavra` | Equivalente a `break`.
 ㅤ| `relashio` | Equivalente a `continue`.
 ㅤ| `accio` | Equivalente a `for`.
