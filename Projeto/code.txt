@@ -1,14 +1,12 @@
 magic
 
-int choice;
-
 revelio("Qual é a caracteristica mais importante pra você?");
 revelio("1- Curiosidade");
 revelio("2- Lealdade");
 revelio("3- Ambição");
 revelio("4- Coragem");
 
-choice = legilimens();
+int choice = legilimens();
 
 revelio("Sua casa é...");
 

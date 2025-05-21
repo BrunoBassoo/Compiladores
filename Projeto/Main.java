@@ -7,7 +7,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         List<Token> tokens1 = null; // = null 
-        KotlinWriter writer = new KotlinWriter("kotlin.txt");
+        KotlinWriter writer = new KotlinWriter("kotlin.kt");
 
         // ------------------------------------------------------ //
         System.out.println("---------------------");

@@ -127,12 +127,11 @@ public class Parser {
     }
 
 
-    // V = Declaracao →  ';' |  '=' declaracaoL2
+    // V = Declaracao → '=' declaracaoL2
     public boolean declaracaoL(Node root){
         Node declaracaoL = new Node("DECLARACAOL");
 
-        if(fim(declaracaoL) 
-        || matchT(TokenType.EQUAL,"=",declaracaoL) && declaracaoL2(declaracaoL)){
+        if(matchT(TokenType.EQUAL,"=",declaracaoL) && declaracaoL2(declaracaoL)){
             root.addNode(declaracaoL);
             return true;
         } 
@@ -277,7 +276,7 @@ public class Parser {
         && number(accio) //in
         && matchL(";","", accio)
         && atualizacaoFor(accio)
-        && matchL(")","",accio)
+        && matchL(")",")",accio)
         && matchL("{","{\n",accio)
         && listaComandos(accio)
         && matchL("}","}",accio)){
@@ -364,10 +363,7 @@ public class Parser {
         return false;
     }
 
-
-
     
-
     // V = Crucio → 'crucio' '(' Expressao ')' '{' ListaComandos '}'
     public boolean crucio(Node root){
         Node crucio = new Node("CRUCIO");
@@ -389,7 +385,7 @@ public class Parser {
     // V = Atualizacao → 'id' OpFor
     public boolean atualizacaoFor(Node root){
         Node atualizacaofor = new Node("ATUALIZACAO FOR");
-        if(matchT(TokenType.IDENTIFIER,"",atualizacaofor) && operadorFor(atualizacaofor)
+        if(matchL(token.getLexema(), " step " + token.getLexema(),atualizacaofor)
         ){
             root.addNode(atualizacaofor);
             return true;
@@ -397,16 +393,6 @@ public class Parser {
         return false;
     }
 
-        // V = Atualizacao → 'id' OpFor
-    public boolean operadorFor(Node root){
-        Node operadorFor = new Node("OPERADOR FOR");
-        if(matchL("+","", operadorFor) && matchL("+"," step 1)",operadorFor)  
-        || matchL("-","", operadorFor) && matchL("-",")",operadorFor)){
-            root.addNode(operadorFor);
-            return true;
-        } 
-        return false;
-    }
 
     // V = Spell → 'spell' Tipo 'id' '(' Parametros ')' '{' ListaComandos '}' 
     public boolean spell(Node root){
@@ -697,6 +683,26 @@ public class Parser {
     private void traduz(String code){
         System.out.print(code);
         writer.write(code);
-    }
 
+        if(code.equals("readLine")){
+            for (int i = 0; i < tokens.size(); i++){
+                token = tokens.get(i);
+                if(token.getTipo().equals(TokenType.LEGILIMENS)){
+                    TokenType tokenTipo = (tokens.get(i - 3).getTipo());
+                    if(tokenTipo.equals(TokenType.INT)){
+                        System.out.println("()?.toInt");
+                        writer.write("()?.toInt");
+                    }
+                    if(tokenTipo.equals(TokenType.DEC)){
+                        System.out.println("()?.toDouble");
+                        writer.write("()?.toDouble");
+                    }
+                    if(tokenTipo.equals(TokenType.BOOLEAN)){
+                        System.out.println("()?.toBoolean");
+                        writer.write("()?.toBoolean");
+                    }
+                }
+            }
+        }
+    }
 }
