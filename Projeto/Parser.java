@@ -591,15 +591,25 @@ public class Parser {
         return false;
     }
 
+    // V = Coment → valor Coment | e
+    public boolean coment(Node root) {
+        Node coment = new Node("COMENTARIO");
+
+        if (matchT(TokenType.COMENT, token.getLexema(),coment) && coment(coment)
+        || true){
+            root.addNode(coment);
+            return true;
+        } 
+        return false;
+    }
+
     // V = Texto → valor Texto | e
     public boolean comentario(Node root) {
         Node comentario = new Node("COMENTARIO");
 
-        if (matchL("-", "/", comentario)
-        && matchL(">", "*", comentario)
-        && matchT(TokenType.TEXT, token.getLexema(),comentario) && texto(comentario)
-        && matchL("<", "*", comentario)
-        && matchL("-", "/", comentario)){
+        if (matchL("-", "/*", comentario)
+        && matchT(TokenType.COMENT, token.getLexema(),comentario) && coment(comentario)
+        && matchL("-", "*/", comentario)){
             root.addNode(comentario);
             return true;
         } 
