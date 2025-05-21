@@ -16,6 +16,7 @@ public class Lexer {
         this.afds.add(new Number());
         this.afds.add(new Identifier());
         this.afds.add(new text());
+        this.afds.add(new coment());
     }
 
     public void skipWhiteSpace(){

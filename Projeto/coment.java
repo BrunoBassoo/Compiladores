@@ -6,26 +6,25 @@ public class coment extends AFD {
     public Token evaluate(CharacterIterator code){
         String letter = readString(code);
         if (isTokenSeparator(code)){
-            return new Token(TokenType.TEXT, letter);
+            return new Token(TokenType.COMENT, letter);
         }
         
         return null;
     }
     private String readString(CharacterIterator code){
-        String letter=">";
-        if (code.current() == '>') {
+        String letter="";
+        if (code.current() == '|') {
             code.next();
         } else {
             return null;
         }
 
-        while (code.current() != '<') {
+        while (code.current() != '|') {
             letter += code.current();
             code.next();
         }
 
-        if (code.current() == '<') {
-            letter += "<";
+        if (code.current() == '|') {
             code.next();
         } else {
             return null;

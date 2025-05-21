@@ -6,7 +6,8 @@ revelio("2- Lealdade");
 revelio("3- Ambição");
 revelio("4- Coragem");
 
--> arroz <-
+<| charlao, vc deveria ser o coordenador do curso. |>
+
 
 int choice = legilimens();
 
@@ -23,6 +24,9 @@ deflexio(choice == 3){
 }
 deflexio(choice == 4){
     revelio("Grifinória");
+}
+protego{
+    revelio("valor incorreto!);
 }
 
 endmagic

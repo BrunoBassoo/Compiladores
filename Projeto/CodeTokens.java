@@ -107,6 +107,8 @@ public class CodeTokens extends AFD {
                             return new Token(TokenType.NOT, lexema);
                         case "text":
                             return new Token(TokenType.TEXT, lexema);
+                        case "coment":
+                            return new Token(TokenType.COMENT, lexema);
                             }
                         }
                     }

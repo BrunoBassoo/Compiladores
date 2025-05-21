@@ -26,12 +26,13 @@ public enum TokenType {
     IDENTIFIER("[a-zA-Z_][a-zA-Z0-9_]*"),
     NUMBER("[0-9]+(.[0-9]+)?"),
     TEXT("\"[^\"]*\""),
-    COMENT(">[^\"]*<"),
+    COMENT("|[^\"]*|"),
+
 
 
     PLUS("+"),
     MINUS("-"),
-    TIMES("*"),
+    TIMES("*"), 
     DIVIDE("/"),
     EQUAL_EQUAL("=="),
     LESS_EQUAL("<="),
@@ -62,3 +63,5 @@ public enum TokenType {
         return regex;
     }
 }
+
+
