@@ -19,6 +19,4 @@ println("Sonserina")
 else if (choice==4){
 println("Grifinória")
 }
-for (z in 0..20 step 1){
-}
 }
