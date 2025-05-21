@@ -104,7 +104,7 @@ public class Parser {
         || revelio(comando)
         || legilimens(comando)
         || matchT(TokenType.RELASHIO, "continue",comando) && fim(comando)
-        || matchT(TokenType.AVADAKEDAVRA, "break",comando)
+        || matchT(TokenType.AVADAKEDAVRA, " break",comando) && fim(comando)
         || matchT(TokenType.FINITE,"\nreturn ",comando) && expressao(comando) && fim(comando)
         ){
             root.addNode(comando);
@@ -210,7 +210,7 @@ public class Parser {
             && matchL("(","(",incendio)
             && expressao(incendio)
             && matchL(")",")",incendio)
-            && matchL("{","{\n\t",incendio)
+            && matchL("{","{\n",incendio)
             && listaComandos(incendio)
             && matchL("}","} \n",incendio)
             && deflexio(incendio)
@@ -228,7 +228,7 @@ public class Parser {
         && matchL("(","(",deflexio)
         && expressao(deflexio)
         && matchL(")",")",deflexio)
-        && matchL("{","{\n\t",deflexio)
+        && matchL("{","{\n",deflexio)
         && listaComandos(deflexio)
         && matchL("}","}",deflexio)
         && deflexio(deflexio)) 
@@ -245,7 +245,7 @@ public class Parser {
     public boolean protego(Node root){
         Node protego = new Node("PROTEGO");
         if((matchT(TokenType.PROTEGO, "else",protego)
-        && matchL("{","{\n\t",protego)
+        && matchL("{","{\n",protego)
         && listaComandos(protego)
         && matchL("}","}",protego))
         || true
@@ -269,7 +269,7 @@ public class Parser {
         && matchL(";","", accio)
         && atualizacaoFor(accio)
         && matchL(")",")",accio)
-        && matchL("{","{\n\t",accio)
+        && matchL("{","{\n",accio)
         && listaComandos(accio)
         && matchL("}","}",accio)
         ){

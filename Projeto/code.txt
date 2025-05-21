@@ -1,7 +1,8 @@
 magic
 
-accio(int x = 13; i>=10; i++){
-    revelio("deu certo o for!")
+crucio(x <3 ){
+    revelio("brunao");
+    avadakedavra;
 }
 
 endmagic
