@@ -9,14 +9,14 @@ public class Parser {
     private int tokenIndex;
     private Tree tree;
     private Node root;
+    private KotlinWriter writer;
 
-
-
-    public Parser(List<Token> tokens){
+    public Parser(List<Token> tokens, KotlinWriter writer){
         this.tokens = tokens;
         this.tokenIndex = 0;
         this.root = new Node("--> RAIZ <--");
         this.tree = new Tree(root);
+        this.writer = writer;
     }
 
     public Token getNextToken(){
@@ -57,13 +57,17 @@ public class Parser {
     // V = CRIANDO A MAIN 
     private void HEADER(){
         System.out.println("import java.util.Scanner\n");
-        System.out.println("fun main(){");
+        System.out.println("fun main(){\n");
         System.out.println("val scanner = Scanner(System.`in`)\n");
+        writer.write("import java.util.Scanner\n");
+        writer.write("fun main(){\n");
+        writer.write("val scanner = Scanner(System.`in`)\n\n");
     }
 
     // V
     public void SHOLDER(){
-        System.out.println("}");
+        System.out.println("\n}");
+        writer.write("\n}");
     }
     
     // V = Programa → 'magic' ListaComandos 'endmagic'
@@ -688,6 +692,7 @@ public class Parser {
 
     private void traduz(String code){
         System.out.print(code);
+        writer.write(code);
     }
 
 }

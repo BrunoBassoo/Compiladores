@@ -1,6 +1,8 @@
 magic
 
-crucio(x <3 ){
+int x = 0;
+
+crucio(x < 3){
     revelio("brunao");
     avadakedavra;
 }

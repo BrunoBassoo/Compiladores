@@ -7,12 +7,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         List<Token> tokens1 = null; // = null 
+        KotlinWriter writer = new KotlinWriter("kotlin.txt");
 
         // ------------------------------------------------------ //
         System.out.println("---------------------");
         System.out.println("ANALISADOR LEXICO\n");
 
-        String filePath = "Projeto/code.txt"; // Arquivo deve estar no mesmo diretório do projeto
+        String filePath = "code.txt"; // Arquivo deve estar no mesmo diretório do projeto
         StringBuilder result = new StringBuilder();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -47,7 +48,7 @@ public class Main {
         System.out.println("ANALISADOR SINTÁTICO\n");
 
         
-        Parser parser = new Parser(tokens);
+        Parser parser = new Parser(tokens, writer);
         Tree tree = parser.main();
         if(tree != null){
             System.out.println("\n---------------------");
@@ -66,7 +67,6 @@ public class Main {
 
         // System.out.println("\nSEMÂNTICO CORRETO!");
         System.out.println("---------------------\n\n");
-
-        
+        writer.close();
     }
 }
