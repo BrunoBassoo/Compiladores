@@ -50,14 +50,6 @@ Outros | `and` | Operador lógico "E".
 
 ## 🚀 Exemplos de Código
 
-**Olá, Mundo Bruxo!:**
-
-```potterscript
-magic
-    revelio("Olá, Mundo Bruxo!");
-endmagic
-```
-
 ```potterscript
 magic
 
