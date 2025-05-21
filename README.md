@@ -78,4 +78,5 @@ endmagic
 ---
 
 **Desenvolvido com ⚡️, ✨ e muito 🧪 por fãs de Harry Potter!**
+
 **Lumos Máxima!**
