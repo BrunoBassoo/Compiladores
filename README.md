@@ -60,9 +60,11 @@ magic
 <| espero que o charlao goste |>
 
 int a = 0;
+a = 1 + "oi"; 
 
 accio(int i = 3; i<10; 2){
     revelio(i + "° numero: " + i);
+    str c = i + 2;
     incendio(i == 3){
         revelio("Charlão é muito gente boa");
     } deflexio (i == 5){
