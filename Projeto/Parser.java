@@ -632,7 +632,7 @@ public class Parser {
     // V = Texto → valor Texto | e
     public boolean comentario(Node root) {
         Node comentario = new Node("COMENTARIO");
-        if (matchL("<","/", comentario)
+        if (matchL("<","/*", comentario)
         && matchT(TokenType.COMENT, token.getLexema(),comentario) && coment(comentario)
         && matchL(">","*/\n", comentario)){
             root.addNode(comentario);
