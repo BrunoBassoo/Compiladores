@@ -53,7 +53,9 @@ Outros | `and` | Operador lógico "E".
 ```potterscript
 magic
 
+revelio("Digite sua nota: ");
 int nota = legilimens();
+
 
 incendio(nota < 5){
 	revelio("abaixo da media");
