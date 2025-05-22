@@ -68,6 +68,41 @@ protego{
 endmagic
 ```
 
+```potterscript
+magic
+
+revelio("Qual é a caracteristica mais importante pra você?");
+revelio("1- Curiosidade");
+revelio("2- Lealdade");
+revelio("3- Ambição");
+revelio("4- Coragem");
+
+<| charlao, vc deveria ser o coordenador do curso. |>
+
+
+int choice = legilimens();
+
+revelio("Sua casa é...");
+
+incendio(choice == 1){
+    revelio("Corvinal");
+}
+deflexio(choice == 2){
+    revelio("Lufa-Lufa");
+}
+deflexio(choice == 3){
+    revelio("Sonserina");
+}
+deflexio(choice == 4){
+    revelio("Grifinória");
+}
+protego{
+    revelio("valor incorreto!);
+}
+
+endmagic
+```
+
 ## 🛠️ Como Compilar e Executar
 
 1.  **Instale o Java** na sua máquina
