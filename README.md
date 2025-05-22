@@ -47,6 +47,7 @@ Entrada/Saída | `revelio` | Exibe mensagens na tela (equivalente a `print`).
 Outros | `and` | Operador lógico "E".
 ㅤ| `or` | Operador lógico "OU".
 ㅤ| `not` | Operador lógico "NÃO".
+Comentário | <  > | 
 
 ## 🚀 Exemplos de Código
 
