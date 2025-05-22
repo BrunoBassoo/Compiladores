@@ -1,6 +1,6 @@
 fun main(){
 println("Digite sua nota: ")
-var nota=readLine()?.toIntOrNull()
+var nota=readLine()?.toInt()
 
 if (nota==null){
 println("errado!")

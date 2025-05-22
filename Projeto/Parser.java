@@ -714,14 +714,20 @@ public class Parser {
                 token = tokens.get(i);
                 if(token.getTipo().equals(TokenType.LEGILIMENS)){
                     TokenType tokenTipo = (tokens.get(i - 3).getTipo());
+                    String tokenLexema = (tokens.get(i - 2).getLexema());
                     if(tokenTipo.equals(TokenType.INT)){
-                        writer.write("()?.toIntOrNull");
+                        writer.write("()?.toInt");
+                        System.out.println("()?.toInt");
+                        
                     }
                     if(tokenTipo.equals(TokenType.DEC)){
                         writer.write("()?.toDouble");
+                        System.out.println("()?.toDouble");
                     }
                     if(tokenTipo.equals(TokenType.BOOLEAN)){
+                        writer.write("()?.toBoolean");
                         System.out.print("()?.toBoolean");
+                        
                     }
                 }
             }
