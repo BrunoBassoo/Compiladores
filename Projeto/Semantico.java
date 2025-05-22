@@ -185,31 +185,34 @@ public class Semantico {
         if (end - start == 2) {
             String tipoEsq = avaliarExpressao(start, start);
             Token operador = tokens.get(start + 1);
+            Token verificaToken = tokens.get(start - 2);
             String tipoDir = avaliarExpressao(end, end);
 
-            switch (operador.getTipo()) {
-                case PLUS:
-                    if (tipoEsq.equals("int") && tipoDir.equals("int"))
-                        return "int";
-                    if (tipoEsq.equals("str") && tipoDir.equals("str"))
-                        return "str";
-                    System.out.println("ERRO ====> OPERADOR '+' INVÁLIDO ENTRE '" + tipoEsq + "' e '" + tipoDir + "'");
-                    return "erro";
-                case EQUAL_EQUAL:
-                case LESS:
-                case GREATER:
-                case LESS_EQUAL:
-                case GREATER_EQUAL:
-                case NOT_EQUAL:
-                    if (tipoEsq.equals(tipoDir))
-                        return "boolean";
-                    System.out.println(
-                            "ERRO ====> OPERADOR DE COMPARAÇÃO INVÁLIDO ENTRE TIPOS INCOMPATÍVEIS '" + tipoEsq + "' e '"
-                                    + tipoDir + "'");
-                    return "erro";
-                default:
-                    System.out.println("ERRO ====> OPERADOR '" + operador.getLexema() + "' NÃO SUPORTADO.");
-                    return "erro";
+            if(verificaToken.getTipo() != TokenType.REVELIO){
+                switch (operador.getTipo()) {
+                    case PLUS:
+                        if (tipoEsq.equals("int") && tipoDir.equals("int"))
+                            return "int";
+                        if (tipoEsq.equals("str") && tipoDir.equals("str"))
+                            return "str";
+                        System.out.println("ERRO ====> OPERADOR '+' INVÁLIDO ENTRE '" + tipoEsq + "' e '" + tipoDir + "'");
+                        return "erro";
+                    case EQUAL_EQUAL:
+                    case LESS:
+                    case GREATER:
+                    case LESS_EQUAL:
+                    case GREATER_EQUAL:
+                    case NOT_EQUAL:
+                        if (tipoEsq.equals(tipoDir))
+                            return "boolean";
+                        System.out.println(
+                                "ERRO ====> OPERADOR DE COMPARAÇÃO INVÁLIDO ENTRE TIPOS INCOMPATÍVEIS '" + tipoEsq + "' e '"
+                                        + tipoDir + "'");
+                        return "erro";
+                    default:
+                        System.out.println("ERRO ====> OPERADOR '" + operador.getLexema() + "' NÃO SUPORTADO.");
+                        return "erro";
+                }
             }
         }
 
@@ -219,32 +222,35 @@ public class Semantico {
                 String tipoEsq = avaliarExpressao(start, start);
                 Token operador = tokens.get(start + 1);
                 String tipoDir = avaliarExpressao(end - 1, end - 1);
+                Token verificaToken = tokens.get(start - 2);
 
-                switch (operador.getTipo()) {
-                    case PLUS:
-                        if (tipoEsq.equals("int") && tipoDir.equals("int"))
-                            return "int";
-                        if (tipoEsq.equals("str") && tipoDir.equals("str"))
-                            return "str";
-                        System.out.println(
-                                "ERRO ====> OPERADOR '+' INVÁLIDO ENTRE '" + tipoEsq + "' e '" + tipoDir + "'");
-                        return "erro";
-                    case EQUAL:
-                    case GREATER:
-                    case LESS:
-                        if (tokens.get(start + 2).getTipo() == TokenType.EQUAL) {
-                            if (tipoEsq.equals(tipoDir)) {
-                                return "boolean";
+                if(verificaToken.getTipo() != TokenType.REVELIO){
+                    switch (operador.getTipo()) {
+                        case PLUS:
+                            if (tipoEsq.equals("int") && tipoDir.equals("int"))
+                                return "int";
+                            if (tipoEsq.equals("str") && tipoDir.equals("str"))
+                                return "str";
+                            System.out.println(
+                                    "ERRO ====> OPERADOR '+' INVÁLIDO ENTRE '" + tipoEsq + "' e '" + tipoDir + "'");
+                            return "erro";
+                        case EQUAL:
+                        case GREATER:
+                        case LESS:
+                            if (tokens.get(start + 2).getTipo() == TokenType.EQUAL) {
+                                if (tipoEsq.equals(tipoDir)) {
+                                    return "boolean";
+                                } else {
+                                    System.out.println(
+                                            "ERRO ====> OPERADOR DE COMPARAÇÃO ENTRE TIPOS INCOMPATÍVEIS '" + tipoEsq
+                                                    + "' e '" + tipoDir
+                                                    + "'");
+                                    return "erro";
+                                }
                             } else {
-                                System.out.println(
-                                        "ERRO ====> OPERADOR DE COMPARAÇÃO ENTRE TIPOS INCOMPATÍVEIS '" + tipoEsq
-                                                + "' e '" + tipoDir
-                                                + "'");
-                                return "erro";
+                                System.out.println("ERRO ====> OPERADOR INVÁLIDO");
                             }
-                        } else {
-                            System.out.println("ERRO ====> OPERADOR INVÁLIDO");
-                        }
+                    }
                 }
             }
 
