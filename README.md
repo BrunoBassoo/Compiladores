@@ -5,7 +5,7 @@
 
 [![harrypotter](https://media1.tenor.com/m/M9kOGVX74UsAAAAC/abell46s-voldemor.gif)](https://www.youtube.com/watch?v=PIwhCiZeVjg)
 
-## ✨ *Accio Código!* ✨
+## ✨ *Revelio Código!* ✨
 
 **PotterScript** é uma linguagem de programação de propósito geral inspirada no universo mágico de Harry Potter. Com ela, você poderá conjurar programas com a mesma facilidade com que um bruxo lança feitiços. Prepare sua varinha (ou melhor, seu teclado) e embarque nessa aventura!
 
