@@ -1,32 +1,20 @@
 magic
 
-revelio("Qual é a caracteristica mais importante pra você?");
-revelio("1- Curiosidade");
-revelio("2- Lealdade");
-revelio("3- Ambição");
-revelio("4- Coragem");
+revelio("Digite sua nota: ");
+int nota = legilimens();
 
-<| charlao, vc deveria ser o coordenador do curso. |>
-
-
-int choice = legilimens();
-
-revelio("Sua casa é...");
-
-incendio(choice == 1){
-    revelio("Corvinal");
+incendio(nota == null){
+    revelio("errado!");
 }
-deflexio(choice == 2){
-    revelio("Lufa-Lufa");
+
+deflexio(nota < 5){
+	revelio("abaixo da media");
 }
-deflexio(choice == 3){
-    revelio("Sonserina");
-}
-deflexio(choice == 4){
-    revelio("Grifinória");
+deflexio (nota == 5) {
+	revelio("na media");
 }
 protego{
-    revelio("valor incorreto!);
+	revelio("acima da media");
 }
 
 endmagic
