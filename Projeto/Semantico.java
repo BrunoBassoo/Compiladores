@@ -21,7 +21,7 @@ public class Semantico {
                     String nomeVar = tokens.get(i + 1).getLexema();
 
                     if (variaveisDeclaradas.containsKey(nomeVar)) {
-                        System.out.println("Erro: variável '" + nomeVar + "' já foi declarada.");
+                        System.out.println("ERRO ====> VARIÁVEL '" + nomeVar + "' JÁ DECLARADA");
                     } else {
                         variaveisDeclaradas.put(nomeVar, tipo);
                     }
@@ -29,9 +29,14 @@ public class Semantico {
                     // Atribuição direta no momento da declaração
                     if (i + 2 < tokens.size() && tokens.get(i + 2).getTipo() == TokenType.EQUAL) {
                         int fimExpr = encontrarFimExpressao(i + 1);
-                        String tipoExpr = avaliarExpressao(i + 3, fimExpr);
+                        String tipoExpr;
+                        if (tokens.get(i + 3).getTipo() == TokenType.LEGILIMENS) {
+                            tipoExpr = tipo;
+                        } else {
+                            tipoExpr = avaliarExpressao(i + 3, fimExpr);
+                        }
                         if (!tipoExpr.equals(tipo)) {
-                            System.out.println("Erro: atribuição incompatível para '" + nomeVar + "'");
+                            System.out.println("ERRO ====> ATRIBUIÇÃO INCOMPATÍVEL PARAA '" + nomeVar + "'");
                         }
                         i = fimExpr;
                     } else {
@@ -45,16 +50,30 @@ public class Semantico {
                     && tokens.get(i + 1).getTipo() == TokenType.EQUAL) {
                 String nomeVar = token.getLexema();
                 String tipoVar = variaveisDeclaradas.get(nomeVar);
-
-                if (tipoVar == null) {
-                    System.out.println("Erro: variável '" + nomeVar + "' não foi declarada.");
+                String tipoExpr;
+                System.out.println(tokens.get(i + 2).getTipo());
+                if (tokens.get(i + 2).getTipo() == TokenType.LEGILIMENS) {
+                    tipoExpr = tipoVar;
                 } else {
-                    int fimExpr = encontrarFimExpressao(i + 2);
-                    String tipoExpr = avaliarExpressao(i + 2, fimExpr);
-                    if (!tipoExpr.equalsIgnoreCase(tipoVar)) {
-                        System.out.println("Erro: atribuição incompatível para '" + nomeVar + "'");
+                    if (tipoVar == null) {
+                        String tipo = tokens.get(i - 1).getTipo().toString();
+                        if (tokens.get(i - 1).getTipo() == TokenType.INT
+                                || tokens.get(i - 1).getTipo() == TokenType.BOOLEAN
+                                || tokens.get(i - 1).getTipo() == TokenType.DEC
+                                || tokens.get(i - 1).getTipo() == TokenType.STR) {
+                            variaveisDeclaradas.put(nomeVar, tipo);
+                            continue;
+                        } else {
+                            System.out.println("ERRO ====> VARIÁVEL '" + nomeVar + "' NÃO FOI DECLARADA");
+                        }
+                    } else {
+                        int fimExpr = encontrarFimExpressao(i + 2);
+                        tipoExpr = avaliarExpressao(i + 2, fimExpr);
+                        if (!tipoExpr.equalsIgnoreCase(tipoVar)) {
+                            System.out.println("ERRO ====> ATRIBUIÇÃO INCOMPATÍVEL PARA '" + nomeVar + "'");
+                        }
+                        i = fimExpr;
                     }
-                    i = fimExpr;
                 }
             }
 
@@ -65,7 +84,7 @@ public class Semantico {
                     int fimExpr = encontrarParentesesFechando(i + 1);
                     String tipoCondicao = avaliarExpressao(i + 2, fimExpr);
                     if (!tipoCondicao.equals("boolean")) {
-                        System.out.println("Erro: condição inválida em comando '" + token.getLexema() + "'");
+                        System.out.println("ERRO ====> CONDIÇÃO INVÁLIDA EM COMANDO '" + token.getLexema() + "'");
                     }
                     i = fimExpr;
                 }
@@ -77,7 +96,7 @@ public class Semantico {
                     int fimExpr = encontrarParentesesFechando(i + 1);
                     String tipoCondicao = avaliarExpressao(i + 2, fimExpr);
                     if (!tipoCondicao.equals("boolean")) {
-                        System.out.println("Erro: condição inválida em loop '" + token.getLexema() + "'");
+                        System.out.println("ERRO ====> CONDIÇÃO INVÁLIDA EM LOOP '" + token.getLexema() + "'");
                     }
                     i = fimExpr;
                 }
@@ -101,11 +120,11 @@ public class Semantico {
     }
 
     private boolean isComandoCondicional(TokenType tipo) {
-        return tipo == TokenType.INCENDIO || tipo == TokenType.DEFLEXIO;
+        return tipo == TokenType.INCENDIO || tipo == TokenType.DEFLEXIO || tipo == TokenType.CRUCIO;
     }
 
     private boolean isComandoLoop(TokenType tipo) {
-        return tipo == TokenType.CRUCIO || tipo == TokenType.ACCIO;
+        return tipo == TokenType.ACCIO;
     }
 
     private int encontrarParentesesFechando(int inicio) {
@@ -142,7 +161,6 @@ public class Semantico {
         if (start > end)
             return "erro";
 
-        // Expressão simples: um valor ou identificador
         if (start == end) {
             Token token = tokens.get(start);
             switch (token.getTipo()) {
@@ -151,19 +169,19 @@ public class Semantico {
                 case TEXT:
                     return "str";
                 case IDENTIFIER:
-
                     String tipo = variaveisDeclaradas.get(token.getLexema());
                     if (tipo == null) {
-                        System.out.println("Erro: variável '" + token.getLexema() + "' não foi declarada.");
+                        System.out.println("ERRO ====> VARIÁVEL '" + token.getLexema() + "' NÃO FOI DECLARADA");
                         return "erro";
                     }
                     return tipo;
+                case INT:
+                    return "int";
                 default:
                     return "erro";
             }
         }
 
-        // Expressão binária simples: x + y, x == y
         if (end - start == 2) {
             String tipoEsq = avaliarExpressao(start, start);
             Token operador = tokens.get(start + 1);
@@ -175,7 +193,7 @@ public class Semantico {
                         return "int";
                     if (tipoEsq.equals("str") && tipoDir.equals("str"))
                         return "str";
-                    System.out.println("Erro: operador '+' inválido entre '" + tipoEsq + "' e '" + tipoDir + "'");
+                    System.out.println("ERRO ====> OPERADOR '+' INVÁLIDO ENTRE '" + tipoEsq + "' e '" + tipoDir + "'");
                     return "erro";
                 case EQUAL_EQUAL:
                 case LESS:
@@ -186,10 +204,11 @@ public class Semantico {
                     if (tipoEsq.equals(tipoDir))
                         return "boolean";
                     System.out.println(
-                            "Erro: operador '==' entre tipos incompatíveis '" + tipoEsq + "' e '" + tipoDir + "'");
+                            "ERRO ====> OPERADOR DE COMPARAÇÃO INVÁLIDO ENTRE TIPOS INCOMPATÍVEIS '" + tipoEsq + "' e '"
+                                    + tipoDir + "'");
                     return "erro";
                 default:
-                    System.out.println("Erro: operador '" + operador.getLexema() + "' não suportado.");
+                    System.out.println("ERRO ====> OPERADOR '" + operador.getLexema() + "' NÃO SUPORTADO.");
                     return "erro";
             }
         }
@@ -198,12 +217,8 @@ public class Semantico {
 
             if (ifCerto) {
                 String tipoEsq = avaliarExpressao(start, start);
-                System.out.println("tipoEsq: " + tipoEsq);
                 Token operador = tokens.get(start + 1);
-                System.out.println("operador: " + operador.getLexema());
-                System.out.println("operador: " + operador.getTipo());
                 String tipoDir = avaliarExpressao(end - 1, end - 1);
-                System.out.println("tipoDir: " + tipoDir);
 
                 switch (operador.getTipo()) {
                     case PLUS:
@@ -211,7 +226,8 @@ public class Semantico {
                             return "int";
                         if (tipoEsq.equals("str") && tipoDir.equals("str"))
                             return "str";
-                        System.out.println("Erro: operador '+' inválido entre '" + tipoEsq + "' e '" + tipoDir + "'");
+                        System.out.println(
+                                "ERRO ====> OPERADOR '+' INVÁLIDO ENTRE '" + tipoEsq + "' e '" + tipoDir + "'");
                         return "erro";
                     case EQUAL:
                     case GREATER:
@@ -221,32 +237,62 @@ public class Semantico {
                                 return "boolean";
                             } else {
                                 System.out.println(
-                                        "Erro: operador '==' entre tipos incompatíveis '" + tipoEsq + "' e '" + tipoDir
+                                        "ERRO ====> OPERADOR DE COMPARAÇÃO ENTRE TIPOS INCOMPATÍVEIS '" + tipoEsq
+                                                + "' e '" + tipoDir
                                                 + "'");
                                 return "erro";
                             }
+                        } else {
+                            System.out.println("ERRO ====> OPERADOR INVÁLIDO");
                         }
                 }
             }
 
             if (loopCerto) {
                 String tipoEsq = avaliarExpressao(start, start);
-                Token operador = tokens.get(start + 1);
-                String tipoDir = avaliarExpressao(start + 2,start + 2);
+                String tipoDir = avaliarExpressao(start + 3, start + 3);
                 if (tipoEsq.equals(tipoDir)) {
-                    int primeiroPontoVirgula = encontrarPontoVirgula(start + 3);
-                    String tipoEsq2 = avaliarExpressao(primeiroPontoVirgula + 1, primeiroPontoVirgula + 1);
-                    String tipoDir2 = avaliarExpressao(primeiroPontoVirgula + 4, primeiroPontoVirgula + 4);
-                    if(tipoEsq2.equals(tipoDir2)){
-                        return "boolean";
-                    }
-                    
-                }
+                    String nomeVar = tokens.get(start + 1).getLexema();
+                    // declara a variavel
+                    variaveisDeclaradas.put(nomeVar, tipoDir);
 
-            } else {
-                return "indefinido";
+                    int primeiroPV = encontrarPontoVirgula(start + 1);
+                    int tokendpv = primeiroPV + 1;
+                    int tokenAntesDoPV = 0;
+
+                    Token operador = tokens.get(tokendpv + 1);
+                    switch (operador.getTipo()) {
+                        case EQUAL:
+                        case GREATER:
+                        case LESS:
+                            if (tokens.get(tokendpv + 2).getTipo() == TokenType.EQUAL) {
+                                tokenAntesDoPV = tokendpv + 3;
+                            } else {
+                                tokenAntesDoPV = tokendpv + 2;
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Operador inesperado: " + operador.getTipo());
+                            break;
+                    }
+
+                    String tipoEsqPV = avaliarExpressao(tokendpv, tokendpv);
+                    String tipoDirPV = avaliarExpressao(tokenAntesDoPV,tokenAntesDoPV);
+                    if(tipoEsqPV.equals(tipoDirPV)){
+                        int segundoPV = encontrarPontoVirgula(tokenAntesDoPV);
+                        Token IncOrDec = tokens.get(segundoPV + 1);
+                        if(IncOrDec.getTipo() == TokenType.NUMBER){
+                            return "boolean";
+                        }            
+
+                    }
+
+                }
             }
 
+        } else {
+            return "indefinido";
         }
         return "indefinido";
     }

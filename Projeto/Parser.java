@@ -215,7 +215,7 @@ public class Parser {
     public boolean incendio(Node root){
         Node incendio = new Node("INCENDIO");
         
-        if(matchT(TokenType.INCENDIO, "\nif ",incendio) 
+        if(matchT(TokenType.INCENDIO, "if ",incendio) 
             && matchL("(","(",incendio)
             && expressao(incendio)
             && matchL(")",")",incendio)
@@ -256,7 +256,7 @@ public class Parser {
         if((matchT(TokenType.PROTEGO, "\nelse",protego)
         && matchL("{","{\n",protego)
         && listaComandos(protego)
-        && matchL("}","}",protego))
+        && matchL("}","}\n",protego))
         || true
         ){
             root.addNode(protego);
@@ -462,10 +462,12 @@ public class Parser {
     public boolean revelio2(Node root){
         Node revelio2 = new Node("REVELIO 2");
 
-        if(texto(revelio2) 
+        if(texto(revelio2) // print("kdkadwkdawk" + id or texto + id or texto +)
+        && revelio3(revelio2)
         && matchL(")",")",revelio2)
         && fim(revelio2)
-        || identifier(revelio2)
+        || matchT(TokenType.IDENTIFIER,token.getLexema() + ".toString()", revelio2)
+        && revelio3(revelio2)
         && matchL(")",")",revelio2)
         && fim(revelio2)
         ){
@@ -474,6 +476,30 @@ public class Parser {
         } 
         return false;
     }
+
+    public boolean revelio3(Node node){
+        Node revelio3 = new Node("REVELIO 3");
+
+        if(matchL("+","+",revelio3)            
+        && revelio4(revelio3) 
+        && revelio3(revelio3)
+        || true){
+            root.addNode(revelio3);
+            return true;
+        } 
+        return false;
+    }
+
+    public boolean revelio4(Node node){
+        Node revelio4 = new Node("REVELIO 4");
+
+        if(identifier(revelio4) || texto(revelio4)){
+            root.addNode(revelio4);
+            return true;
+        } 
+        return false;
+    }
+    
 
     public boolean identifier(Node root){
         Node identifier = new Node("IDENTIFIER");
@@ -621,8 +647,8 @@ public class Parser {
         Node legilimens = new Node("LEGILIMENS");
 
         if(matchT(TokenType.LEGILIMENS, "readLine",legilimens)
-        && matchL("(", "(",legilimens)
-        && matchL(")", ")",legilimens)
+        && matchL("(", "",legilimens)
+        && matchL(")", "",legilimens)
         && matchL(";", "\n",legilimens)){
             root.addNode(legilimens);
             return true;
@@ -716,17 +742,42 @@ public class Parser {
                     TokenType tokenTipo = (tokens.get(i - 3).getTipo());
                     String tokenLexema = (tokens.get(i - 2).getLexema());
                     if(tokenTipo.equals(TokenType.INT)){
-                        writer.write("()?.toInt");
-                        System.out.println("()?.toInt");
+                        writer.write("()?.toInt()\n\n");
+                        System.out.print("()?.toInt()\n\n");
+
+                        writer.write("if (" + tokenLexema + " == null){\n");
+                        System.out.print("if (" + tokenLexema + " == null){\n");
+
+                        writer.write("println(\"Errado!\");\n}\nelse");
+                        System.out.print("println(\"Errado!\");\n}\nelse");
+
                         
                     }
                     if(tokenTipo.equals(TokenType.DEC)){
-                        writer.write("()?.toDouble");
-                        System.out.println("()?.toDouble");
+                        writer.write("()?.toDouble()\n\n");
+                        System.out.print("()?.toDouble()\n\n");
+
+                        writer.write("if (" + tokenLexema + " == null){\n");
+                        System.out.print("if (" + tokenLexema + " == null){\n");
+
+                        writer.write("println(\"Errado!\");\n}\nelse");
+                        System.out.print("println(\"Errado!\");\n}\nelse");
                     }
                     if(tokenTipo.equals(TokenType.BOOLEAN)){
-                        writer.write("()?.toBoolean");
-                        System.out.print("()?.toBoolean");
+                        writer.write("()?.toBoolean()\n\n");
+                        System.out.print("()?.toBoolean()\n\n");
+
+                        writer.write("if (" + tokenLexema + " == null){\n");
+                        System.out.print("if (" + tokenLexema + " == null){\n");
+
+                        writer.write("println(\"Errado!\");\n}\nelse");
+                        System.out.print("println(\"Errado!\");\n}\nelse");
+                        
+                    }
+                    if(tokenTipo.equals(TokenType.STR)){
+                        writer.write("()");
+                        System.out.print("()");
+                        
                         
                     }
                 }

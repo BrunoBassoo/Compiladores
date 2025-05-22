@@ -1,20 +1,25 @@
 magic
 
-revelio("Digite sua nota: ");
-int nota = legilimens();
+<| esse codigo faz um loop e um print |>
+<| espero que o charlao goste |>
 
-incendio(nota == null){
-    revelio("errado!");
-}
+int a = 0;
 
-deflexio(nota < 5){
-	revelio("abaixo da media");
-}
-deflexio (nota == 5) {
-	revelio("na media");
-}
-protego{
-	revelio("acima da media");
+accio(int i = 3; i<10; 2){
+    revelio(i + "° numero: " + i);
+    incendio(i == 3){
+        revelio("Charlão é muito gente boa");
+    } deflexio (i == 5){
+        revelio("Eu acho que o Charles da duas aulas pra gente...");
+    } deflexio (i == 7){
+        revelio("Charlao, voce tem irmão gêmeo??");
+    } protego{
+        revelio("Eu acho que o seu irmão da aula pra gente de SO! :0");
+    }
+
+
+    a = 5 + i;
+    revelio("----> valor do A: " + a);
 }
 
 endmagic
