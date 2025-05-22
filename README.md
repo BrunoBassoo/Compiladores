@@ -50,6 +50,41 @@ Outros | `and` | Operador lógico "E".
 
 ## 🚀 Exemplos de Código
 
+CÓDIGO 1:
+
+```potterscript
+
+magic
+
+<| esse codigo faz um loop e um print |>
+<| espero que o charlao goste |>
+
+int a = 0;
+
+accio(int i = 3; i<10; 2){
+    revelio(i + "° numero: " + i);
+    incendio(i == 3){
+        revelio("Charlão é muito gente boa");
+    } deflexio (i == 5){
+        revelio("Eu acho que o Charles da duas aulas pra gente...");
+    } deflexio (i == 7){
+        revelio("Charlao, voce tem irmão gêmeo??");
+    } protego{
+        revelio("Eu acho que o seu irmão da aula pra gente de SO! :0");
+    }
+
+
+    a = 5 + i;
+    revelio("----> valor do A: " + a);
+}
+
+endmagic
+
+```
+
+CÓDIGO 2:
+
+
 ```potterscript
 magic
 
@@ -69,6 +104,8 @@ protego{
 
 endmagic
 ```
+
+CÓDIGO 3:
 
 ```potterscript
 magic
